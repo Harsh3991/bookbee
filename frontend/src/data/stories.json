@@ -1,0 +1,144 @@
+{
+  "stories": [
+    {
+      "id": 1,
+      "title": "Midnight Secrets",
+      "image": "https://picsum.photos/300/400?random=1",
+      "rating": 4.5,
+      "author": "Emma Wilson"
+    },
+    {
+      "id": 2,
+      "title": "Ocean Dreams",
+      "image": "https://picsum.photos/300/400?random=2",
+      "rating": 4.2,
+      "author": "James Carter"
+    },
+    {
+      "id": 3,
+      "title": "The Last Kingdom",
+      "image": "https://picsum.photos/300/400?random=3",
+      "rating": 4.8,
+      "author": "Sarah Johnson"
+    },
+    {
+      "id": 4,
+      "title": "Whispers in the Dark",
+      "image": "https://picsum.photos/300/400?random=4",
+      "rating": 4.1,
+      "author": "Mike Roberts"
+    },
+    {
+      "id": 5,
+      "title": "Eternal Flame",
+      "image": "https://picsum.photos/300/400?random=5",
+      "rating": 4.7,
+      "author": "Lisa Thompson"
+    },
+    {
+      "id": 6,
+      "title": "Desert Rose",
+      "image": "https://picsum.photos/300/400?random=6",
+      "rating": 4.3,
+      "author": "Ahmed Hassan"
+    },
+    {
+      "id": 7,
+      "title": "Winter's Heart",
+      "image": "https://picsum.photos/300/400?random=7",
+      "rating": 4.6,
+      "author": "Maria Garcia"
+    },
+    {
+      "id": 8,
+      "title": "City of Shadows",
+      "image": "https://picsum.photos/300/400?random=8",
+      "rating": 4.4,
+      "author": "David Chen"
+    },
+    {
+      "id": 9,
+      "title": "Golden Years",
+      "image": "https://picsum.photos/300/400?random=9",
+      "rating": 4.9,
+      "author": "Robert Brown"
+    },
+    {
+      "id": 10,
+      "title": "Summer Breeze",
+      "image": "https://picsum.photos/300/400?random=10",
+      "rating": 4.0,
+      "author": "Jessica Lee"
+    },
+    {
+      "id": 11,
+      "title": "Mountain Echo",
+      "image": "https://picsum.photos/300/400?random=11",
+      "rating": 4.5,
+      "author": "Thomas Wright"
+    },
+    {
+      "id": 12,
+      "title": "Starlight Promise",
+      "image": "https://picsum.photos/300/400?random=12",
+      "rating": 4.7,
+      "author": "Sophia Martinez"
+    },
+    {
+      "id": 13,
+      "title": "River's Edge",
+      "image": "https://picsum.photos/300/400?random=13",
+      "rating": 4.2,
+      "author": "Kevin Adams"
+    },
+    {
+      "id": 14,
+      "title": "Forgotten Realm",
+      "image": "https://picsum.photos/300/400?random=14",
+      "rating": 4.8,
+      "author": "Amanda Scott"
+    },
+    {
+      "id": 15,
+      "title": "Crimson Tide",
+      "image": "https://picsum.photos/300/400?random=15",
+      "rating": 4.3,
+      "author": "Daniel Kim"
+    },
+    {
+      "id": 16,
+      "title": "Silent Forest",
+      "image": "https://picsum.photos/300/400?random=16",
+      "rating": 4.6,
+      "author": "Rachel Green"
+    },
+    {
+      "id": 17,
+      "title": "Phoenix Rising",
+      "image": "https://picsum.photos/300/400?random=17",
+      "rating": 4.9,
+      "author": "Brian Taylor"
+    },
+    {
+      "id": 18,
+      "title": "Moonlight Sonata",
+      "image": "https://picsum.photos/300/400?random=18",
+      "rating": 4.4,
+      "author": "Olivia Parker"
+    },
+    {
+      "id": 19,
+      "title": "Desert Wind",
+      "image": "https://picsum.photos/300/400?random=19",
+      "rating": 4.1,
+      "author": "Jason Miller"
+    },
+    {
+      "id": 20,
+      "title": "Ancient Wisdom",
+      "image": "https://picsum.photos/300/400?random=20",
+      "rating": 4.7,
+      "author": "Natalie White"
+    }
+  ]
+}
