@@ -1,8 +1,8 @@
-import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useAuth } from '../contexts/AuthContext';
 
 const Navbar = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const { isAuthenticated, logout, user } = useAuth();
 
   return (
     <nav className="bg-white shadow-lg sticky top-0 z-50">
@@ -34,11 +34,11 @@ const Navbar = () => {
 
           {/* Auth Buttons */}
           <div className="flex items-center space-x-4">
-            {isLoggedIn ? (
+            {isAuthenticated ? (
               <div className="flex items-center space-x-4">
-                <span className="text-gray-600">Welcome!</span>
+                <span className="text-gray-600">Welcome, {user?.name || 'User'}!</span>
                 <button 
-                  onClick={() => setIsLoggedIn(false)}
+                  onClick={logout}
                   className="bg-gray-200 hover:bg-gray-300 px-4 py-2 rounded-lg transition-colors"
                 >
                   Logout

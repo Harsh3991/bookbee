@@ -27,7 +27,7 @@ const StoryCard = ({ story }) => {
       {/* Story Image */}
       <div className="relative overflow-hidden">
         <img 
-          src={story.image} 
+          src={story.coverImage || 'https://picsum.photos/300/400?random=1'} 
           alt={story.title}
           className="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-300"
         />
@@ -41,7 +41,7 @@ const StoryCard = ({ story }) => {
         <h3 className="font-semibold text-gray-800 mb-2 line-clamp-2 group-hover:text-yellow-600 transition-colors">
           {story.title}
         </h3>
-        <p className="text-gray-600 text-sm mb-3">by {story.author}</p>
+        <p className="text-gray-600 text-sm mb-3">by {story.author?.name || 'Unknown Author'}</p>
         
         {/* Rating Stars */}
         <div className="flex items-center space-x-1">
