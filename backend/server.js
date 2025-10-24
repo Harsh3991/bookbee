@@ -17,6 +17,8 @@ const searchRoutes = require('./routes/searchRoutes');
 
 connectDB();
 
+const cronJob = require('./config/cron');
+
 const app = express();
 
 app.use(helmet());
@@ -46,3 +48,5 @@ app.get('/', (req, res) => {
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);
 });
+
+cronJob.start();
