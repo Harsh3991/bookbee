@@ -159,6 +159,69 @@ const uploadCover = async (req, res) => {
   }
 };
 
+// @desc    Get stories by user
+// @route   GET /api/stories/user/:userId
+// @access  Public
+const getUserStories = async (req, res) => {
+  try {
+    const stories = await Story.find({ author: req.params.userId })
+      .populate('author', 'name avatar')
+      .sort({ createdAt: -1 });
+
+    res.json(stories);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+// @desc    Like a story
+// @route   POST /api/stories/:id/like
+// @access  Private
+const likeStory = async (req, res) => {
+  try {
+    const story = await Story.findById(req.params.id);
+
+    if (!story) {
+      return res.status(404).json({ message: 'Story not found' });
+    }
+
+    if (story.likes.includes(req.user._id)) {
+      return res.status(400).json({ message: 'Story already liked' });
+    }
+
+    story.likes.push(req.user._id);
+    await story.save();
+
+    res.json({ message: 'Story liked' });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+// @desc    Unlike a story
+// @route   DELETE /api/stories/:id/like
+// @access  Private
+const unlikeStory = async (req, res) => {
+  try {
+    const story = await Story.findById(req.params.id);
+
+    if (!story) {
+      return res.status(404).json({ message: 'Story not found' });
+    }
+
+    if (!story.likes.includes(req.user._id)) {
+      return res.status(400).json({ message: 'Story not liked' });
+    }
+
+    story.likes = story.likes.filter(id => id.toString() !== req.user._id.toString());
+    await story.save();
+
+    res.json({ message: 'Story unliked' });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
 module.exports = {
   getStories,
   getStoryById,
@@ -166,4 +229,7 @@ module.exports = {
   updateStory,
   deleteStory,
   uploadCover,
+  getUserStories,
+  likeStory,
+  unlikeStory,
 };
