@@ -24,9 +24,9 @@ const Navbar = () => {
             <button className="text-gray-600 hover:text-yellow-500 transition-colors">
               Search
             </button>
-            <button className="text-gray-600 hover:text-yellow-500 transition-colors">
+            <Link to="/write" className="text-gray-600 hover:text-yellow-500 transition-colors">
               Write
-            </button>
+            </Link>
             <Link to="/profile" className="text-gray-600 hover:text-yellow-500 transition-colors">
               Profile
             </Link>
