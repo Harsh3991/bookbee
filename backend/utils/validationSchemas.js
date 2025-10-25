@@ -18,6 +18,7 @@ const storySchema = Joi.object({
   description: Joi.string().min(10).max(1000).required(),
   genres: Joi.array().items(Joi.string()).min(1).required(),
   tags: Joi.array().items(Joi.string()),
+  status: Joi.string().valid('ongoing', 'completed', 'hiatus').optional(),
 });
 
 // Chapter validation schemas

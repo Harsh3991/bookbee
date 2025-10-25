@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { api } from '../services/api';
 import { useAuth } from '../contexts/AuthContext';
+import TermsAndConditions from '../components/TermsAndConditions';
 
 const Signup = () => {
   const [formData, setFormData] = useState({
@@ -14,6 +15,7 @@ const Signup = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [showPassword, setShowPassword] = useState(false);
+  const [showTerms, setShowTerms] = useState(false);
   const navigate = useNavigate();
   const { login } = useAuth();
 
@@ -159,7 +161,14 @@ const Signup = () => {
               required
             />
             <label htmlFor="agree-terms" className="ml-2 block text-sm text-gray-900">
-              I agree to the <a href="#" className="text-yellow-400 hover:text-yellow-500">Terms and Conditions</a>
+              I agree to the{' '}
+              <button
+                type="button"
+                onClick={() => setShowTerms(true)}
+                className="text-yellow-400 hover:text-yellow-500 underline cursor-pointer"
+              >
+                Terms and Conditions
+              </button>
             </label>
           </div>
 
@@ -181,6 +190,11 @@ const Signup = () => {
           </div>
         </form>
       </motion.div>
+
+      <TermsAndConditions
+        isOpen={showTerms}
+        onClose={() => setShowTerms(false)}
+      />
     </div>
   );
 };

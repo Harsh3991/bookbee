@@ -53,13 +53,14 @@ const getStoryById = async (req, res) => {
 // @access  Private
 const createStory = async (req, res) => {
   try {
-    const { title, description, genres, tags } = req.body;
+    const { title, description, genres, tags, status } = req.body;
 
     const story = new Story({
       title,
       description,
       genres,
       tags,
+      status,
       author: req.user._id,
     });
 
