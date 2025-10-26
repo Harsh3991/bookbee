@@ -131,12 +131,12 @@ const Write = () => {
     }
   };
 
-  const handleCoverUpload = async (file) => {
-    if (!id) return; // Can only upload cover for existing stories
+  const handleCoverUpload = async (file, storyId = id) => {
+    if (!storyId) return; // Can only upload cover for existing stories
 
     try {
       setUploadingCover(true);
-      const result = await api.uploadCover(id, file);
+      const result = await api.uploadCover(storyId, file);
       setStoryData(prev => ({
         ...prev,
         coverImage: result.coverImage
@@ -210,7 +210,7 @@ const Write = () => {
 
       // Upload cover if selected
       if (coverFile && storyId) {
-        await handleCoverUpload(coverFile);
+        await handleCoverUpload(coverFile, storyId);
       }
 
       // Create/update chapters

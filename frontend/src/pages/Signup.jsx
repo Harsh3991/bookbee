@@ -40,8 +40,7 @@ const Signup = () => {
 
       const response = await api.register(userData);
 
-      // Store token in localStorage and update auth context
-      localStorage.setItem('token', response.token);
+      // Update auth context (this will handle localStorage)
       login(response);
 
       // Redirect to home

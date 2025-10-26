@@ -1,4 +1,5 @@
 import { createContext, useContext, useState, useEffect } from 'react';
+import { api } from '../services/api';
 
 const AuthContext = createContext();
 
@@ -16,21 +17,38 @@ export const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     // Check if user is logged in on app start
-    const token = localStorage.getItem('token');
-    if (token) {
-      // You could validate the token here with the backend
-      // For now, just assume it's valid
-      setUser({ token });
-    }
-    setLoading(false);
+    const initializeAuth = async () => {
+      const token = localStorage.getItem('token');
+      const storedUser = localStorage.getItem('user');
+
+      if (token && storedUser) {
+        try {
+          // Validate token by fetching user profile
+          const userData = await api.getProfile();
+          setUser(userData);
+        } catch (error) {
+          // Token is invalid, clear stored data
+          localStorage.removeItem('token');
+          localStorage.removeItem('user');
+          console.error('Token validation failed:', error);
+        }
+      }
+      setLoading(false);
+    };
+
+    initializeAuth();
   }, []);
 
   const login = (userData) => {
+    // Store both token and user data
+    localStorage.setItem('token', userData.token);
+    localStorage.setItem('user', JSON.stringify(userData));
     setUser(userData);
   };
 
   const logout = () => {
     localStorage.removeItem('token');
+    localStorage.removeItem('user');
     setUser(null);
   };
 
