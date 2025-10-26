@@ -45,7 +45,7 @@ const uploadAvatar = async (req, res) => {
       return res.status(400).json({ message: 'No file uploaded' });
     }
 
-    const result = await uploadToCloudinary(req.file.path, 'avatars');
+    const result = await uploadToCloudinary(req.file.buffer, 'avatars');
 
     const user = await User.findById(req.user._id);
     if (user.avatar) {

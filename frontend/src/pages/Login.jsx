@@ -30,8 +30,7 @@ const Login = () => {
     try {
       const response = await api.login(formData);
 
-      // Store token in localStorage and update auth context
-      localStorage.setItem('token', response.token);
+      // Update auth context (this will handle localStorage)
       login(response);
 
       // Redirect to home

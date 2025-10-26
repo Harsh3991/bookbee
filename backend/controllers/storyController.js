@@ -144,7 +144,7 @@ const uploadCover = async (req, res) => {
       return res.status(400).json({ message: 'No file uploaded' });
     }
 
-    const result = await uploadToCloudinary(req.file.path, 'covers');
+    const result = await uploadToCloudinary(req.file.buffer, 'covers');
 
     if (story.coverImage) {
       const publicId = story.coverImage.split('/').pop().split('.')[0];

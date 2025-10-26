@@ -1,8 +1,8 @@
 const cloudinary = require('../config/cloudinary');
 
-const uploadToCloudinary = (filePath, folder = 'bookbee') => {
+const uploadToCloudinary = (fileBuffer, folder = 'bookbee') => {
   return new Promise((resolve, reject) => {
-    cloudinary.uploader.upload(filePath, {
+    const uploadStream = cloudinary.uploader.upload_stream({
       folder,
       resource_type: 'auto',
     }, (error, result) => {
@@ -15,6 +15,10 @@ const uploadToCloudinary = (filePath, folder = 'bookbee') => {
         });
       }
     });
+
+    // Convert buffer to stream and pipe to Cloudinary
+    const bufferStream = require('stream').Readable.from(fileBuffer);
+    bufferStream.pipe(uploadStream);
   });
 };
 

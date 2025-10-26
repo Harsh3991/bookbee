@@ -32,6 +32,20 @@ export const api = {
     return data;
   },
 
+  getProfile: async () => {
+    const token = localStorage.getItem('token');
+    const response = await fetch(`${API_BASE}/auth/profile`, {
+      headers: {
+        'Authorization': `Bearer ${token}`,
+      },
+    });
+    const data = await response.json();
+    if (!response.ok) {
+      throw new Error(data.message || 'Failed to get profile');
+    }
+    return data;
+  },
+
   // Stories endpoints
   getStories: async () => {
     const response = await fetch(`${API_BASE}/stories`);
