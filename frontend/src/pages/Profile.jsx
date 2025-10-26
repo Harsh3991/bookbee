@@ -13,14 +13,22 @@ const Profile = () => {
   const [readingHistory, setReadingHistory] = useState([]);
   const [bookmarks, setBookmarks] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
+  const [refreshing, setRefreshing] = useState(false);
 
   useEffect(() => {
     loadProfileData();
   }, []);
 
-  const loadProfileData = async () => {
+  const loadProfileData = async (isRefresh = false) => {
     try {
-      setLoading(true);
+      if (isRefresh) {
+        setRefreshing(true);
+      } else {
+        setLoading(true);
+      }
+      setError('');
+
       const [storiesData, progressData, bookmarksData] = await Promise.all([
         api.getUserStories(user._id),
         api.getReadingProgress(),
@@ -32,9 +40,15 @@ const Profile = () => {
       setBookmarks(bookmarksData);
     } catch (error) {
       console.error('Error loading profile data:', error);
+      setError('Failed to load profile data. Please try again.');
     } finally {
       setLoading(false);
+      setRefreshing(false);
     }
+  };
+
+  const handleRefresh = () => {
+    loadProfileData(true);
   };
 
   const tabs = [
@@ -47,7 +61,12 @@ const Profile = () => {
     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
       {userStories.length > 0 ? (
         userStories.map((story) => (
-          <StoryCard key={story._id} story={story} />
+          <StoryCard 
+            key={story._id} 
+            story={story} 
+            showEditButton={true}
+            onEdit={(story) => navigate(`/write/${story._id}`)}
+          />
         ))
       ) : (
         <div className="col-span-full text-center py-12">
@@ -168,6 +187,29 @@ const Profile = () => {
     );
   }
 
+  if (error) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="text-center">
+          <div className="text-red-500 mb-4">
+            <svg className="w-16 h-16 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+          </div>
+          <h3 className="text-lg font-medium text-gray-900 mb-2">Failed to load profile</h3>
+          <p className="text-gray-600 mb-4">{error}</p>
+          <button
+            onClick={handleRefresh}
+            disabled={refreshing}
+            className="bg-yellow-400 hover:bg-yellow-500 disabled:bg-yellow-300 text-black px-6 py-2 rounded-lg font-semibold transition-colors disabled:cursor-not-allowed"
+          >
+            {refreshing ? 'Retrying...' : 'Try Again'}
+          </button>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-gray-50 py-8">
       <div className="max-w-4xl mx-auto px-4">
@@ -202,9 +244,21 @@ const Profile = () => {
                 </div>
               </div>
             </div>
-            <button className="bg-yellow-400 hover:bg-yellow-500 text-black px-6 py-2 rounded-lg font-semibold transition-colors">
-              Edit Profile
-            </button>
+            <div className="flex space-x-3">
+              <button
+                onClick={handleRefresh}
+                disabled={refreshing}
+                className="bg-gray-100 hover:bg-gray-200 disabled:bg-gray-50 text-gray-700 disabled:text-gray-400 px-4 py-2 rounded-lg font-semibold transition-colors disabled:cursor-not-allowed flex items-center space-x-2"
+              >
+                <svg className={`w-4 h-4 ${refreshing ? 'animate-spin' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                </svg>
+                <span>{refreshing ? 'Refreshing...' : 'Refresh'}</span>
+              </button>
+              <button className="bg-yellow-400 hover:bg-yellow-500 text-black px-6 py-2 rounded-lg font-semibold transition-colors">
+                Edit Profile
+              </button>
+            </div>
           </div>
         </motion.div>
 
