@@ -6,8 +6,20 @@ const Story = require('../models/Story');
 // @access  Public
 const getChapters = async (req, res) => {
   try {
-    const chapters = await Chapter.find({ story: req.params.storyId, published: true })
-      .sort({ chapterNumber: 1 });
+    const story = await Story.findById(req.params.storyId);
+
+    if (!story) {
+      return res.status(404).json({ message: 'Story not found' });
+    }
+
+    // If user is authenticated and is the author, show all chapters
+    // Otherwise, only show published chapters
+    const query = { story: req.params.storyId };
+    if (!req.user || req.user._id.toString() !== story.author.toString()) {
+      query.published = true;
+    }
+
+    const chapters = await Chapter.find(query).sort({ chapterNumber: 1 });
 
     res.json(chapters);
   } catch (error) {
@@ -52,7 +64,7 @@ const createChapter = async (req, res) => {
       return res.status(401).json({ message: 'Not authorized' });
     }
 
-    const { title, content } = req.body;
+    const { title, content, published } = req.body;
 
     // Auto-assign chapterNumber
     const lastChapter = await Chapter.findOne({ story: req.params.storyId }).sort({ chapterNumber: -1 });
@@ -63,6 +75,7 @@ const createChapter = async (req, res) => {
       title,
       content,
       chapterNumber,
+      published: published !== undefined ? published : false, // Allow frontend to set published status
     });
 
     const createdChapter = await chapter.save();
@@ -115,7 +128,7 @@ const deleteChapter = async (req, res) => {
       return res.status(401).json({ message: 'Not authorized' });
     }
 
-    await chapter.remove();
+    await Chapter.findByIdAndDelete(req.params.id);
 
     res.json({ message: 'Chapter removed' });
   } catch (error) {

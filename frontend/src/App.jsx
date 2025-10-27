@@ -9,6 +9,8 @@ import Login from './pages/Login';
 import Signup from './pages/Signup';
 import Write from './pages/Write';
 import Read from './pages/Read';
+import StoryEditor from './pages/StoryEditor';
+import AddChapter from './pages/AddChapter';
 
 // Protected Route Component
 const ProtectedRoute = ({ children }) => {
@@ -35,6 +37,8 @@ function AppContent() {
           <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
           <Route path="/write" element={<ProtectedRoute><Write /></ProtectedRoute>} />
           <Route path="/write/:storyId" element={<ProtectedRoute><Write /></ProtectedRoute>} />
+          <Route path="/story-editor/:storyId" element={<ProtectedRoute><StoryEditor /></ProtectedRoute>} />
+          <Route path="/add-chapter/:storyId" element={<ProtectedRoute><AddChapter /></ProtectedRoute>} />
           <Route path="/read/:storyId/:chapterId" element={<ProtectedRoute><Read /></ProtectedRoute>} />
           <Route path="/login" element={<PublicRoute><Login /></PublicRoute>} />
           <Route path="/signup" element={<PublicRoute><Signup /></PublicRoute>} />

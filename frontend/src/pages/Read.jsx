@@ -79,7 +79,7 @@ const Read = () => {
     try {
       const progressData = await api.getReadingProgress();
       const currentProgress = progressData.find(
-        p => p.story._id === storyId && p.chapter._id === chapterId
+        p => p.story && p.story._id === storyId && p.chapter && p.chapter._id === chapterId
       );
       if (currentProgress) {
         setReadingProgress(currentProgress);
