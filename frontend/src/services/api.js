@@ -46,6 +46,23 @@ export const api = {
     return data;
   },
 
+  updateUserProfile: async (userData) => {
+    const token = localStorage.getItem('token');
+    const response = await fetch(`${API_BASE}/users/profile`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`,
+      },
+      body: JSON.stringify(userData),
+    });
+    const data = await response.json();
+    if (!response.ok) {
+      throw new Error(data.message || 'Failed to update profile');
+    }
+    return data;
+  },
+
   // Stories endpoints
   getStories: async () => {
     const response = await fetch(`${API_BASE}/stories`);
@@ -143,7 +160,11 @@ export const api = {
 
   // Chapters endpoints
   getChapters: async (storyId) => {
-    const response = await fetch(`${API_BASE}/chapters/${storyId}/chapters`);
+    const token = localStorage.getItem('token');
+    const headers = token ? { 'Authorization': `Bearer ${token}` } : {};
+    const response = await fetch(`${API_BASE}/chapters/${storyId}/chapters`, {
+      headers
+    });
     const data = await response.json();
     if (!response.ok) {
       throw new Error(data.message || 'Failed to fetch chapters');
@@ -199,6 +220,20 @@ export const api = {
       throw new Error(data.message || 'Failed to publish chapter');
     }
     return data;
+  },
+
+  deleteChapter: async (id) => {
+    const token = localStorage.getItem('token');
+    const response = await fetch(`${API_BASE}/chapters/${id}`, {
+      method: 'DELETE',
+      headers: {
+        'Authorization': `Bearer ${token}`,
+      },
+    });
+    if (!response.ok) {
+      const data = await response.json();
+      throw new Error(data.message || 'Failed to delete chapter');
+    }
   },
 
   // Reading progress endpoints

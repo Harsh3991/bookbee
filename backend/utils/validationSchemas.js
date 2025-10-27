@@ -25,9 +25,9 @@ const storySchema = Joi.object({
 const chapterSchema = Joi.object({
   title: Joi.string().min(1).max(100).required(),
   content: Joi.string().min(20).required(),
-  chapterNumber: Joi.number().integer().min(1).optional(),  // Changed to optional
-  status: Joi.string().valid('draft', 'published').optional(),
-});
+  chapterNumber: Joi.number().integer().min(1).optional(),
+  published: Joi.boolean().optional(),
+}).unknown(true);
 
 module.exports = {
   registerSchema,

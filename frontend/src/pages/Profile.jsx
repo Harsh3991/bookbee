@@ -6,7 +6,7 @@ import { api } from '../services/api';
 import StoryCard from '../components/StoryCard';
 
 const Profile = () => {
-  const { user } = useAuth();
+  const { user, updateUser } = useAuth();
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState('stories');
   const [userStories, setUserStories] = useState([]);
@@ -16,9 +16,22 @@ const Profile = () => {
   const [error, setError] = useState('');
   const [refreshing, setRefreshing] = useState(false);
 
+  // Edit mode states
+  const [isEditing, setIsEditing] = useState(false);
+  const [editingName, setEditingName] = useState('');
+  const [saving, setSaving] = useState(false);
+  const [saveError, setSaveError] = useState('');
+  const [saveSuccess, setSaveSuccess] = useState(false);
+
   useEffect(() => {
     loadProfileData();
   }, []);
+
+  useEffect(() => {
+    if (user) {
+      setEditingName(user.name || '');
+    }
+  }, [user]);
 
   const loadProfileData = async (isRefresh = false) => {
     try {
@@ -51,6 +64,43 @@ const Profile = () => {
     loadProfileData(true);
   };
 
+  const handleEdit = () => {
+    setIsEditing(true);
+    setSaveError('');
+    setSaveSuccess(false);
+  };
+
+  const handleCancel = () => {
+    setIsEditing(false);
+    setEditingName(user?.name || '');
+    setSaveError('');
+    setSaveSuccess(false);
+  };
+
+  const handleSave = async () => {
+    try {
+      setSaving(true);
+      setSaveError('');
+      setSaveSuccess(false);
+
+      const updatedUser = await api.updateUserProfile({
+        name: editingName.trim(),
+      });
+
+      updateUser(updatedUser);
+      setIsEditing(false);
+      setSaveSuccess(true);
+
+      // Clear success message after 3 seconds
+      setTimeout(() => setSaveSuccess(false), 3000);
+    } catch (error) {
+      console.error('Error updating profile:', error);
+      setSaveError(error.message || 'Failed to update profile');
+    } finally {
+      setSaving(false);
+    }
+  };
+
   const tabs = [
     { id: 'stories', label: 'My Stories', count: userStories.length },
     { id: 'reading', label: 'Reading History', count: readingHistory.length },
@@ -65,7 +115,7 @@ const Profile = () => {
             key={story._id} 
             story={story} 
             showEditButton={true}
-            onEdit={(story) => navigate(`/write/${story._id}`)}
+            onEdit={(story) => navigate(`/story-editor/${story._id}`)}
           />
         ))
       ) : (
@@ -227,8 +277,23 @@ const Profile = () => {
               {user?.name?.charAt(0)?.toUpperCase() || 'U'}
             </motion.div>
             <div className="flex-1">
-              <h1 className="text-3xl font-bold text-gray-900 mb-2">{user?.name || 'User'}</h1>
-              <p className="text-gray-600 mb-4">{user?.bio || 'Welcome to BookBee! Start your reading and writing journey.'}</p>
+              {isEditing ? (
+                <div className="space-y-4">
+                  <input
+                    type="text"
+                    value={editingName}
+                    onChange={(e) => setEditingName(e.target.value)}
+                    className="text-3xl font-bold text-gray-900 bg-transparent border-b-2 border-gray-300 focus:border-yellow-400 focus:outline-none w-full"
+                    placeholder="Enter your name"
+                  />
+                  <p className="text-gray-600">{user?.bio || 'Welcome to BookBee! Start your reading and writing journey.'}</p>
+                </div>
+              ) : (
+                <>
+                  <h1 className="text-3xl font-bold text-gray-900 mb-2">{user?.name || 'User'}</h1>
+                  <p className="text-gray-600 mb-4">{user?.bio || 'Welcome to BookBee! Start your reading and writing journey.'}</p>
+                </>
+              )}
               <div className="flex space-x-6 text-center">
                 <div>
                   <div className="text-2xl font-bold text-gray-900">{userStories.length}</div>
@@ -255,12 +320,68 @@ const Profile = () => {
                 </svg>
                 <span>{refreshing ? 'Refreshing...' : 'Refresh'}</span>
               </button>
-              <button className="bg-yellow-400 hover:bg-yellow-500 text-black px-6 py-2 rounded-lg font-semibold transition-colors">
-                Edit Profile
-              </button>
+              {isEditing ? (
+                <div className="flex space-x-2">
+                  <button
+                    onClick={handleCancel}
+                    disabled={saving}
+                    className="bg-gray-100 hover:bg-gray-200 disabled:bg-gray-50 text-gray-700 disabled:text-gray-400 px-4 py-2 rounded-lg font-semibold transition-colors disabled:cursor-not-allowed"
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    onClick={handleSave}
+                    disabled={saving}
+                    className="bg-yellow-400 hover:bg-yellow-500 disabled:bg-yellow-300 text-black px-4 py-2 rounded-lg font-semibold transition-colors disabled:cursor-not-allowed flex items-center space-x-2"
+                  >
+                    {saving && (
+                      <svg className="w-4 h-4 animate-spin" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                      </svg>
+                    )}
+                    <span>{saving ? 'Saving...' : 'Save Changes'}</span>
+                  </button>
+                </div>
+              ) : (
+                <button
+                  onClick={handleEdit}
+                  className="bg-yellow-400 hover:bg-yellow-500 text-black px-6 py-2 rounded-lg font-semibold transition-colors"
+                >
+                  Edit Profile
+                </button>
+              )}
             </div>
           </div>
         </motion.div>
+
+        {/* Success/Error Messages */}
+        {saveSuccess && (
+          <motion.div
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
+            className="bg-green-50 border border-green-200 text-green-700 px-4 py-3 rounded-lg mb-6 flex items-center space-x-2"
+          >
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+            </svg>
+            <span>Profile updated successfully!</span>
+          </motion.div>
+        )}
+
+        {saveError && (
+          <motion.div
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
+            className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg mb-6 flex items-center space-x-2"
+          >
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+            <span>{saveError}</span>
+          </motion.div>
+        )}
 
         {/* Tabs */}
         <motion.div
