@@ -189,6 +189,20 @@ export const api = {
     return data;
   },
 
+  getChapterById: async (id) => {
+    const token = localStorage.getItem('token');
+    const response = await fetch(`${API_BASE}/chapters/${id}`, {
+      headers: {
+        'Authorization': `Bearer ${token}`,
+      },
+    });
+    const data = await response.json();
+    if (!response.ok) {
+      throw new Error(data.message || 'Failed to fetch chapter');
+    }
+    return data;
+  },
+
   updateChapter: async (id, chapterData) => {
     const token = localStorage.getItem('token');
     const response = await fetch(`${API_BASE}/chapters/${id}`, {
