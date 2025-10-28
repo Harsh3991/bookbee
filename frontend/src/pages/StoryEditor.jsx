@@ -418,7 +418,13 @@ const StoryEditor = () => {
                       View
                     </button>
                     <button
-                      onClick={() => {/* Edit chapter - could navigate to edit page */}}
+                      onClick={() => {
+                        if (story.author._id !== user._id) {
+                          alert('You do not have permission to edit this chapter');
+                          return;
+                        }
+                        navigate(`/edit-chapter/${storyId}/${chapter._id}`);
+                      }}
                       className="px-3 py-1 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded text-sm"
                     >
                       Edit
