@@ -1,8 +1,9 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 
 const Navbar = () => {
   const { isAuthenticated, logout, user } = useAuth();
+  const navigate = useNavigate();
 
   return (
     <nav className="bg-white shadow-lg sticky top-0 z-50">
@@ -21,7 +22,10 @@ const Navbar = () => {
             <Link to="/" className="text-gray-600 hover:text-yellow-500 transition-colors">
               Home
             </Link>
-            <button className="text-gray-600 hover:text-yellow-500 transition-colors">
+            <button 
+              onClick={() => navigate('/search')}
+              className="text-gray-600 hover:text-yellow-500 transition-colors"
+            >
               Search
             </button>
             <Link to="/write" className="text-gray-600 hover:text-yellow-500 transition-colors">
