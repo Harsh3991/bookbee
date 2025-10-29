@@ -12,6 +12,7 @@ import Read from './pages/Read';
 import StoryEditor from './pages/StoryEditor';
 import AddChapter from './pages/AddChapter';
 import EditChapter from './pages/EditChapter';
+import Search from './pages/Search';
 
 // Protected Route Component
 const ProtectedRoute = ({ children }) => {
@@ -35,6 +36,7 @@ function AppContent() {
       <AnimatePresence mode="wait">
         <Routes>
           <Route path="/" element={<ProtectedRoute><Home /></ProtectedRoute>} />
+          <Route path="/search" element={<ProtectedRoute><Search /></ProtectedRoute>} />
           <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
           <Route path="/write" element={<ProtectedRoute><Write /></ProtectedRoute>} />
           <Route path="/write/:storyId" element={<ProtectedRoute><Write /></ProtectedRoute>} />

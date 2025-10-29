@@ -325,4 +325,35 @@ export const api = {
       throw new Error(data.message || 'Failed to remove bookmark');
     }
   },
+
+  // Search endpoints
+  searchStories: async (params) => {
+    const queryString = new URLSearchParams(params).toString();
+    const response = await fetch(`${API_BASE}/search/stories?${queryString}`);
+    const data = await response.json();
+    if (!response.ok) {
+      throw new Error(data.message || 'Failed to search stories');
+    }
+    return data;
+  },
+
+  getStoriesByGenre: async (genre, params = {}) => {
+    const queryString = new URLSearchParams(params).toString();
+    const response = await fetch(`${API_BASE}/search/genres/${genre}?${queryString}`);
+    const data = await response.json();
+    if (!response.ok) {
+      throw new Error(data.message || 'Failed to fetch stories by genre');
+    }
+    return data;
+  },
+
+  getPopularStories: async (params = {}) => {
+    const queryString = new URLSearchParams(params).toString();
+    const response = await fetch(`${API_BASE}/search/popular?${queryString}`);
+    const data = await response.json();
+    if (!response.ok) {
+      throw new Error(data.message || 'Failed to fetch popular stories');
+    }
+    return data;
+  },
 };
