@@ -108,247 +108,458 @@ const Profile = () => {
   ];
 
   const renderStoriesTab = () => (
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
       {userStories.length > 0 ? (
-        userStories.map((story) => (
-          <StoryCard 
-            key={story._id} 
-            story={story} 
-            showEditButton={true}
-            onEdit={(story) => navigate(`/story-editor/${story._id}`)}
-          />
+        userStories.map((story, index) => (
+          <motion.div
+            key={story._id}
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: index * 0.1, duration: 0.4 }}
+          >
+            <StoryCard 
+              story={story} 
+              showEditButton={true}
+              onEdit={(story) => navigate(`/story-editor/${story._id}`)}
+            />
+          </motion.div>
         ))
       ) : (
-        <div className="col-span-full text-center py-12">
-          <div className="text-gray-400 mb-4">
-            <svg className="w-16 h-16 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
-            </svg>
+        <motion.div
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.5 }}
+          className="col-span-full"
+        >
+          <div className="bg-linear-to-br from-white to-yellow-50/30 rounded-3xl shadow-lg shadow-gray-200/50 border border-gray-100 p-16 text-center">
+            <motion.div
+              animate={{ 
+                y: [0, -10, 0],
+                rotate: [0, 5, 0, -5, 0]
+              }}
+              transition={{ 
+                duration: 4,
+                repeat: Infinity,
+                ease: "easeInOut"
+              }}
+              className="text-gray-300 mb-6"
+            >
+              <svg className="w-24 h-24 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+              </svg>
+            </motion.div>
+            <h3 className="text-2xl font-bold text-gray-900 mb-3">No stories yet</h3>
+            <p className="text-gray-600 mb-8 text-lg max-w-md mx-auto">Start your writing journey by creating your first story and share it with the world.</p>
+            <motion.button
+              whileHover={{ scale: 1.05, y: -2 }}
+              whileTap={{ scale: 0.95 }}
+              onClick={() => navigate('/write')}
+              className="bg-linear-to-r from-yellow-400 to-yellow-500 hover:from-yellow-500 hover:to-yellow-600 text-black px-8 py-3.5 rounded-xl font-bold text-lg transition-all shadow-xl hover:shadow-2xl inline-flex items-center space-x-2"
+            >
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+              </svg>
+              <span>Write Your First Story</span>
+            </motion.button>
           </div>
-          <h3 className="text-lg font-medium text-gray-900 mb-2">No stories yet</h3>
-          <p className="text-gray-600 mb-4">Start your writing journey by creating your first story.</p>
-          <button
-            onClick={() => navigate('/write')}
-            className="bg-yellow-400 hover:bg-yellow-500 text-black px-6 py-2 rounded-lg font-semibold transition-colors"
-          >
-            Write Your First Story
-          </button>
-        </div>
+        </motion.div>
       )}
     </div>
   );
 
   const renderReadingHistoryTab = () => (
-    <div className="space-y-4">
+    <div className="space-y-6">
       {readingHistory.length > 0 ? (
-        readingHistory.map((progress) => (
-          <motion.div
-            key={`${progress.story._id}-${progress.chapter._id}`}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="bg-white rounded-lg shadow-sm p-6 hover:shadow-md transition-shadow"
-          >
-            <div className="flex items-center justify-between">
-              <div className="flex-1">
-                <h3 className="text-lg font-semibold text-gray-900 mb-1">
-                  {progress.story.title}
-                </h3>
-                <p className="text-gray-600 mb-2">
-                  Chapter {progress.chapter.chapterNumber}: {progress.chapter.title}
-                </p>
-                <p className="text-sm text-gray-500">
-                  by {progress.story.author?.name || 'Unknown Author'}
-                </p>
-              </div>
-              <div className="text-right">
-                <div className="text-sm text-gray-600 mb-2">
-                  Progress: {progress.progress}%
+        readingHistory
+          .filter((progress) => progress.story && progress.chapter) // Filter out invalid entries
+          .map((progress, index) => (
+            <motion.div
+              key={`${progress.story._id}-${progress.chapter._id}`}
+              initial={{ opacity: 0, x: -30 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: index * 0.1, duration: 0.4 }}
+              whileHover={{ y: -4, scale: 1.01 }}
+              className="bg-white rounded-2xl shadow-lg shadow-gray-200/50 p-8 hover:shadow-xl transition-all border border-gray-100 cursor-pointer group"
+            >
+              <div className="flex items-center justify-between gap-6">
+                <div className="flex-1 min-w-0">
+                  <h3 className="text-xl font-bold text-gray-900 mb-2 group-hover:text-yellow-600 transition-colors truncate">
+                    {progress.story.title}
+                  </h3>
+                  <p className="text-gray-700 mb-2 font-medium">
+                    Chapter {progress.chapter.chapterNumber}: {progress.chapter.title}
+                  </p>
+                  <p className="text-sm text-gray-500 flex items-center space-x-2">
+                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                    </svg>
+                    <span>by {progress.story.author?.name || 'Unknown Author'}</span>
+                  </p>
                 </div>
-                <div className="w-24 bg-gray-200 rounded-full h-2">
-                  <div
-                    className="bg-yellow-400 h-2 rounded-full"
-                    style={{ width: `${progress.progress}%` }}
-                  ></div>
+                
+                <div className="flex flex-col items-end space-y-4">
+                  <div className="text-right">
+                    <div className="text-sm font-semibold text-gray-600 mb-3">
+                      Reading Progress
+                    </div>
+                    <div className="relative w-32 h-32">
+                      {/* Circular progress */}
+                      <svg className="transform -rotate-90 w-32 h-32">
+                        <circle
+                          cx="64"
+                          cy="64"
+                          r="56"
+                          stroke="currentColor"
+                          strokeWidth="8"
+                          fill="transparent"
+                          className="text-gray-200"
+                        />
+                        <motion.circle
+                          cx="64"
+                          cy="64"
+                          r="56"
+                          stroke="currentColor"
+                          strokeWidth="8"
+                          fill="transparent"
+                          strokeDasharray={`${2 * Math.PI * 56}`}
+                          initial={{ strokeDashoffset: 2 * Math.PI * 56 }}
+                          animate={{ 
+                            strokeDashoffset: 2 * Math.PI * 56 * (1 - (progress.progress || 0) / 100)
+                          }}
+                          transition={{ duration: 1, ease: "easeOut", delay: index * 0.1 }}
+                          className="text-yellow-400"
+                          strokeLinecap="round"
+                        />
+                      </svg>
+                      <div className="absolute inset-0 flex items-center justify-center">
+                        <span className="text-2xl font-bold text-gray-900">{progress.progress || 0}%</span>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <motion.button
+                    whileHover={{ scale: 1.05, x: 5 }}
+                    whileTap={{ scale: 0.95 }}
+                    onClick={() => navigate(`/read/${progress.story._id}/${progress.chapter._id}`)}
+                    className="bg-linear-to-r from-yellow-400 to-yellow-500 hover:from-yellow-500 hover:to-yellow-600 text-black px-6 py-3 rounded-xl font-bold transition-all shadow-lg hover:shadow-xl flex items-center space-x-2"
+                  >
+                    <span>Continue Reading</span>
+                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                    </svg>
+                  </motion.button>
                 </div>
-                <button
-                  onClick={() => navigate(`/read/${progress.story._id}/${progress.chapter._id}`)}
-                  className="mt-3 text-yellow-600 hover:text-yellow-700 text-sm font-medium"
-                >
-                  Continue Reading →
-                </button>
               </div>
-            </div>
-          </motion.div>
-        ))
+            </motion.div>
+          ))
       ) : (
-        <div className="text-center py-12">
-          <div className="text-gray-400 mb-4">
-            <svg className="w-16 h-16 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
-            </svg>
+        <motion.div
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.5 }}
+        >
+          <div className="bg-linear-to-br from-white to-orange-50/30 rounded-3xl shadow-lg shadow-gray-200/50 border border-gray-100 p-16 text-center">
+            <motion.div
+              animate={{ 
+                y: [0, -10, 0],
+                rotate: [0, -5, 0, 5, 0]
+              }}
+              transition={{ 
+                duration: 4,
+                repeat: Infinity,
+                ease: "easeInOut"
+              }}
+              className="text-gray-300 mb-6"
+            >
+              <svg className="w-24 h-24 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+              </svg>
+            </motion.div>
+            <h3 className="text-2xl font-bold text-gray-900 mb-3">No reading history</h3>
+            <p className="text-gray-600 mb-8 text-lg max-w-md mx-auto">Start reading amazing stories and track your progress here.</p>
+            <motion.button
+              whileHover={{ scale: 1.05, y: -2 }}
+              whileTap={{ scale: 0.95 }}
+              onClick={() => navigate('/')}
+              className="bg-linear-to-r from-orange-400 to-orange-500 hover:from-orange-500 hover:to-orange-600 text-white px-8 py-3.5 rounded-xl font-bold text-lg transition-all shadow-xl hover:shadow-2xl inline-flex items-center space-x-2"
+            >
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+              </svg>
+              <span>Browse Stories</span>
+            </motion.button>
           </div>
-          <h3 className="text-lg font-medium text-gray-900 mb-2">No reading history</h3>
-          <p className="text-gray-600 mb-4">Start reading stories to track your progress here.</p>
-          <button
-            onClick={() => navigate('/')}
-            className="bg-yellow-400 hover:bg-yellow-500 text-black px-6 py-2 rounded-lg font-semibold transition-colors"
-          >
-            Browse Stories
-          </button>
-        </div>
+        </motion.div>
       )}
     </div>
   );
 
   const renderBookmarksTab = () => (
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
       {bookmarks.length > 0 ? (
-        bookmarks.map((bookmark) => (
-          <StoryCard key={bookmark.story._id} story={bookmark.story} />
+        bookmarks.map((bookmark, index) => (
+          <motion.div
+            key={bookmark.story._id}
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: index * 0.1, duration: 0.4 }}
+          >
+            <StoryCard story={bookmark.story} />
+          </motion.div>
         ))
       ) : (
-        <div className="col-span-full text-center py-12">
-          <div className="text-gray-400 mb-4">
-            <svg className="w-16 h-16 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z" />
-            </svg>
+        <motion.div
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.5 }}
+          className="col-span-full"
+        >
+          <div className="bg-linear-to-br from-white to-gray-50 rounded-3xl shadow-lg shadow-gray-200/50 border border-gray-100 p-16 text-center">
+            <motion.div
+              animate={{ 
+                scale: [1, 1.1, 1],
+                rotate: [0, 10, 0, -10, 0]
+              }}
+              transition={{ 
+                duration: 4,
+                repeat: Infinity,
+                ease: "easeInOut"
+              }}
+              className="text-gray-300 mb-6"
+            >
+              <svg className="w-24 h-24 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z" />
+              </svg>
+            </motion.div>
+            <h3 className="text-2xl font-bold text-gray-900 mb-3">No bookmarks yet</h3>
+            <p className="text-gray-600 mb-8 text-lg max-w-md mx-auto">Bookmark your favorite stories to save them for later reading.</p>
+            <motion.button
+              whileHover={{ scale: 1.05, y: -2 }}
+              whileTap={{ scale: 0.95 }}
+              onClick={() => navigate('/')}
+              className="bg-linear-to-r from-gray-700 to-gray-800 hover:from-gray-800 hover:to-gray-900 text-white px-8 py-3.5 rounded-xl font-bold text-lg transition-all shadow-xl hover:shadow-2xl inline-flex items-center space-x-2"
+            >
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01" />
+              </svg>
+              <span>Discover Stories</span>
+            </motion.button>
           </div>
-          <h3 className="text-lg font-medium text-gray-900 mb-2">No bookmarks yet</h3>
-          <p className="text-gray-600 mb-4">Bookmark stories you want to read later.</p>
-          <button
-            onClick={() => navigate('/')}
-            className="bg-yellow-400 hover:bg-yellow-500 text-black px-6 py-2 rounded-lg font-semibold transition-colors"
-          >
-            Discover Stories
-          </button>
-        </div>
+        </motion.div>
       )}
     </div>
   );
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-yellow-400 mx-auto"></div>
-          <p className="mt-4 text-gray-600">Loading profile...</p>
-        </div>
+      <div className="min-h-screen bg-linear-to-br from-gray-50 via-yellow-50/30 to-gray-50 flex items-center justify-center">
+        <motion.div
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          className="text-center"
+        >
+          <motion.div
+            animate={{ rotate: 360 }}
+            transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+            className="relative mx-auto w-20 h-20 mb-6"
+          >
+            <div className="absolute inset-0 rounded-full border-4 border-yellow-200"></div>
+            <div className="absolute inset-0 rounded-full border-4 border-yellow-400 border-t-transparent"></div>
+          </motion.div>
+          <motion.p
+            animate={{ opacity: [0.5, 1, 0.5] }}
+            transition={{ duration: 2, repeat: Infinity }}
+            className="text-xl font-semibold text-gray-700"
+          >
+            Loading your profile...
+          </motion.p>
+        </motion.div>
       </div>
     );
   }
 
   if (error) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <div className="text-center">
-          <div className="text-red-500 mb-4">
-            <svg className="w-16 h-16 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-            </svg>
+      <div className="min-h-screen bg-linear-to-br from-gray-50 via-yellow-50/30 to-gray-50 flex items-center justify-center p-4">
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="max-w-md w-full"
+        >
+          <div className="bg-white rounded-3xl shadow-2xl shadow-red-200/50 p-12 text-center border border-red-100">
+            <motion.div
+              animate={{ 
+                rotate: [0, -10, 10, -10, 0],
+                scale: [1, 1.1, 1]
+              }}
+              transition={{ 
+                duration: 0.6,
+                repeat: 3,
+                repeatDelay: 1
+              }}
+              className="text-red-500 mb-6"
+            >
+              <svg className="w-24 h-24 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+            </motion.div>
+            <h3 className="text-2xl font-bold text-gray-900 mb-3">Oops! Something went wrong</h3>
+            <p className="text-gray-600 mb-8 text-lg">{error}</p>
+            <motion.button
+              whileHover={{ scale: 1.05, y: -2 }}
+              whileTap={{ scale: 0.95 }}
+              onClick={handleRefresh}
+              disabled={refreshing}
+              className="bg-linear-to-r from-yellow-400 to-yellow-500 hover:from-yellow-500 hover:to-yellow-600 disabled:from-yellow-300 disabled:to-yellow-400 text-black px-8 py-3.5 rounded-xl font-bold text-lg transition-all shadow-xl hover:shadow-2xl disabled:cursor-not-allowed inline-flex items-center space-x-2"
+            >
+              {refreshing && (
+                <svg className="w-5 h-5 animate-spin" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                </svg>
+              )}
+              <span>{refreshing ? 'Retrying...' : 'Try Again'}</span>
+            </motion.button>
           </div>
-          <h3 className="text-lg font-medium text-gray-900 mb-2">Failed to load profile</h3>
-          <p className="text-gray-600 mb-4">{error}</p>
-          <button
-            onClick={handleRefresh}
-            disabled={refreshing}
-            className="bg-yellow-400 hover:bg-yellow-500 disabled:bg-yellow-300 text-black px-6 py-2 rounded-lg font-semibold transition-colors disabled:cursor-not-allowed"
-          >
-            {refreshing ? 'Retrying...' : 'Try Again'}
-          </button>
-        </div>
+        </motion.div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 py-8">
-      <div className="max-w-4xl mx-auto px-4">
+    <div className="min-h-screen bg-linear-to-br from-gray-50 via-yellow-50/30 to-gray-50 py-12">
+      <div className="max-w-5xl mx-auto px-4">
         {/* Profile Header */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
-          className="bg-white rounded-2xl shadow-lg p-8 mb-8"
+          transition={{ duration: 0.5, ease: "easeOut" }}
+          className="bg-white rounded-3xl shadow-xl shadow-gray-200/50 p-10 mb-10 border border-gray-100 overflow-hidden relative"
         >
-          <div className="flex items-center space-x-6">
+          {/* Decorative background pattern */}
+          <div className="absolute top-0 right-0 w-64 h-64 bg-linear-to-br from-yellow-100 to-transparent rounded-full -mr-32 -mt-32 opacity-50"></div>
+          
+          <div className="flex items-start space-x-8 relative z-10">
+            {/* Enhanced Avatar */}
             <motion.div
-              whileHover={{ scale: 1.1 }}
-              className="w-24 h-24 bg-linear-to-br from-yellow-400 to-orange-500 rounded-full flex items-center justify-center text-white text-2xl font-bold"
+              whileHover={{ scale: 1.05, rotate: 5 }}
+              whileTap={{ scale: 0.95 }}
+              transition={{ type: "spring", stiffness: 300 }}
+              className="relative"
             >
-              {user?.name?.charAt(0)?.toUpperCase() || 'U'}
+              <div className="w-32 h-32 bg-linear-to-br from-yellow-400 via-yellow-500 to-orange-500 rounded-full flex items-center justify-center text-white text-4xl font-bold shadow-2xl shadow-yellow-500/30 ring-4 ring-white ring-offset-4 ring-offset-gray-50">
+                {user?.name?.charAt(0)?.toUpperCase() || 'U'}
+              </div>
+              {/* Decorative pulse ring */}
+              <motion.div
+                animate={{ scale: [1, 1.2, 1], opacity: [0.5, 0, 0.5] }}
+                transition={{ duration: 3, repeat: Infinity }}
+                className="absolute inset-0 rounded-full bg-yellow-400/20"
+              ></motion.div>
             </motion.div>
-            <div className="flex-1">
+
+            <div className="flex-1 min-w-0">
               {isEditing ? (
-                <div className="space-y-4">
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  className="space-y-4"
+                >
                   <input
                     type="text"
                     value={editingName}
                     onChange={(e) => setEditingName(e.target.value)}
-                    className="text-3xl font-bold text-gray-900 bg-transparent border-b-2 border-gray-300 focus:border-yellow-400 focus:outline-none w-full"
+                    className="text-4xl font-bold text-gray-900 bg-transparent border-b-2 border-gray-300 focus:border-yellow-400 focus:outline-none w-full transition-colors pb-2"
                     placeholder="Enter your name"
                   />
-                  <p className="text-gray-600">{user?.bio || 'Welcome to BookBee! Start your reading and writing journey.'}</p>
-                </div>
+                  <p className="text-gray-600 text-lg">{user?.bio || 'Welcome to BookBee! Start your reading and writing journey.'}</p>
+                </motion.div>
               ) : (
-                <>
-                  <h1 className="text-3xl font-bold text-gray-900 mb-2">{user?.name || 'User'}</h1>
-                  <p className="text-gray-600 mb-4">{user?.bio || 'Welcome to BookBee! Start your reading and writing journey.'}</p>
-                </>
+                <motion.div
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: 0.2 }}
+                >
+                  <h1 className="text-4xl font-bold text-gray-900 mb-3 tracking-tight">{user?.name || 'User'}</h1>
+                  <p className="text-gray-600 text-lg mb-6">{user?.bio || 'Welcome to BookBee! Start your reading and writing journey.'}</p>
+                </motion.div>
               )}
-              <div className="flex space-x-6 text-center">
-                <div>
-                  <div className="text-2xl font-bold text-gray-900">{userStories.length}</div>
-                  <div className="text-gray-500">Stories</div>
-                </div>
-                <div>
-                  <div className="text-2xl font-bold text-gray-900">{readingHistory.length}</div>
-                  <div className="text-gray-500">Reading</div>
-                </div>
-                <div>
-                  <div className="text-2xl font-bold text-gray-900">{bookmarks.length}</div>
-                  <div className="text-gray-500">Bookmarks</div>
-                </div>
+              
+              {/* Enhanced Stats Grid */}
+              <div className="grid grid-cols-3 gap-6 mt-6">
+                <motion.div
+                  whileHover={{ y: -4 }}
+                  className="bg-linear-to-br from-yellow-50 to-white rounded-xl p-4 border border-yellow-100 shadow-sm hover:shadow-md transition-all cursor-pointer"
+                >
+                  <div className="text-3xl font-bold text-yellow-600 mb-1">{userStories.length}</div>
+                  <div className="text-sm font-medium text-gray-600">Stories Written</div>
+                </motion.div>
+                <motion.div
+                  whileHover={{ y: -4 }}
+                  className="bg-linear-to-br from-orange-50 to-white rounded-xl p-4 border border-orange-100 shadow-sm hover:shadow-md transition-all cursor-pointer"
+                >
+                  <div className="text-3xl font-bold text-orange-600 mb-1">{readingHistory.length}</div>
+                  <div className="text-sm font-medium text-gray-600">Currently Reading</div>
+                </motion.div>
+                <motion.div
+                  whileHover={{ y: -4 }}
+                  className="bg-linear-to-br from-gray-50 to-white rounded-xl p-4 border border-gray-200 shadow-sm hover:shadow-md transition-all cursor-pointer"
+                >
+                  <div className="text-3xl font-bold text-gray-700 mb-1">{bookmarks.length}</div>
+                  <div className="text-sm font-medium text-gray-600">Saved Stories</div>
+                </motion.div>
               </div>
             </div>
-            <div className="flex space-x-3">
-              <button
+
+            {/* Enhanced Action Buttons */}
+            <div className="flex flex-col space-y-3">
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
                 onClick={handleRefresh}
                 disabled={refreshing}
-                className="bg-gray-100 hover:bg-gray-200 disabled:bg-gray-50 text-gray-700 disabled:text-gray-400 px-4 py-2 rounded-lg font-semibold transition-colors disabled:cursor-not-allowed flex items-center space-x-2"
+                className="bg-white hover:bg-gray-50 disabled:bg-gray-50 text-gray-700 disabled:text-gray-400 px-5 py-2.5 rounded-xl font-semibold transition-all disabled:cursor-not-allowed flex items-center space-x-2 shadow-md hover:shadow-lg border border-gray-200"
               >
                 <svg className={`w-4 h-4 ${refreshing ? 'animate-spin' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
                 </svg>
                 <span>{refreshing ? 'Refreshing...' : 'Refresh'}</span>
-              </button>
+              </motion.button>
+              
               {isEditing ? (
-                <div className="flex space-x-2">
-                  <button
-                    onClick={handleCancel}
-                    disabled={saving}
-                    className="bg-gray-100 hover:bg-gray-200 disabled:bg-gray-50 text-gray-700 disabled:text-gray-400 px-4 py-2 rounded-lg font-semibold transition-colors disabled:cursor-not-allowed"
-                  >
-                    Cancel
-                  </button>
-                  <button
+                <div className="flex flex-col space-y-2">
+                  <motion.button
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
                     onClick={handleSave}
                     disabled={saving}
-                    className="bg-yellow-400 hover:bg-yellow-500 disabled:bg-yellow-300 text-black px-4 py-2 rounded-lg font-semibold transition-colors disabled:cursor-not-allowed flex items-center space-x-2"
+                    className="bg-linear-to-r from-yellow-400 to-yellow-500 hover:from-yellow-500 hover:to-yellow-600 disabled:from-yellow-300 disabled:to-yellow-400 text-black px-5 py-2.5 rounded-xl font-semibold transition-all disabled:cursor-not-allowed flex items-center justify-center space-x-2 shadow-lg hover:shadow-xl"
                   >
                     {saving && (
                       <svg className="w-4 h-4 animate-spin" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
                       </svg>
                     )}
-                    <span>{saving ? 'Saving...' : 'Save Changes'}</span>
-                  </button>
+                    <span>{saving ? 'Saving...' : 'Save'}</span>
+                  </motion.button>
+                  <motion.button
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                    onClick={handleCancel}
+                    disabled={saving}
+                    className="bg-white hover:bg-gray-50 disabled:bg-gray-50 text-gray-700 disabled:text-gray-400 px-5 py-2.5 rounded-xl font-semibold transition-all disabled:cursor-not-allowed shadow-md border border-gray-200"
+                  >
+                    Cancel
+                  </motion.button>
                 </div>
               ) : (
-                <button
+                <motion.button
+                  whileHover={{ scale: 1.05, y: -2 }}
+                  whileTap={{ scale: 0.95 }}
                   onClick={handleEdit}
-                  className="bg-yellow-400 hover:bg-yellow-500 text-black px-6 py-2 rounded-lg font-semibold transition-colors"
+                  className="bg-linear-to-r from-yellow-400 to-yellow-500 hover:from-yellow-500 hover:to-yellow-600 text-black px-6 py-2.5 rounded-xl font-semibold transition-all shadow-lg hover:shadow-xl"
                 >
                   Edit Profile
-                </button>
+                </motion.button>
               )}
             </div>
           </div>
@@ -357,56 +568,99 @@ const Profile = () => {
         {/* Success/Error Messages */}
         {saveSuccess && (
           <motion.div
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -10 }}
-            className="bg-green-50 border border-green-200 text-green-700 px-4 py-3 rounded-lg mb-6 flex items-center space-x-2"
+            initial={{ opacity: 0, y: -20, scale: 0.95 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.95 }}
+            transition={{ type: "spring", stiffness: 500, damping: 30 }}
+            className="bg-linear-to-r from-green-50 to-emerald-50 border-2 border-green-300 text-green-800 px-6 py-4 rounded-2xl mb-8 flex items-center space-x-3 shadow-lg shadow-green-200/50"
           >
-            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-            </svg>
-            <span>Profile updated successfully!</span>
+            <motion.div
+              initial={{ scale: 0 }}
+              animate={{ scale: 1 }}
+              transition={{ delay: 0.2, type: "spring", stiffness: 500 }}
+              className="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center"
+            >
+              <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" />
+              </svg>
+            </motion.div>
+            <span className="font-semibold text-lg">Profile updated successfully!</span>
           </motion.div>
         )}
 
         {saveError && (
           <motion.div
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -10 }}
-            className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg mb-6 flex items-center space-x-2"
+            initial={{ opacity: 0, y: -20, scale: 0.95 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.95 }}
+            transition={{ type: "spring", stiffness: 500, damping: 30 }}
+            className="bg-linear-to-r from-red-50 to-rose-50 border-2 border-red-300 text-red-800 px-6 py-4 rounded-2xl mb-8 flex items-center space-x-3 shadow-lg shadow-red-200/50"
           >
-            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-            </svg>
-            <span>{saveError}</span>
+            <motion.div
+              initial={{ scale: 0 }}
+              animate={{ scale: 1 }}
+              transition={{ delay: 0.2, type: "spring", stiffness: 500 }}
+              className="w-8 h-8 bg-red-500 rounded-full flex items-center justify-center"
+            >
+              <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+            </motion.div>
+            <span className="font-semibold text-lg">{saveError}</span>
           </motion.div>
         )}
 
-        {/* Tabs */}
+        {/* Enhanced Tabs */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.1 }}
-          className="bg-white rounded-lg shadow-sm mb-8"
+          transition={{ delay: 0.2, duration: 0.5 }}
+          className="bg-white rounded-2xl shadow-lg shadow-gray-200/50 mb-10 border border-gray-100 overflow-hidden"
         >
-          <div className="border-b border-gray-200">
-            <nav className="flex">
-              {tabs.map((tab) => (
-                <button
-                  key={tab.id}
-                  onClick={() => setActiveTab(tab.id)}
-                  className={`px-6 py-4 text-sm font-medium border-b-2 transition-colors ${
+          <nav className="flex relative">
+            {tabs.map((tab, index) => (
+              <motion.button
+                key={tab.id}
+                onClick={() => setActiveTab(tab.id)}
+                whileHover={{ y: -2 }}
+                whileTap={{ scale: 0.98 }}
+                className={`flex-1 px-8 py-5 text-base font-semibold transition-all relative ${
+                  activeTab === tab.id
+                    ? 'text-yellow-600'
+                    : 'text-gray-500 hover:text-gray-700'
+                }`}
+              >
+                {/* Active tab indicator */}
+                {activeTab === tab.id && (
+                  <motion.div
+                    layoutId="activeTab"
+                    transition={{ type: "spring", stiffness: 500, damping: 30 }}
+                    className="absolute bottom-0 left-0 right-0 h-1 bg-linear-to-r from-yellow-400 via-yellow-500 to-yellow-400"
+                  />
+                )}
+                
+                {/* Tab background on active */}
+                {activeTab === tab.id && (
+                  <motion.div
+                    layoutId="activeTabBg"
+                    transition={{ type: "spring", stiffness: 500, damping: 30 }}
+                    className="absolute inset-0 bg-linear-to-b from-yellow-50/50 to-transparent"
+                  />
+                )}
+                
+                <span className="relative z-10 flex items-center justify-center space-x-2">
+                  <span>{tab.label}</span>
+                  <span className={`inline-flex items-center justify-center px-2.5 py-0.5 rounded-full text-sm font-bold ${
                     activeTab === tab.id
-                      ? 'border-yellow-400 text-yellow-600'
-                      : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
-                  }`}
-                >
-                  {tab.label} ({tab.count})
-                </button>
-              ))}
-            </nav>
-          </div>
+                      ? 'bg-yellow-400 text-black'
+                      : 'bg-gray-200 text-gray-600'
+                  }`}>
+                    {tab.count}
+                  </span>
+                </span>
+              </motion.button>
+            ))}
+          </nav>
         </motion.div>
 
         {/* Tab Content */}
