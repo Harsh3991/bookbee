@@ -174,97 +174,149 @@ const Read = () => {
     <div className="min-h-screen bg-gray-50">
       {/* Header */}
       <div className="bg-white shadow-sm border-b sticky top-0 z-10">
-        <div className="max-w-7xl mx-auto px-4 py-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-4">
+        <div className="max-w-7xl mx-auto px-3 sm:px-4 md:px-6 py-3 sm:py-4">
+          {/* Mobile: Stack vertically; Tablet+: Side by side */}
+          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3 md:gap-4">
+            <div className="flex items-center gap-2 sm:gap-3 md:gap-4">
               <button
                 onClick={() => navigate('/')}
-                className="text-gray-600 hover:text-gray-900"
+                className="text-gray-600 hover:text-gray-900 text-xs sm:text-sm md:text-base whitespace-nowrap shrink-0"
+                aria-label="Back to Home"
               >
-                ← Back to Home
+                ← <span className="hidden sm:inline">Back to Home</span>
+                <span className="sm:hidden">Back</span>
               </button>
-              <div>
-                <h1 className="text-xl font-bold text-gray-900">{story.title}</h1>
-                <p className="text-sm text-gray-600">by {story.author?.name || 'Unknown Author'}</p>
+              <div className="min-w-0 flex-1">
+                <h1 className="text-sm sm:text-base md:text-xl lg:text-2xl font-bold text-gray-900 truncate">{story.title}</h1>
+                <p className="text-xs sm:text-sm text-gray-600 truncate">by {story.author?.name || 'Unknown Author'}</p>
               </div>
             </div>
 
-            <div className="flex items-center space-x-4">
-              <div className="text-sm text-gray-600">
-                Chapter {currentChapter.chapterNumber} of {chapters.length}
+            {/* Progress Section - Horizontal on mobile, enhanced on larger screens */}
+            <div className="flex items-center gap-2 sm:gap-3 md:gap-4 shrink-0">
+              <div className="text-xs sm:text-sm text-gray-600 whitespace-nowrap">
+                Ch {currentChapter.chapterNumber}/{chapters.length}
               </div>
-              <div className="w-32 bg-gray-200 rounded-full h-2">
+              <div className="w-20 sm:w-24 md:w-32 lg:w-40 bg-gray-200 rounded-full h-1.5 sm:h-2 shrink-0">
                 <div
-                  className="bg-yellow-400 h-2 rounded-full transition-all duration-300"
+                  className="bg-yellow-400 h-1.5 sm:h-2 rounded-full transition-all duration-300"
                   style={{ width: `${progress}%` }}
+                  role="progressbar"
+                  aria-valuenow={progress}
+                  aria-valuemin="0"
+                  aria-valuemax="100"
                 ></div>
               </div>
-              <span className="text-sm text-gray-600">{progress}%</span>
+              <span className="text-xs sm:text-sm text-gray-600 w-8 sm:w-10 text-right">{progress}%</span>
             </div>
           </div>
 
           {/* Chapter Navigation */}
-          <div className="mt-4 flex items-center justify-between">
-            <button
-              onClick={goToPreviousChapter}
-              disabled={chapters.findIndex(ch => ch._id === currentChapter._id) === 0}
-              className="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 disabled:opacity-50 disabled:cursor-not-allowed"
-            >
-              ← Previous
-            </button>
+          <div className="mt-3 sm:mt-4">
+            {/* Mobile: Stack buttons, hide chapter list; Tablet+: Show all */}
+            <div className="flex items-center justify-between gap-2 mb-3 md:hidden">
+              <button
+                onClick={goToPreviousChapter}
+                disabled={chapters.findIndex(ch => ch._id === currentChapter._id) === 0}
+                className="px-3 py-2 text-xs sm:text-sm bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 disabled:opacity-50 disabled:cursor-not-allowed min-h-11 touch-manipulation"
+                aria-label="Previous Chapter"
+              >
+                ← Prev
+              </button>
 
-            <div className="flex space-x-2 overflow-x-auto">
-              {chapters.map((chapter) => (
-                <button
-                  key={chapter._id}
-                  onClick={() => goToChapter(chapter)}
-                  className={`px-3 py-2 rounded-lg text-sm whitespace-nowrap ${
-                    chapter._id === currentChapter._id
-                      ? 'bg-yellow-400 text-black'
-                      : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
-                  }`}
-                >
-                  {chapter.chapterNumber}. {chapter.title || 'Untitled'}
-                </button>
-              ))}
+              {/* Mobile dropdown for chapter selection */}
+              <select
+                value={currentChapter._id}
+                onChange={(e) => {
+                  const chapter = chapters.find(ch => ch._id === e.target.value);
+                  if (chapter) goToChapter(chapter);
+                }}
+                className="flex-1 px-2 py-2 text-xs sm:text-sm bg-gray-100 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-400 focus:border-transparent min-h-11"
+              >
+                {chapters.map((chapter) => (
+                  <option key={chapter._id} value={chapter._id}>
+                    Ch {chapter.chapterNumber}: {chapter.title || 'Untitled'}
+                  </option>
+                ))}
+              </select>
+
+              <button
+                onClick={goToNextChapter}
+                disabled={chapters.findIndex(ch => ch._id === currentChapter._id) === chapters.length - 1}
+                className="px-3 py-2 text-xs sm:text-sm bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 disabled:opacity-50 disabled:cursor-not-allowed min-h-11 touch-manipulation"
+                aria-label="Next Chapter"
+              >
+                Next →
+              </button>
             </div>
 
-            <button
-              onClick={goToNextChapter}
-              disabled={chapters.findIndex(ch => ch._id === currentChapter._id) === chapters.length - 1}
-              className="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 disabled:opacity-50 disabled:cursor-not-allowed"
-            >
-              Next →
-            </button>
+            {/* Tablet+ Layout */}
+            <div className="hidden md:flex items-center justify-between gap-3 lg:gap-4">
+              <button
+                onClick={goToPreviousChapter}
+                disabled={chapters.findIndex(ch => ch._id === currentChapter._id) === 0}
+                className="px-4 py-2 text-sm lg:text-base bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 disabled:opacity-50 disabled:cursor-not-allowed whitespace-nowrap"
+                aria-label="Previous Chapter"
+              >
+                ← Previous
+              </button>
+
+              <div className="flex gap-2 overflow-x-auto scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100 pb-2 flex-1">
+                {chapters.map((chapter) => (
+                  <button
+                    key={chapter._id}
+                    onClick={() => goToChapter(chapter)}
+                    className={`px-2 lg:px-3 py-2 rounded-lg text-xs lg:text-sm whitespace-nowrap shrink-0 transition-colors ${
+                      chapter._id === currentChapter._id
+                        ? 'bg-yellow-400 text-black font-semibold'
+                        : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+                    }`}
+                    aria-label={`Go to chapter ${chapter.chapterNumber}`}
+                    aria-current={chapter._id === currentChapter._id ? 'page' : undefined}
+                  >
+                    {chapter.chapterNumber}. {chapter.title || 'Untitled'}
+                  </button>
+                ))}
+              </div>
+
+              <button
+                onClick={goToNextChapter}
+                disabled={chapters.findIndex(ch => ch._id === currentChapter._id) === chapters.length - 1}
+                className="px-4 py-2 text-sm lg:text-base bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 disabled:opacity-50 disabled:cursor-not-allowed whitespace-nowrap"
+                aria-label="Next Chapter"
+              >
+                Next →
+              </button>
+            </div>
           </div>
         </div>
       </div>
 
       {/* Chapter Content */}
-      <div className="max-w-4xl mx-auto px-4 py-8">
+      <div className="max-w-4xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8 py-4 sm:py-6 md:py-8">
         <motion.div
           key={currentChapter._id}
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
         >
-          <div className="bg-white rounded-lg shadow-sm p-8">
-            <h2 className="text-2xl font-bold text-gray-900 mb-6">
+          <div className="bg-white rounded-lg shadow-sm p-4 sm:p-6 md:p-8">
+            <h2 className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-bold text-gray-900 mb-4 sm:mb-6">
               Chapter {currentChapter.chapterNumber}: {currentChapter.title}
             </h2>
 
             <div
               id="chapter-content"
               onScroll={handleScroll}
-              className="prose prose-lg max-w-none leading-relaxed text-gray-800"
+              className="prose prose-sm sm:prose-base md:prose-lg lg:prose-xl max-w-none leading-relaxed text-gray-800 [&>p]:wrap-break-word"
               style={{
-                maxHeight: '70vh',
+                maxHeight: window.innerWidth < 640 ? '55vh' : window.innerWidth < 1024 ? '65vh' : '70vh',
                 overflowY: 'auto',
-                paddingRight: '1rem'
+                paddingRight: '0.5rem'
               }}
             >
               {currentChapter.content.split('\n').map((paragraph, index) => (
-                <p key={index} className="mb-4">
+                <p key={index} className="mb-3 sm:mb-4 text-sm sm:text-base md:text-lg">
                   {paragraph}
                 </p>
               ))}
@@ -272,11 +324,12 @@ const Read = () => {
           </div>
 
           {/* Chapter Navigation Footer */}
-          <div className="mt-8 flex justify-between">
+          <div className="mt-4 sm:mt-6 md:mt-8 flex flex-col sm:flex-row gap-3 sm:gap-4 justify-between">
             <button
               onClick={goToPreviousChapter}
               disabled={chapters.findIndex(ch => ch._id === currentChapter._id) === 0}
-              className="px-6 py-3 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 disabled:opacity-50 disabled:cursor-not-allowed"
+              className="w-full sm:w-auto px-4 sm:px-6 py-3 text-sm sm:text-base bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 disabled:opacity-50 disabled:cursor-not-allowed min-h-11 sm:min-h-12 touch-manipulation transition-colors"
+              aria-label="Previous Chapter"
             >
               ← Previous Chapter
             </button>
@@ -284,7 +337,8 @@ const Read = () => {
             <button
               onClick={goToNextChapter}
               disabled={chapters.findIndex(ch => ch._id === currentChapter._id) === chapters.length - 1}
-              className="px-6 py-3 bg-yellow-400 text-black rounded-lg hover:bg-yellow-500 disabled:opacity-50 disabled:cursor-not-allowed"
+              className="w-full sm:w-auto px-4 sm:px-6 py-3 text-sm sm:text-base bg-yellow-400 text-black rounded-lg hover:bg-yellow-500 disabled:opacity-50 disabled:cursor-not-allowed font-semibold min-h-11 sm:min-h-12 touch-manipulation transition-colors"
+              aria-label="Next Chapter"
             >
               Next Chapter →
             </button>
