@@ -184,58 +184,59 @@ const StoryEditor = () => {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <div className="max-w-6xl mx-auto px-4 py-8">
+      <div className="max-w-7xl 2xl:max-w-screen-2xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8 py-4 sm:py-6 md:py-8">
         {/* Header Section */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="bg-white rounded-xl shadow-lg p-6 mb-8"
+          className="bg-white rounded-xl shadow-lg p-4 sm:p-5 md:p-6 mb-6 sm:mb-8"
         >
-          <div className="flex flex-col md:flex-row gap-6">
+          <div className="flex flex-col lg:flex-row gap-4 sm:gap-5 md:gap-6">
             {/* Cover Image */}
-            <div className="shrink-0">
+            <div className="shrink-0 mx-auto lg:mx-0">
               <img
                 src={story.coverImage || 'https://picsum.photos/300/400?random=1'}
                 alt={story.title}
-                className="w-48 h-64 object-cover rounded-lg shadow-md"
+                className="w-36 h-48 sm:w-44 sm:h-56 md:w-48 md:h-64 lg:w-52 lg:h-72 object-cover rounded-lg shadow-md"
               />
             </div>
 
             {/* Story Details */}
-            <div className="flex-1">
+            <div className="flex-1 min-w-0">
               {!isEditing ? (
                 <>
-                  <div className="flex justify-between items-start mb-4">
-                    <div>
-                      <h1 className="text-3xl font-bold text-gray-900 mb-2">{story.title}</h1>
-                      <p className="text-gray-600 mb-2">by {story.author?.name || 'Unknown Author'}</p>
-                      <p className="text-sm text-gray-500">
-                        Created: {new Date(story.createdAt).toLocaleDateString()} |
-                        Status: <span className="capitalize font-medium">{story.status}</span>
+                  <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-3 sm:gap-4 mb-4">
+                    <div className="min-w-0 flex-1">
+                      <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-gray-900 mb-2 wrap-break-word">{story.title}</h1>
+                      <p className="text-sm sm:text-base text-gray-600 mb-2">by {story.author?.name || 'Unknown Author'}</p>
+                      <p className="text-xs sm:text-sm text-gray-500 flex flex-wrap gap-x-2 gap-y-1">
+                        <span>Created: {new Date(story.createdAt).toLocaleDateString()}</span>
+                        <span className="hidden sm:inline">|</span>
+                        <span>Status: <span className="capitalize font-medium">{story.status}</span></span>
                       </p>
                     </div>
                     <button
                       onClick={handleEditToggle}
-                      className="bg-yellow-400 hover:bg-yellow-500 text-black px-4 py-2 rounded-lg font-semibold transition-colors"
+                      className="w-full sm:w-auto bg-yellow-400 hover:bg-yellow-500 text-black px-4 py-2 rounded-lg font-semibold transition-colors text-sm sm:text-base min-h-11 touch-manipulation shrink-0"
                     >
                       Edit Story Details
                     </button>
                   </div>
 
-                  <p className="text-gray-700 mb-4">{story.description}</p>
+                  <p className="text-sm sm:text-base text-gray-700 mb-4 leading-relaxed wrap-break-word">{story.description}</p>
 
-                  <div className="flex flex-wrap gap-4 text-sm">
-                    <div>
+                  <div className="flex flex-col sm:flex-row sm:flex-wrap gap-2 sm:gap-4 text-xs sm:text-sm">
+                    <div className="wrap-break-word">
                       <span className="font-medium">Genres:</span>{' '}
                       {story.genres?.length > 0 ? story.genres.join(', ') : 'None'}
                     </div>
-                    <div>
+                    <div className="wrap-break-word">
                       <span className="font-medium">Tags:</span>{' '}
                       {story.tags?.length > 0 ? story.tags.join(', ') : 'None'}
                     </div>
                   </div>
 
-                  <div className="flex gap-6 mt-4 text-sm text-gray-600">
+                  <div className="flex flex-wrap gap-3 sm:gap-4 md:gap-6 mt-4 text-xs sm:text-sm text-gray-600">
                     <span>Views: {story.views || 0}</span>
                     <span>Likes: {story.likes || 0}</span>
                     <span>Rating: {story.rating || 0} ★</span>
@@ -245,35 +246,35 @@ const StoryEditor = () => {
               ) : (
                 <>
                   <div className="mb-4">
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Title</label>
+                    <label className="block text-xs sm:text-sm font-medium text-gray-700 mb-1">Title</label>
                     <input
                       type="text"
                       value={editForm.title}
                       onChange={(e) => handleEditFormChange('title', e.target.value)}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-400 focus:border-transparent"
+                      className="w-full px-3 py-2 text-sm sm:text-base border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-400 focus:border-transparent min-h-11"
                     />
                   </div>
 
                   <div className="mb-4">
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Description</label>
+                    <label className="block text-xs sm:text-sm font-medium text-gray-700 mb-1">Description</label>
                     <textarea
                       value={editForm.description}
                       onChange={(e) => handleEditFormChange('description', e.target.value)}
                       rows={4}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-400 focus:border-transparent"
+                      className="w-full px-3 py-2 text-sm sm:text-base border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-400 focus:border-transparent resize-y"
                     />
                   </div>
 
                   <div className="mb-4">
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Genres</label>
+                    <label className="block text-xs sm:text-sm font-medium text-gray-700 mb-2">Genres</label>
                     <div className="flex flex-wrap gap-2">
                       {availableGenres.map(genre => (
                         <button
                           key={genre}
                           onClick={() => handleGenreToggle(genre)}
-                          className={`px-3 py-1 rounded-full text-sm ${
+                          className={`px-2 sm:px-3 py-1.5 sm:py-2 rounded-full text-xs sm:text-sm min-h-9 touch-manipulation transition-colors ${
                             editForm.genres.includes(genre)
-                              ? 'bg-yellow-400 text-black'
+                              ? 'bg-yellow-400 text-black font-semibold'
                               : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
                           }`}
                         >
@@ -284,14 +285,15 @@ const StoryEditor = () => {
                   </div>
 
                   <div className="mb-4">
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Tags</label>
+                    <label className="block text-xs sm:text-sm font-medium text-gray-700 mb-2">Tags</label>
                     <div className="flex flex-wrap gap-2 mb-2">
                       {editForm.tags.map(tag => (
-                        <span key={tag} className="bg-gray-200 px-2 py-1 rounded-full text-sm flex items-center gap-1">
+                        <span key={tag} className="bg-gray-200 px-2 sm:px-3 py-1 sm:py-1.5 rounded-full text-xs sm:text-sm flex items-center gap-1">
                           {tag}
                           <button
                             onClick={() => handleTagRemove(tag)}
-                            className="text-gray-500 hover:text-red-500"
+                            className="text-gray-500 hover:text-red-500 text-base sm:text-lg min-h-5 min-w-5 touch-manipulation"
+                            aria-label={`Remove tag ${tag}`}
                           >
                             ×
                           </button>
@@ -307,16 +309,16 @@ const StoryEditor = () => {
                           e.target.value = '';
                         }
                       }}
-                      className="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-400 focus:border-transparent"
+                      className="w-full px-3 py-2 text-sm sm:text-base border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-400 focus:border-transparent min-h-11"
                     />
                   </div>
 
                   <div className="mb-4">
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Status</label>
+                    <label className="block text-xs sm:text-sm font-medium text-gray-700 mb-1">Status</label>
                     <select
                       value={editForm.status}
                       onChange={(e) => handleEditFormChange('status', e.target.value)}
-                      className="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-400 focus:border-transparent"
+                      className="w-full px-3 py-2 text-sm sm:text-base border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-400 focus:border-transparent min-h-11"
                     >
                       <option value="ongoing">Ongoing</option>
                       <option value="completed">Completed</option>
@@ -324,20 +326,20 @@ const StoryEditor = () => {
                     </select>
                   </div>
 
-                  {saveError && <div className="text-red-600 mb-4">{saveError}</div>}
-                  {saveSuccess && <div className="text-green-600 mb-4">Story updated successfully!</div>}
+                  {saveError && <div className="text-red-600 mb-4 text-xs sm:text-sm">{saveError}</div>}
+                  {saveSuccess && <div className="text-green-600 mb-4 text-xs sm:text-sm">Story updated successfully!</div>}
 
-                  <div className="flex gap-2">
+                  <div className="flex flex-col sm:flex-row gap-2 sm:gap-3">
                     <button
                       onClick={handleSave}
                       disabled={saving}
-                      className="bg-yellow-400 hover:bg-yellow-500 disabled:bg-yellow-300 text-black px-4 py-2 rounded-lg font-semibold transition-colors"
+                      className="w-full sm:w-auto bg-yellow-400 hover:bg-yellow-500 disabled:bg-yellow-300 text-black px-4 py-2 rounded-lg font-semibold transition-colors text-sm sm:text-base min-h-11 touch-manipulation"
                     >
                       {saving ? 'Saving...' : 'Save'}
                     </button>
                     <button
                       onClick={handleCancel}
-                      className="bg-gray-200 hover:bg-gray-300 text-gray-700 px-4 py-2 rounded-lg font-semibold transition-colors"
+                      className="w-full sm:w-auto bg-gray-200 hover:bg-gray-300 text-gray-700 px-4 py-2 rounded-lg font-semibold transition-colors text-sm sm:text-base min-h-11 touch-manipulation"
                     >
                       Cancel
                     </button>
@@ -353,67 +355,72 @@ const StoryEditor = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}
-          className="bg-white rounded-xl shadow-lg p-6"
+          className="bg-white rounded-xl shadow-lg p-4 sm:p-5 md:p-6"
         >
-          <div className="flex justify-between items-center mb-6">
-            <div className="flex items-center gap-3">
-              <h2 className="text-2xl font-bold text-gray-900">Chapters ({chapters.length})</h2>
+          <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3 sm:gap-4 mb-4 sm:mb-6">
+            <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3">
+              <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900">
+                Chapters ({chapters.length})
+              </h2>
               {refreshing && (
-                <div className="flex items-center gap-2 text-sm text-gray-500">
-                  <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-yellow-400"></div>
+                <div className="flex items-center gap-2 text-xs sm:text-sm text-gray-500">
+                  <div className="animate-spin rounded-full h-3 w-3 sm:h-4 sm:w-4 border-b-2 border-yellow-400"></div>
                   Refreshing...
                 </div>
               )}
               <button
                 onClick={() => loadStoryData(true)}
                 disabled={refreshing}
-                className="text-sm text-gray-500 hover:text-gray-700 disabled:opacity-50 flex items-center gap-1"
+                className="text-xs sm:text-sm text-gray-500 hover:text-gray-700 disabled:opacity-50 flex items-center gap-1 touch-manipulation"
                 title="Refresh chapters"
+                aria-label="Refresh chapters"
               >
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg className="w-3.5 h-3.5 sm:w-4 sm:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
                 </svg>
-                Refresh
+                <span className="hidden sm:inline">Refresh</span>
               </button>
             </div>
             <button
               onClick={() => navigate(`/add-chapter/${storyId}`)}
-              className="bg-yellow-400 hover:bg-yellow-500 text-black px-6 py-2 rounded-lg font-semibold transition-colors"
+              className="w-full sm:w-auto bg-yellow-400 hover:bg-yellow-500 text-black px-4 sm:px-6 py-2.5 sm:py-3 rounded-lg font-semibold transition-colors text-sm sm:text-base min-h-11 touch-manipulation"
             >
-              Add New Chapter
+              <span className="hidden sm:inline">Add New Chapter</span>
+              <span className="sm:hidden">+ Add Chapter</span>
             </button>
           </div>
 
           {chapters.length > 0 ? (
-            <div className="space-y-4">
+            <div className="space-y-3 sm:space-y-4">
               {chapters.map((chapter) => (
                 <motion.div
                   key={chapter._id}
                   initial={{ opacity: 0, x: -20 }}
                   animate={{ opacity: 1, x: 0 }}
-                  className="flex items-center justify-between p-4 border border-gray-200 rounded-lg hover:bg-gray-50"
+                  className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-4 p-3 sm:p-4 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors"
                 >
-                  <div className="flex-1">
-                    <div className="flex items-center gap-4">
-                      <span className="text-lg font-semibold text-gray-900">
+                  <div className="flex-1 min-w-0">
+                    <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4">
+                      <span className="text-base sm:text-lg font-semibold text-gray-900 shrink-0">
                         Chapter {chapter.chapterNumber}
                       </span>
-                      <span className="text-gray-700">{chapter.title}</span>
-                      <span className={`px-2 py-1 rounded-full text-xs ${
+                      <span className="text-sm sm:text-base text-gray-700 truncate">{chapter.title}</span>
+                      <span className={`px-2 py-0.5 sm:py-1 rounded-full text-xs shrink-0 w-fit ${
                         chapter.published ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800'
                       }`}>
                         {chapter.published ? 'Published' : 'Draft'}
                       </span>
                     </div>
-                    <div className="text-sm text-gray-500 mt-1">
-                      Created: {new Date(chapter.createdAt).toLocaleDateString()} |
-                      Views: {chapter.views || 0}
+                    <div className="text-xs sm:text-sm text-gray-500 mt-1 sm:mt-2 flex flex-wrap gap-x-2 gap-y-1">
+                      <span>Created: {new Date(chapter.createdAt).toLocaleDateString()}</span>
+                      <span className="hidden sm:inline">|</span>
+                      <span>Views: {chapter.views || 0}</span>
                     </div>
                   </div>
-                  <div className="flex gap-2">
+                  <div className="flex gap-2 sm:gap-3 shrink-0">
                     <button
                       onClick={() => navigate(`/read/${storyId}/${chapter._id}`)}
-                      className="px-3 py-1 bg-blue-100 hover:bg-blue-200 text-blue-700 rounded text-sm"
+                      className="flex-1 sm:flex-none px-3 py-1.5 sm:py-2 bg-blue-100 hover:bg-blue-200 text-blue-700 rounded text-xs sm:text-sm min-h-9 sm:min-h-10 touch-manipulation transition-colors"
                     >
                       View
                     </button>
@@ -425,13 +432,13 @@ const StoryEditor = () => {
                         }
                         navigate(`/edit-chapter/${storyId}/${chapter._id}`);
                       }}
-                      className="px-3 py-1 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded text-sm"
+                      className="flex-1 sm:flex-none px-3 py-1.5 sm:py-2 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded text-xs sm:text-sm min-h-9 sm:min-h-10 touch-manipulation transition-colors"
                     >
                       Edit
                     </button>
                     <button
                       onClick={() => handleDeleteChapter(chapter._id)}
-                      className="px-3 py-1 bg-red-100 hover:bg-red-200 text-red-700 rounded text-sm"
+                      className="flex-1 sm:flex-none px-3 py-1.5 sm:py-2 bg-red-100 hover:bg-red-200 text-red-700 rounded text-xs sm:text-sm min-h-9 sm:min-h-10 touch-manipulation transition-colors"
                     >
                       Delete
                     </button>
@@ -440,17 +447,17 @@ const StoryEditor = () => {
               ))}
             </div>
           ) : (
-            <div className="text-center py-12">
+            <div className="text-center py-8 sm:py-12">
               <div className="text-gray-400 mb-4">
-                <svg className="w-16 h-16 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg className="w-12 h-12 sm:w-16 sm:h-16 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                 </svg>
               </div>
-              <h3 className="text-lg font-medium text-gray-900 mb-2">No chapters yet</h3>
-              <p className="text-gray-600 mb-4">Start building your story by adding your first chapter.</p>
+              <h3 className="text-base sm:text-lg font-medium text-gray-900 mb-2">No chapters yet</h3>
+              <p className="text-sm sm:text-base text-gray-600 mb-4">Start building your story by adding your first chapter.</p>
               <button
                 onClick={() => navigate(`/add-chapter/${storyId}`)}
-                className="bg-yellow-400 hover:bg-yellow-500 text-black px-6 py-2 rounded-lg font-semibold transition-colors"
+                className="w-full sm:w-auto bg-yellow-400 hover:bg-yellow-500 text-black px-4 sm:px-6 py-2.5 sm:py-3 rounded-lg font-semibold transition-colors text-sm sm:text-base min-h-11 touch-manipulation"
               >
                 Add First Chapter
               </button>
