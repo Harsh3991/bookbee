@@ -198,3 +198,52 @@ body {
   transform: translateY(-4px) scale(1.02);
   box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.15);
 }
+
+/* Hide scrollbar utility class */
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+/* Touch-friendly tap targets */
+.touch-manipulation {
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Responsive container padding */
+@media (max-width: 320px) {
+  .container {
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
+  }
+}
+
+/* Optimize font sizes for very small screens */
+@media (max-width: 375px) {
+  body {
+    font-size: 14px;
+  }
+}
+
+/* Better button touch targets on mobile */
+@media (max-width: 768px) {
+  button, a {
+    min-height: 44px;
+    min-width: 44px;
+  }
+}
+
+/* Prevent horizontal overflow */
+body {
+  overflow-x: hidden;
+}
+
+/* Improve text wrapping */
+.wrap-balance {
+  text-wrap: balance;
+}
