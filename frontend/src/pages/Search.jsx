@@ -102,19 +102,19 @@ const Search = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 pt-8">
-      <div className="max-w-7xl mx-auto px-4">
+    <div className="min-h-screen bg-linear-to-br from-gray-50 via-yellow-50/30 to-gray-50 pt-6 sm:pt-8 md:pt-12 pb-8">
+      <div className="max-w-7xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8">
         {/* Search Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="text-center mb-8"
+          className="text-center mb-6 sm:mb-8 md:mb-10"
         >
-          <h1 className="text-4xl font-bold text-gray-900 mb-4">
-            Search Stories
+          <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-2 sm:mb-3 md:mb-4 px-2 leading-tight">
+            🔍 Search Stories
           </h1>
-          <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+          <p className="text-base sm:text-lg md:text-xl text-gray-600 max-w-2xl mx-auto px-4">
             Find your next favorite story from our collection
           </p>
         </motion.div>
@@ -124,12 +124,14 @@ const Search = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.2 }}
-          className="bg-white rounded-lg shadow-md p-6 mb-8"
+          className="bg-white/90 backdrop-blur-md rounded-xl sm:rounded-2xl lg:rounded-3xl shadow-lg sm:shadow-xl border border-gray-100 p-4 sm:p-5 md:p-6 lg:p-8 mb-6 sm:mb-8"
         >
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-4">
+          {/* Filters Grid - Stacks vertically on mobile, expands horizontally on larger screens */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 lg:gap-5 mb-4 sm:mb-5">
             {/* Search Query */}
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+            <div className="sm:col-span-2 lg:col-span-1">
+              <label className="flex items-center text-xs sm:text-sm font-semibold text-gray-700 mb-1.5 sm:mb-2">
+                <span className="mr-1.5">🔎</span>
                 Search Query
               </label>
               <input
@@ -138,19 +140,27 @@ const Search = () => {
                 onChange={(e) => setQuery(e.target.value)}
                 onKeyPress={handleKeyPress}
                 placeholder="Title, description, or tags..."
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-transparent"
+                className="w-full px-3 sm:px-4 py-2.5 sm:py-3 text-sm sm:text-base border-2 border-gray-200 rounded-lg sm:rounded-xl focus:outline-none focus:ring-4 focus:ring-yellow-100 focus:border-yellow-400 transition-all duration-300 placeholder-gray-400 touch-manipulation"
+                aria-label="Search query input"
               />
             </div>
 
             {/* Genre Filter */}
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="flex items-center text-xs sm:text-sm font-semibold text-gray-700 mb-1.5 sm:mb-2">
+                <span className="mr-1.5">🎭</span>
                 Genre
               </label>
               <select
                 value={genre}
                 onChange={(e) => setGenre(e.target.value)}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-transparent"
+                className="w-full px-3 sm:px-4 py-2.5 sm:py-3 text-sm sm:text-base border-2 border-gray-200 rounded-lg sm:rounded-xl focus:outline-none focus:ring-4 focus:ring-yellow-100 focus:border-yellow-400 transition-all duration-300 bg-white cursor-pointer touch-manipulation appearance-none bg-no-repeat bg-right pr-8"
+                style={{
+                  backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3E%3Cpath stroke='%236B7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3E%3C/svg%3E")`,
+                  backgroundPosition: 'right 0.5rem center',
+                  backgroundSize: '1.5em 1.5em'
+                }}
+                aria-label="Genre filter"
               >
                 <option value="">All Genres</option>
                 {availableGenres.map((g) => (
@@ -161,13 +171,20 @@ const Search = () => {
 
             {/* Status Filter */}
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="flex items-center text-xs sm:text-sm font-semibold text-gray-700 mb-1.5 sm:mb-2">
+                <span className="mr-1.5">📊</span>
                 Status
               </label>
               <select
                 value={status}
                 onChange={(e) => setStatus(e.target.value)}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-transparent"
+                className="w-full px-3 sm:px-4 py-2.5 sm:py-3 text-sm sm:text-base border-2 border-gray-200 rounded-lg sm:rounded-xl focus:outline-none focus:ring-4 focus:ring-yellow-100 focus:border-yellow-400 transition-all duration-300 bg-white cursor-pointer touch-manipulation appearance-none bg-no-repeat bg-right pr-8"
+                style={{
+                  backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3E%3Cpath stroke='%236B7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3E%3C/svg%3E")`,
+                  backgroundPosition: 'right 0.5rem center',
+                  backgroundSize: '1.5em 1.5em'
+                }}
+                aria-label="Status filter"
               >
                 <option value="">All Statuses</option>
                 {availableStatuses.map((s) => (
@@ -178,7 +195,8 @@ const Search = () => {
 
             {/* Author Filter */}
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="flex items-center text-xs sm:text-sm font-semibold text-gray-700 mb-1.5 sm:mb-2">
+                <span className="mr-1.5">✍️</span>
                 Author
               </label>
               <input
@@ -186,55 +204,77 @@ const Search = () => {
                 value={author}
                 onChange={(e) => setAuthor(e.target.value)}
                 placeholder="Author name..."
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-transparent"
+                className="w-full px-3 sm:px-4 py-2.5 sm:py-3 text-sm sm:text-base border-2 border-gray-200 rounded-lg sm:rounded-xl focus:outline-none focus:ring-4 focus:ring-yellow-100 focus:border-yellow-400 transition-all duration-300 placeholder-gray-400 touch-manipulation"
+                aria-label="Author filter input"
               />
             </div>
           </div>
 
-          {/* Action Buttons */}
-          <div className="flex flex-col sm:flex-row gap-3">
-            <button
+          {/* Action Buttons - Stack on mobile, side-by-side on larger screens */}
+          <div className="flex flex-col sm:flex-row gap-2.5 sm:gap-3">
+            <motion.button
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
               onClick={() => handleSearch()}
               disabled={loading}
-              className="bg-yellow-400 hover:bg-yellow-500 disabled:bg-yellow-300 text-black px-6 py-2 rounded-lg font-medium transition-colors flex items-center justify-center"
+              className="bg-linear-to-r from-yellow-400 to-yellow-500 hover:from-yellow-500 hover:to-yellow-600 disabled:from-yellow-300 disabled:to-yellow-300 text-black px-6 sm:px-8 py-3 sm:py-3.5 rounded-xl sm:rounded-2xl font-bold text-sm sm:text-base transition-all duration-300 flex items-center justify-center shadow-lg shadow-yellow-500/30 disabled:shadow-none disabled:cursor-not-allowed touch-manipulation min-h-11"
+              aria-label="Search stories"
             >
               {loading ? (
                 <>
-                  <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-black mr-2"></div>
-                  Searching...
+                  <div className="animate-spin rounded-full h-4 w-4 sm:h-5 sm:w-5 border-2 border-black border-t-transparent mr-2"></div>
+                  <span>Searching...</span>
                 </>
               ) : (
-                'Search'
+                <>
+                  <span className="mr-2">🔍</span>
+                  <span>Search Stories</span>
+                </>
               )}
-            </button>
-            <button
+            </motion.button>
+            <motion.button
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
               onClick={handleClearFilters}
-              className="bg-gray-200 hover:bg-gray-300 text-gray-700 px-6 py-2 rounded-lg font-medium transition-colors"
+              className="bg-gray-100 hover:bg-gray-200 text-gray-700 px-6 sm:px-8 py-3 sm:py-3.5 rounded-xl sm:rounded-2xl font-semibold text-sm sm:text-base transition-all duration-300 border-2 border-gray-200 hover:border-gray-300 touch-manipulation min-h-11 flex items-center justify-center"
+              aria-label="Clear all filters"
             >
-              Clear Filters
-            </button>
+              <span className="mr-2">🔄</span>
+              <span>Clear Filters</span>
+            </motion.button>
           </div>
         </motion.div>
 
         {/* Error Message */}
         {error && (
           <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg mb-6"
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="bg-red-50 border-2 border-red-200 text-red-700 px-4 sm:px-5 py-3 sm:py-4 rounded-xl mb-6 sm:mb-8 flex items-start space-x-2 shadow-sm"
+            role="alert"
           >
-            {error}
+            <span className="text-lg sm:text-xl shrink-0">⚠️</span>
+            <p className="text-sm sm:text-base flex-1">{error}</p>
           </motion.div>
         )}
 
         {/* Loading State */}
         {loading && (
-          <div className="flex items-center justify-center py-12">
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            className="flex items-center justify-center py-12 sm:py-16 md:py-20"
+          >
             <div className="text-center">
-              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-yellow-400 mx-auto"></div>
-              <p className="mt-4 text-gray-600">Searching stories...</p>
+              <div className="relative mx-auto w-16 h-16 sm:w-20 sm:h-20">
+                <div className="animate-spin rounded-full h-full w-full border-4 sm:border-[5px] border-yellow-200 border-t-yellow-400"></div>
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <span className="text-2xl sm:text-3xl">✨</span>
+                </div>
+              </div>
+              <p className="mt-4 sm:mt-6 text-gray-600 text-sm sm:text-base font-medium">Searching stories...</p>
             </div>
-          </div>
+          </motion.div>
         )}
 
         {/* Results */}
@@ -244,48 +284,68 @@ const Search = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.4 }}
-              className="mb-6"
+              className="mb-6 sm:mb-8"
             >
-              <h2 className="text-2xl font-bold text-gray-900">
-                {hasSearched ? 'Search Results' : 'Popular Stories'}
+              <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 mb-2 flex items-center">
+                <span className="mr-2 text-2xl sm:text-3xl">
+                  {hasSearched ? '🎯' : '🔥'}
+                </span>
+                <span>{hasSearched ? 'Search Results' : 'Popular Stories'}</span>
               </h2>
-              <p className="text-gray-600">
-                {hasSearched ? `Found ${stories.length} stories` : 'Discover trending stories'}
+              <p className="text-sm sm:text-base text-gray-600">
+                {hasSearched ? `Found ${stories.length} ${stories.length === 1 ? 'story' : 'stories'}` : 'Discover trending stories'}
               </p>
             </motion.div>
 
+            {/* Story Cards Grid - Optimized for all screen sizes */}
             <motion.div
               variants={containerVariants}
               initial="hidden"
               animate="visible"
-              className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 gap-6 mb-8"
+              className="grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-3 sm:gap-4 md:gap-5 lg:gap-6 mb-8 sm:mb-10 md:mb-12"
             >
               {stories.map((story) => (
                 <StoryCard key={story._id} story={story} />
               ))}
             </motion.div>
 
-            {/* Pagination */}
+            {/* Enhanced Pagination */}
             {totalPages > 1 && (
-              <div className="flex justify-center items-center space-x-2">
-                <button
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="flex flex-col sm:flex-row justify-center items-center gap-3 sm:gap-4 pb-4"
+              >
+                <motion.button
+                  whileHover={{ scale: 1.05, x: -3 }}
+                  whileTap={{ scale: 0.95 }}
                   onClick={() => handleSearch(currentPage - 1)}
                   disabled={currentPage === 1 || loading}
-                  className="px-4 py-2 bg-gray-200 hover:bg-gray-300 disabled:bg-gray-100 disabled:cursor-not-allowed rounded-lg transition-colors"
+                  className="w-full sm:w-auto px-6 sm:px-8 py-3 bg-white border-2 border-gray-300 hover:border-yellow-400 hover:bg-yellow-50 disabled:bg-gray-100 disabled:border-gray-200 disabled:cursor-not-allowed rounded-xl transition-all duration-300 font-semibold text-sm sm:text-base text-gray-700 disabled:text-gray-400 shadow-md hover:shadow-lg disabled:shadow-none min-h-11 flex items-center justify-center touch-manipulation"
+                  aria-label="Previous page"
                 >
-                  Previous
-                </button>
-                <span className="text-gray-600">
-                  Page {currentPage} of {totalPages}
-                </span>
-                <button
+                  <span className="mr-2">←</span>
+                  <span>Previous</span>
+                </motion.button>
+                
+                <div className="flex items-center space-x-2 px-4 py-2.5 bg-yellow-100 border-2 border-yellow-300 rounded-xl">
+                  <span className="text-xs sm:text-sm font-semibold text-gray-700">
+                    Page <span className="text-yellow-700 text-base sm:text-lg font-bold mx-1">{currentPage}</span> of {totalPages}
+                  </span>
+                </div>
+                
+                <motion.button
+                  whileHover={{ scale: 1.05, x: 3 }}
+                  whileTap={{ scale: 0.95 }}
                   onClick={() => handleSearch(currentPage + 1)}
                   disabled={currentPage === totalPages || loading}
-                  className="px-4 py-2 bg-gray-200 hover:bg-gray-300 disabled:bg-gray-100 disabled:cursor-not-allowed rounded-lg transition-colors"
+                  className="w-full sm:w-auto px-6 sm:px-8 py-3 bg-white border-2 border-gray-300 hover:border-yellow-400 hover:bg-yellow-50 disabled:bg-gray-100 disabled:border-gray-200 disabled:cursor-not-allowed rounded-xl transition-all duration-300 font-semibold text-sm sm:text-base text-gray-700 disabled:text-gray-400 shadow-md hover:shadow-lg disabled:shadow-none min-h-11 flex items-center justify-center touch-manipulation"
+                  aria-label="Next page"
                 >
-                  Next
-                </button>
-              </div>
+                  <span>Next</span>
+                  <span className="ml-2">→</span>
+                </motion.button>
+              </motion.div>
             )}
           </>
         )}
@@ -293,11 +353,23 @@ const Search = () => {
         {/* No Results */}
         {!loading && stories.length === 0 && hasSearched && (
           <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            className="text-center py-12"
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            className="text-center py-12 sm:py-16 md:py-20 px-4"
           >
-            <p className="text-gray-600 text-lg">No stories found. Try adjusting your filters.</p>
+            <div className="text-6xl sm:text-7xl md:text-8xl mb-4 sm:mb-6">📚</div>
+            <h3 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 mb-2 sm:mb-3">No Stories Found</h3>
+            <p className="text-sm sm:text-base md:text-lg text-gray-600 max-w-md mx-auto mb-6 sm:mb-8">
+              We couldn't find any stories matching your search. Try adjusting your filters or search terms.
+            </p>
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              onClick={handleClearFilters}
+              className="px-6 sm:px-8 py-3 bg-linear-to-r from-yellow-400 to-yellow-500 hover:from-yellow-500 hover:to-yellow-600 text-black rounded-xl font-bold shadow-lg shadow-yellow-500/30 transition-all duration-300 text-sm sm:text-base touch-manipulation"
+            >
+              Clear Filters & Try Again
+            </motion.button>
           </motion.div>
         )}
       </div>
