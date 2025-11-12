@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { api } from '../services/api';
@@ -25,6 +25,8 @@ const Read = () => {
   const [loading, setLoading] = useState(true);
   const [progress, setProgress] = useState(0);
   const [readingProgress, setReadingProgress] = useState(null);
+  
+  const isProgrammaticScroll = useRef(false);  // New ref to track programmatic scrolls
 
   useEffect(() => {
     loadStoryAndChapters();
@@ -46,17 +48,19 @@ const Read = () => {
 
   useEffect(() => {
     // Scroll to saved position after chapter loads
-    if (currentChapter && readingProgress && progress > 0) {
+    if (currentChapter && readingProgress && readingProgress.progress > 0) {
+      isProgrammaticScroll.current = true;  // Mark as programmatic
       setTimeout(() => {
         const element = document.getElementById('chapter-content');
         if (element) {
           const scrollHeight = element.scrollHeight - element.clientHeight;
-          const scrollPosition = (progress / 100) * scrollHeight;
+          const scrollPosition = (readingProgress.progress / 100) * scrollHeight;
           element.scrollTop = scrollPosition;
         }
+        isProgrammaticScroll.current = false;  // Reset after setting
       }, 500); // Small delay to ensure content is rendered
     }
-  }, [currentChapter, readingProgress, progress]);
+  }, [currentChapter, readingProgress]);
 
   const loadStoryAndChapters = async () => {
     try {
@@ -107,6 +111,8 @@ const Read = () => {
   };
 
   const handleScroll = () => {
+    if (isProgrammaticScroll.current) return;  // Skip if programmatic
+
     const element = document.getElementById('chapter-content');
     if (element) {
       const scrollTop = element.scrollTop;
