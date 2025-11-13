@@ -2,10 +2,12 @@ import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { api } from '../services/api';
+import { useAuth } from '../contexts/AuthContext';
 
 const Write = () => {
   const { id } = useParams(); // story id for editing
   const navigate = useNavigate();
+  const { isAuthenticated } = useAuth();
   const [currentStep, setCurrentStep] = useState(1);
   const [loading, setLoading] = useState(false);
   const [saving, setSaving] = useState(false);
@@ -35,12 +37,19 @@ const Write = () => {
   // Auto-save timer
   const [autoSaveTimer, setAutoSaveTimer] = useState(null);
 
+  // Redirect unauthenticated users to login
   useEffect(() => {
-    if (id) {
+    if (!isAuthenticated) {
+      navigate(`/login?redirect=/write${id ? `/${id}` : ''}`);
+    }
+  }, [isAuthenticated, navigate, id]);
+
+  useEffect(() => {
+    if (id && isAuthenticated) {
       // Load existing story for editing
       loadStory(id);
     }
-  }, [id]);
+  }, [id, isAuthenticated]);
 
   useEffect(() => {
     // Auto-save every 30 seconds

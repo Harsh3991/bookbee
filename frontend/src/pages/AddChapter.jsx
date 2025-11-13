@@ -7,7 +7,7 @@ import { api } from '../services/api';
 const AddChapter = () => {
   const { storyId } = useParams();
   const navigate = useNavigate();
-  const { user } = useAuth();
+  const { user, isAuthenticated } = useAuth();
   const [story, setStory] = useState(null);
   const [chapters, setChapters] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -19,11 +19,18 @@ const AddChapter = () => {
   const [saving, setSaving] = useState(false);
   const [saveError, setSaveError] = useState('');
 
+  // Redirect unauthenticated users to login
   useEffect(() => {
-    if (storyId) {
+    if (!isAuthenticated) {
+      navigate(`/login?redirect=/add-chapter/${storyId}`);
+    }
+  }, [isAuthenticated, navigate, storyId]);
+
+  useEffect(() => {
+    if (storyId && isAuthenticated) {
       loadStoryAndChapters();
     }
-  }, [storyId]);
+  }, [storyId, isAuthenticated]);
 
   const loadStoryAndChapters = async () => {
     try {

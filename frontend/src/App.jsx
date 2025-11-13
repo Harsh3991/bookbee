@@ -28,15 +28,14 @@ const PublicRoute = ({ children }) => {
 
 function AppContent() {
   const location = useLocation();
-  const hideNavbar = location.pathname === '/login' || location.pathname === '/signup';
 
   return (
     <div className="App">
-      {!hideNavbar && <Navbar />}
+      <Navbar />
       <AnimatePresence mode="wait">
         <Routes>
-          <Route path="/" element={<ProtectedRoute><Home /></ProtectedRoute>} />
-          <Route path="/search" element={<ProtectedRoute><Search /></ProtectedRoute>} />
+          <Route path="/" element={<Home />} />
+          <Route path="/search" element={<Search />} />
           <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
           <Route path="/write" element={<ProtectedRoute><Write /></ProtectedRoute>} />
           <Route path="/write/:storyId" element={<ProtectedRoute><Write /></ProtectedRoute>} />
