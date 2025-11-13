@@ -1,9 +1,11 @@
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { api } from '../services/api';
+import { useAuth } from '../contexts/AuthContext';
 
 const StoryCard = ({ story, showEditButton = false, onEdit }) => {
   const navigate = useNavigate();
+  const { isAuthenticated } = useAuth();
 
   const renderStars = (rating) => {
     return [...Array(5)].map((_, index) => (
@@ -20,6 +22,24 @@ const StoryCard = ({ story, showEditButton = false, onEdit }) => {
   };
 
   const handleReadClick = async () => {
+    // If user is not authenticated, redirect to login
+    if (!isAuthenticated) {
+      try {
+        // Fetch chapters to get the first chapter ID
+        const chapters = await api.getChapters(story._id);
+        if (chapters.length > 0) {
+          navigate(`/login?redirect=/read/${story._id}/${chapters[0]._id}`);
+        } else {
+          navigate(`/login?redirect=/read/${story._id}/first`);
+        }
+      } catch (error) {
+        // If fetching chapters fails, redirect to login anyway
+        navigate(`/login?redirect=/read/${story._id}/first`);
+      }
+      return;
+    }
+
+    // If authenticated, proceed as normal
     try {
       // Fetch chapters for this story
       const chapters = await api.getChapters(story._id);

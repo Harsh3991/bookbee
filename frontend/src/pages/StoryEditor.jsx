@@ -8,7 +8,7 @@ const StoryEditor = () => {
   const { storyId } = useParams();
   const navigate = useNavigate();
   const location = useLocation();
-  const { user } = useAuth();
+  const { user, isAuthenticated } = useAuth();
   const [story, setStory] = useState(null);
   const [chapters, setChapters] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -26,11 +26,18 @@ const StoryEditor = () => {
   const [saveSuccess, setSaveSuccess] = useState(false);
   const [refreshing, setRefreshing] = useState(false);
 
+  // Redirect unauthenticated users to login
   useEffect(() => {
-    if (storyId) {
+    if (!isAuthenticated) {
+      navigate(`/login?redirect=/story-editor/${storyId}`);
+    }
+  }, [isAuthenticated, navigate, storyId]);
+
+  useEffect(() => {
+    if (storyId && isAuthenticated) {
       loadStoryData();
     }
-  }, [storyId, location.key]); // Reload data when storyId changes or when navigating back to this page
+  }, [storyId, location.key, isAuthenticated]); // Reload data when storyId changes or when navigating back to this page
 
   const loadStoryData = async (isRefresh = false) => {
     try {

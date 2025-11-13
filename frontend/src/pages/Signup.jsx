@@ -1,5 +1,5 @@
 import { motion, AnimatePresence } from 'framer-motion';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import { useState } from 'react';
 import { api } from '../services/api';
 import { useAuth } from '../contexts/AuthContext';
@@ -20,6 +20,7 @@ const Signup = () => {
   const [passwordStrength, setPasswordStrength] = useState(0);
   const [termsAccepted, setTermsAccepted] = useState(false);
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
   const { login } = useAuth();
 
   const calculatePasswordStrength = (password) => {
@@ -61,8 +62,11 @@ const Signup = () => {
       // Update auth context (this will handle localStorage)
       login(response);
 
-      // Redirect to home
-      navigate('/');
+      // Check for redirect parameter
+      const redirectPath = searchParams.get('redirect');
+      
+      // Redirect to the intended page or home
+      navigate(redirectPath || '/');
     } catch (err) {
       setError(err.message);
     } finally {
@@ -147,7 +151,27 @@ const Signup = () => {
   };
 
   return (
-    <div className="min-h-screen bg-linear-to-br from-yellow-400 via-yellow-300 to-orange-200 flex items-center justify-center py-12 px-4 relative overflow-hidden">
+    <div className="min-h-screen bg-linear-to-br from-amber-50 via-orange-50 to-yellow-50 flex items-center justify-center py-12 px-4 relative overflow-hidden">
+      {/* Decorative Background Elements */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        {/* Large gradient orbs */}
+        <motion.div
+          animate={{ 
+            scale: [1, 1.2, 1],
+            opacity: [0.3, 0.5, 0.3]
+          }}
+          transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+          className="absolute -top-1/4 -left-1/4 w-96 h-96 bg-linear-to-br from-amber-300/40 to-orange-300/40 rounded-full blur-3xl"
+        />
+        <motion.div
+          animate={{ 
+            scale: [1.2, 1, 1.2],
+            opacity: [0.2, 0.4, 0.2]
+          }}
+          transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
+          className="absolute -bottom-1/4 -right-1/4 w-[500px] h-[500px] bg-linear-to-tl from-yellow-300/30 to-orange-300/30 rounded-full blur-3xl"
+        />
+      </div>
       {/* Animated Background Pattern */}
       <div className="absolute inset-0 opacity-10">
         <div className="absolute inset-0" style={{

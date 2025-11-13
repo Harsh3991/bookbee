@@ -2,6 +2,7 @@ import { useState, useEffect, useCallback, useRef } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { api } from '../services/api';
+import { useAuth } from '../contexts/AuthContext';
 
 // Simple debounce utility
 const debounce = (func, wait) => {
@@ -19,6 +20,7 @@ const debounce = (func, wait) => {
 const Read = () => {
   const { storyId, chapterId } = useParams();
   const navigate = useNavigate();
+  const { isAuthenticated } = useAuth();
   const [story, setStory] = useState(null);
   const [chapters, setChapters] = useState([]);
   const [currentChapter, setCurrentChapter] = useState(null);
@@ -28,9 +30,18 @@ const Read = () => {
   
   const isProgrammaticScroll = useRef(false);  // New ref to track programmatic scrolls
 
+  // Redirect unauthenticated users to login
   useEffect(() => {
-    loadStoryAndChapters();
-  }, [storyId]);
+    if (!isAuthenticated) {
+      navigate(`/login?redirect=/read/${storyId}/${chapterId}`);
+    }
+  }, [isAuthenticated, navigate, storyId, chapterId]);
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      loadStoryAndChapters();
+    }
+  }, [storyId, isAuthenticated]);
 
   useEffect(() => {
     if (chapters.length > 0 && chapterId) {
