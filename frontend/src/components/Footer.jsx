@@ -1,17 +1,17 @@
 const Footer = () => {
   return (
-    <footer className="bg-gray-900 text-white py-12">
+    <footer className="bg-neutral text-neutral-content py-12">
       <div className="max-w-7xl mx-auto px-4">
         <div className="grid md:grid-cols-4 gap-8">
           {/* Brand */}
           <div className="space-y-4">
             <div className="flex items-center space-x-2">
-              <div className="w-8 h-8 bg-yellow-400 rounded-full flex items-center justify-center">
-                <span className="text-black font-bold text-lg">B</span>
+              <div className="w-8 h-8 bg-primary rounded-full flex items-center justify-center">
+                <span className="text-primary-content font-bold text-lg">B</span>
               </div>
               <span className="text-xl font-bold">BookBee</span>
             </div>
-            <p className="text-gray-400">
+            <p className="text-neutral-content/70">
               Your favorite platform for reading and writing amazing stories.
             </p>
           </div>
@@ -19,22 +19,22 @@ const Footer = () => {
           {/* Quick Links */}
           <div>
             <h3 className="font-semibold mb-4">Quick Links</h3>
-            <ul className="space-y-2 text-gray-400">
-              <li><a href="#" className="hover:text-yellow-400 transition-colors">Home</a></li>
-              <li><a href="#" className="hover:text-yellow-400 transition-colors">Browse</a></li>
-              <li><a href="#" className="hover:text-yellow-400 transition-colors">Write</a></li>
-              <li><a href="#" className="hover:text-yellow-400 transition-colors">Community</a></li>
+            <ul className="space-y-2 text-neutral-content/70">
+              <li><a href="#" className="hover:text-primary transition-colors">Home</a></li>
+              <li><a href="#" className="hover:text-primary transition-colors">Browse</a></li>
+              <li><a href="#" className="hover:text-primary transition-colors">Write</a></li>
+              <li><a href="#" className="hover:text-primary transition-colors">Community</a></li>
             </ul>
           </div>
 
           {/* Support */}
           <div>
             <h3 className="font-semibold mb-4">Support</h3>
-            <ul className="space-y-2 text-gray-400">
-              <li><a href="#" className="hover:text-yellow-400 transition-colors">Help Center</a></li>
-              <li><a href="#" className="hover:text-yellow-400 transition-colors">Contact Us</a></li>
-              <li><a href="#" className="hover:text-yellow-400 transition-colors">Privacy Policy</a></li>
-              <li><a href="#" className="hover:text-yellow-400 transition-colors">Terms of Service</a></li>
+            <ul className="space-y-2 text-neutral-content/70">
+              <li><a href="#" className="hover:text-primary transition-colors">Help Center</a></li>
+              <li><a href="#" className="hover:text-primary transition-colors">Contact Us</a></li>
+              <li><a href="#" className="hover:text-primary transition-colors">Privacy Policy</a></li>
+              <li><a href="#" className="hover:text-primary transition-colors">Terms of Service</a></li>
             </ul>
           </div>
 
@@ -45,7 +45,7 @@ const Footer = () => {
               {/* Twitter/X */}
               <a 
                 href="#" 
-                className="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-yellow-400 hover:text-black transition-colors group"
+                className="w-10 h-10 bg-base-300 rounded-full flex items-center justify-center hover:bg-primary hover:text-primary-content transition-colors group"
                 aria-label="Twitter"
               >
                 <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
@@ -56,7 +56,7 @@ const Footer = () => {
               {/* Facebook */}
               <a 
                 href="#" 
-                className="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-yellow-400 hover:text-black transition-colors group"
+                className="w-10 h-10 bg-base-300 rounded-full flex items-center justify-center hover:bg-primary hover:text-primary-content transition-colors group"
                 aria-label="Facebook"
               >
                 <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
@@ -67,7 +67,7 @@ const Footer = () => {
               {/* Instagram */}
               <a 
                 href="#" 
-                className="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-yellow-400 hover:text-black transition-colors group"
+                className="w-10 h-10 bg-base-300 rounded-full flex items-center justify-center hover:bg-primary hover:text-primary-content transition-colors group"
                 aria-label="Instagram"
               >
                 <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
@@ -78,7 +78,7 @@ const Footer = () => {
               {/* YouTube */}
               <a 
                 href="#" 
-                className="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-yellow-400 hover:text-black transition-colors group"
+                className="w-10 h-10 bg-base-300 rounded-full flex items-center justify-center hover:bg-primary hover:text-primary-content transition-colors group"
                 aria-label="YouTube"
               >
                 <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
@@ -89,7 +89,7 @@ const Footer = () => {
           </div>
         </div>
 
-        <div className="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
+        <div className="border-t border-base-300 mt-8 pt-8 text-center text-neutral-content/70">
           <p>&copy; 2024 BookBee. All rights reserved.</p>
         </div>
       </div>

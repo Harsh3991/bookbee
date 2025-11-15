@@ -131,7 +131,7 @@ const Profile = () => {
           transition={{ duration: 0.5 }}
           className="col-span-full"
         >
-          <div className="bg-linear-to-br from-white to-yellow-50/30 rounded-3xl shadow-lg shadow-gray-200/50 border border-gray-100 p-16 text-center">
+          <div className="bg-base-100 rounded-3xl shadow-lg border border-base-300 p-16 text-center">
             <motion.div
               animate={{ 
                 y: [0, -10, 0],
@@ -148,13 +148,13 @@ const Profile = () => {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
               </svg>
             </motion.div>
-            <h3 className="text-2xl font-bold text-gray-900 mb-3">No stories yet</h3>
-            <p className="text-gray-600 mb-8 text-lg max-w-md mx-auto">Start your writing journey by creating your first story and share it with the world.</p>
+            <h3 className="text-2xl font-bold text-base-content mb-3">No stories yet</h3>
+            <p className="text-base-content/70 mb-8 text-lg max-w-md mx-auto">Start your writing journey by creating your first story and share it with the world.</p>
             <motion.button
               whileHover={{ scale: 1.05, y: -2 }}
               whileTap={{ scale: 0.95 }}
               onClick={() => navigate('/write')}
-              className="bg-linear-to-r from-yellow-400 to-yellow-500 hover:from-yellow-500 hover:to-yellow-600 text-black px-8 py-3.5 rounded-xl font-bold text-lg transition-all shadow-xl hover:shadow-2xl inline-flex items-center space-x-2"
+              className="bg-primary hover:bg-primary/90 text-primary-content px-8 py-3.5 rounded-xl font-bold text-lg transition-all shadow-xl hover:shadow-2xl inline-flex items-center space-x-2"
             >
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
@@ -179,17 +179,17 @@ const Profile = () => {
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: index * 0.1, duration: 0.4 }}
               whileHover={{ y: -4, scale: 1.01 }}
-              className="bg-white rounded-2xl shadow-lg shadow-gray-200/50 p-8 hover:shadow-xl transition-all border border-gray-100 cursor-pointer group"
+              className="bg-base-100 rounded-2xl shadow-lg p-8 hover:shadow-xl transition-all border border-base-300 cursor-pointer group"
             >
               <div className="flex items-center justify-between gap-6">
                 <div className="flex-1 min-w-0">
-                  <h3 className="text-xl font-bold text-gray-900 mb-2 group-hover:text-yellow-600 transition-colors truncate">
+                  <h3 className="text-xl font-bold text-base-content mb-2 group-hover:text-primary transition-colors truncate">
                     {progress.story.title}
                   </h3>
-                  <p className="text-gray-700 mb-2 font-medium">
+                  <p className="text-base-content/90 mb-2 font-medium">
                     Chapter {progress.chapter.chapterNumber}: {progress.chapter.title}
                   </p>
-                  <p className="text-sm text-gray-500 flex items-center space-x-2">
+                  <p className="text-sm text-base-content/60 flex items-center space-x-2">
                     <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                     </svg>
@@ -199,7 +199,7 @@ const Profile = () => {
                 
                 <div className="flex flex-col items-end space-y-4">
                   <div className="text-right">
-                    <div className="text-sm font-semibold text-gray-600 mb-3">
+                    <div className="text-sm font-semibold text-base-content/70 mb-3">
                       Reading Progress
                     </div>
                     <div className="relative w-32 h-32">
@@ -212,7 +212,7 @@ const Profile = () => {
                           stroke="currentColor"
                           strokeWidth="8"
                           fill="transparent"
-                          className="text-gray-200"
+                          className="text-base-300"
                         />
                         <motion.circle
                           cx="64"
@@ -227,12 +227,12 @@ const Profile = () => {
                             strokeDashoffset: 2 * Math.PI * 56 * (1 - (progress.progress || 0) / 100)
                           }}
                           transition={{ duration: 1, ease: "easeOut", delay: index * 0.1 }}
-                          className="text-yellow-400"
+                          className="text-primary"
                           strokeLinecap="round"
                         />
                       </svg>
                       <div className="absolute inset-0 flex items-center justify-center">
-                        <span className="text-2xl font-bold text-gray-900">{progress.progress || 0}%</span>
+                        <span className="text-2xl font-bold text-base-content">{progress.progress || 0}%</span>
                       </div>
                     </div>
                   </div>
@@ -241,7 +241,7 @@ const Profile = () => {
                     whileHover={{ scale: 1.05, x: 5 }}
                     whileTap={{ scale: 0.95 }}
                     onClick={() => navigate(`/read/${progress.story._id}/${progress.chapter._id}`)}
-                    className="bg-linear-to-r from-yellow-400 to-yellow-500 hover:from-yellow-500 hover:to-yellow-600 text-black px-6 py-3 rounded-xl font-bold transition-all shadow-lg hover:shadow-xl flex items-center space-x-2"
+                    className="bg-primary hover:bg-primary/90 text-primary-content px-6 py-3 rounded-xl font-bold transition-all shadow-lg hover:shadow-xl flex items-center space-x-2"
                   >
                     <span>Continue Reading</span>
                     <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -258,7 +258,7 @@ const Profile = () => {
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.5 }}
         >
-          <div className="bg-linear-to-br from-white to-orange-50/30 rounded-3xl shadow-lg shadow-gray-200/50 border border-gray-100 p-16 text-center">
+          <div className="bg-base-100 rounded-3xl shadow-lg border border-base-300 p-16 text-center">
             <motion.div
               animate={{ 
                 y: [0, -10, 0],
@@ -269,19 +269,19 @@ const Profile = () => {
                 repeat: Infinity,
                 ease: "easeInOut"
               }}
-              className="text-gray-300 mb-6"
+              className="text-base-content/20 mb-6"
             >
               <svg className="w-24 h-24 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
               </svg>
             </motion.div>
-            <h3 className="text-2xl font-bold text-gray-900 mb-3">No reading history</h3>
-            <p className="text-gray-600 mb-8 text-lg max-w-md mx-auto">Start reading amazing stories and track your progress here.</p>
+            <h3 className="text-2xl font-bold text-base-content mb-3">No reading history</h3>
+            <p className="text-base-content/70 mb-8 text-lg max-w-md mx-auto">Start reading amazing stories and track your progress here.</p>
             <motion.button
               whileHover={{ scale: 1.05, y: -2 }}
               whileTap={{ scale: 0.95 }}
               onClick={() => navigate('/')}
-              className="bg-linear-to-r from-orange-400 to-orange-500 hover:from-orange-500 hover:to-orange-600 text-white px-8 py-3.5 rounded-xl font-bold text-lg transition-all shadow-xl hover:shadow-2xl inline-flex items-center space-x-2"
+              className="bg-secondary hover:bg-secondary/90 text-secondary-content px-8 py-3.5 rounded-xl font-bold text-lg transition-all shadow-xl hover:shadow-2xl inline-flex items-center space-x-2"
             >
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
@@ -314,7 +314,7 @@ const Profile = () => {
           transition={{ duration: 0.5 }}
           className="col-span-full"
         >
-          <div className="bg-linear-to-br from-white to-gray-50 rounded-3xl shadow-lg shadow-gray-200/50 border border-gray-100 p-16 text-center">
+          <div className="bg-base-100 rounded-3xl shadow-lg border border-base-300 p-16 text-center">
             <motion.div
               animate={{ 
                 scale: [1, 1.1, 1],
@@ -325,19 +325,19 @@ const Profile = () => {
                 repeat: Infinity,
                 ease: "easeInOut"
               }}
-              className="text-gray-300 mb-6"
+              className="text-base-content/20 mb-6"
             >
               <svg className="w-24 h-24 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z" />
               </svg>
             </motion.div>
-            <h3 className="text-2xl font-bold text-gray-900 mb-3">No bookmarks yet</h3>
-            <p className="text-gray-600 mb-8 text-lg max-w-md mx-auto">Bookmark your favorite stories to save them for later reading.</p>
+            <h3 className="text-2xl font-bold text-base-content mb-3">No bookmarks yet</h3>
+            <p className="text-base-content/70 mb-8 text-lg max-w-md mx-auto">Bookmark your favorite stories to save them for later reading.</p>
             <motion.button
               whileHover={{ scale: 1.05, y: -2 }}
               whileTap={{ scale: 0.95 }}
               onClick={() => navigate('/')}
-              className="bg-linear-to-r from-gray-700 to-gray-800 hover:from-gray-800 hover:to-gray-900 text-white px-8 py-3.5 rounded-xl font-bold text-lg transition-all shadow-xl hover:shadow-2xl inline-flex items-center space-x-2"
+              className="bg-neutral hover:bg-neutral/90 text-neutral-content px-8 py-3.5 rounded-xl font-bold text-lg transition-all shadow-xl hover:shadow-2xl inline-flex items-center space-x-2"
             >
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01" />
@@ -352,7 +352,7 @@ const Profile = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-linear-to-br from-gray-50 via-yellow-50/30 to-gray-50 flex items-center justify-center">
+      <div className="min-h-screen bg-base-200 flex items-center justify-center">
         <motion.div
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
@@ -363,13 +363,13 @@ const Profile = () => {
             transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
             className="relative mx-auto w-20 h-20 mb-6"
           >
-            <div className="absolute inset-0 rounded-full border-4 border-yellow-200"></div>
-            <div className="absolute inset-0 rounded-full border-4 border-yellow-400 border-t-transparent"></div>
+            <div className="absolute inset-0 rounded-full border-4 border-base-300"></div>
+            <div className="absolute inset-0 rounded-full border-4 border-primary border-t-transparent"></div>
           </motion.div>
           <motion.p
             animate={{ opacity: [0.5, 1, 0.5] }}
             transition={{ duration: 2, repeat: Infinity }}
-            className="text-xl font-semibold text-gray-700"
+            className="text-xl font-semibold text-base-content"
           >
             Loading your profile...
           </motion.p>
@@ -380,13 +380,13 @@ const Profile = () => {
 
   if (error) {
     return (
-      <div className="min-h-screen bg-linear-to-br from-gray-50 via-yellow-50/30 to-gray-50 flex items-center justify-center p-4">
+      <div className="min-h-screen bg-base-200 flex items-center justify-center p-4">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           className="max-w-md w-full"
         >
-          <div className="bg-white rounded-3xl shadow-2xl shadow-red-200/50 p-12 text-center border border-red-100">
+          <div className="bg-base-100 rounded-3xl shadow-2xl p-12 text-center border border-error">
             <motion.div
               animate={{ 
                 rotate: [0, -10, 10, -10, 0],
@@ -403,14 +403,14 @@ const Profile = () => {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
               </svg>
             </motion.div>
-            <h3 className="text-2xl font-bold text-gray-900 mb-3">Oops! Something went wrong</h3>
-            <p className="text-gray-600 mb-8 text-lg">{error}</p>
+            <h3 className="text-2xl font-bold text-base-content mb-3">Oops! Something went wrong</h3>
+            <p className="text-base-content/70 mb-8 text-lg">{error}</p>
             <motion.button
               whileHover={{ scale: 1.05, y: -2 }}
               whileTap={{ scale: 0.95 }}
               onClick={handleRefresh}
               disabled={refreshing}
-              className="bg-linear-to-r from-yellow-400 to-yellow-500 hover:from-yellow-500 hover:to-yellow-600 disabled:from-yellow-300 disabled:to-yellow-400 text-black px-8 py-3.5 rounded-xl font-bold text-lg transition-all shadow-xl hover:shadow-2xl disabled:cursor-not-allowed inline-flex items-center space-x-2"
+              className="bg-primary hover:bg-primary/90 disabled:bg-primary/50 text-primary-content px-8 py-3.5 rounded-xl font-bold text-lg transition-all shadow-xl hover:shadow-2xl disabled:cursor-not-allowed inline-flex items-center space-x-2"
             >
               {refreshing && (
                 <svg className="w-5 h-5 animate-spin" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -426,17 +426,17 @@ const Profile = () => {
   }
 
   return (
-    <div className="min-h-screen bg-linear-to-br from-gray-50 via-yellow-50/30 to-gray-50 py-4 sm:py-8 md:py-12">
+    <div className="min-h-screen bg-base-200 py-4 sm:py-8 md:py-12">
       <div className="max-w-5xl mx-auto px-3 sm:px-4 md:px-6 lg:px-4">
         {/* Profile Header */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, ease: "easeOut" }}
-          className="bg-white rounded-2xl sm:rounded-3xl shadow-xl shadow-gray-200/50 p-4 sm:p-6 md:p-8 lg:p-10 mb-6 sm:mb-8 md:mb-10 border border-gray-100 overflow-hidden relative"
+          className="bg-base-100 rounded-2xl sm:rounded-3xl shadow-xl p-4 sm:p-6 md:p-8 lg:p-10 mb-6 sm:mb-8 md:mb-10 border border-base-300 overflow-hidden relative"
         >
           {/* Decorative background pattern */}
-          <div className="absolute top-0 right-0 w-32 h-32 sm:w-48 sm:h-48 md:w-64 md:h-64 bg-linear-to-br from-yellow-100 to-transparent rounded-full -mr-16 sm:-mr-24 md:-mr-32 -mt-16 sm:-mt-24 md:-mt-32 opacity-50"></div>
+          <div className="absolute top-0 right-0 w-32 h-32 sm:w-48 sm:h-48 md:w-64 md:h-64 bg-primary/10 rounded-full -mr-16 sm:-mr-24 md:-mr-32 -mt-16 sm:-mt-24 md:-mt-32 opacity-50"></div>
           
           <div className="flex flex-col sm:flex-row items-center sm:items-start space-y-6 sm:space-y-0 sm:space-x-4 md:space-x-6 lg:space-x-8 relative z-10">
             {/* Enhanced Avatar */}
@@ -446,14 +446,14 @@ const Profile = () => {
               transition={{ type: "spring", stiffness: 300 }}
               className="relative shrink-0"
             >
-              <div className="w-20 h-20 sm:w-24 sm:h-24 md:w-28 md:h-28 lg:w-32 lg:h-32 bg-linear-to-br from-yellow-400 via-yellow-500 to-orange-500 rounded-full flex items-center justify-center text-white text-2xl sm:text-3xl md:text-3xl lg:text-4xl font-bold shadow-2xl shadow-yellow-500/30 ring-2 sm:ring-4 ring-white ring-offset-2 sm:ring-offset-4 ring-offset-gray-50">
+              <div className="w-20 h-20 sm:w-24 sm:h-24 md:w-28 md:h-28 lg:w-32 lg:h-32 bg-primary rounded-full flex items-center justify-center text-primary-content text-2xl sm:text-3xl md:text-3xl lg:text-4xl font-bold shadow-2xl ring-2 sm:ring-4 ring-base-100 ring-offset-2 sm:ring-offset-4 ring-offset-base-200">
                 {user?.name?.charAt(0)?.toUpperCase() || 'U'}
               </div>
               {/* Decorative pulse ring */}
               <motion.div
                 animate={{ scale: [1, 1.2, 1], opacity: [0.5, 0, 0.5] }}
                 transition={{ duration: 3, repeat: Infinity }}
-                className="absolute inset-0 rounded-full bg-yellow-400/20"
+                className="absolute inset-0 rounded-full bg-primary/20"
               ></motion.div>
             </motion.div>
 
@@ -468,10 +468,10 @@ const Profile = () => {
                     type="text"
                     value={editingName}
                     onChange={(e) => setEditingName(e.target.value)}
-                    className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 bg-transparent border-b-2 border-gray-300 focus:border-yellow-400 focus:outline-none w-full transition-colors pb-2 text-center sm:text-left"
+                    className="text-2xl sm:text-3xl md:text-4xl font-bold text-base-content bg-transparent border-b-2 border-base-300 focus:border-primary focus:outline-none w-full transition-colors pb-2 text-center sm:text-left"
                     placeholder="Enter your name"
                   />
-                  <p className="text-gray-600 text-sm sm:text-base md:text-lg px-2 sm:px-0">{user?.bio || 'Welcome to BookBee! Start your reading and writing journey.'}</p>
+                  <p className="text-base-content/70 text-sm sm:text-base md:text-lg px-2 sm:px-0">{user?.bio || 'Welcome to BookBee! Start your reading and writing journey.'}</p>
                 </motion.div>
               ) : (
                 <motion.div
@@ -479,8 +479,8 @@ const Profile = () => {
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: 0.2 }}
                 >
-                  <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-2 sm:mb-3 tracking-tight wrap-break-word">{user?.name || 'User'}</h1>
-                  <p className="text-gray-600 text-sm sm:text-base md:text-lg mb-4 sm:mb-5 md:mb-6 px-2 sm:px-0">{user?.bio || 'Welcome to BookBee! Start your reading and writing journey.'}</p>
+                  <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-base-content mb-2 sm:mb-3 tracking-tight wrap-break-word">{user?.name || 'User'}</h1>
+                  <p className="text-base-content/70 text-sm sm:text-base md:text-lg mb-4 sm:mb-5 md:mb-6 px-2 sm:px-0">{user?.bio || 'Welcome to BookBee! Start your reading and writing journey.'}</p>
                 </motion.div>
               )}
               
@@ -488,24 +488,24 @@ const Profile = () => {
               <div className="grid grid-cols-3 gap-2 sm:gap-3 md:gap-4 lg:gap-6 mt-4 sm:mt-5 md:mt-6">
                 <motion.div
                   whileHover={{ y: -4 }}
-                  className="bg-linear-to-br from-yellow-50 to-white rounded-lg sm:rounded-xl p-2 sm:p-3 md:p-4 border border-yellow-100 shadow-sm hover:shadow-md transition-all cursor-pointer"
+                  className="bg-primary/10 rounded-lg sm:rounded-xl p-2 sm:p-3 md:p-4 border border-primary/20 shadow-sm hover:shadow-md transition-all cursor-pointer"
                 >
-                  <div className="text-xl sm:text-2xl md:text-3xl font-bold text-yellow-600 mb-0.5 sm:mb-1">{userStories.length}</div>
-                  <div className="text-xs sm:text-sm font-medium text-gray-600 leading-tight">Stories Written</div>
+                  <div className="text-xl sm:text-2xl md:text-3xl font-bold text-primary mb-0.5 sm:mb-1">{userStories.length}</div>
+                  <div className="text-xs sm:text-sm font-medium text-base-content/70 leading-tight">Stories Written</div>
                 </motion.div>
                 <motion.div
                   whileHover={{ y: -4 }}
-                  className="bg-linear-to-br from-orange-50 to-white rounded-lg sm:rounded-xl p-2 sm:p-3 md:p-4 border border-orange-100 shadow-sm hover:shadow-md transition-all cursor-pointer"
+                  className="bg-secondary/10 rounded-lg sm:rounded-xl p-2 sm:p-3 md:p-4 border border-secondary/20 shadow-sm hover:shadow-md transition-all cursor-pointer"
                 >
-                  <div className="text-xl sm:text-2xl md:text-3xl font-bold text-orange-600 mb-0.5 sm:mb-1">{readingHistory.length}</div>
-                  <div className="text-xs sm:text-sm font-medium text-gray-600 leading-tight">Currently Reading</div>
+                  <div className="text-xl sm:text-2xl md:text-3xl font-bold text-secondary mb-0.5 sm:mb-1">{readingHistory.length}</div>
+                  <div className="text-xs sm:text-sm font-medium text-base-content/70 leading-tight">Currently Reading</div>
                 </motion.div>
                 <motion.div
                   whileHover={{ y: -4 }}
-                  className="bg-linear-to-br from-gray-50 to-white rounded-lg sm:rounded-xl p-2 sm:p-3 md:p-4 border border-gray-200 shadow-sm hover:shadow-md transition-all cursor-pointer"
+                  className="bg-neutral/10 rounded-lg sm:rounded-xl p-2 sm:p-3 md:p-4 border border-neutral/20 shadow-sm hover:shadow-md transition-all cursor-pointer"
                 >
-                  <div className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-700 mb-0.5 sm:mb-1">{bookmarks.length}</div>
-                  <div className="text-xs sm:text-sm font-medium text-gray-600 leading-tight">Saved Stories</div>
+                  <div className="text-xl sm:text-2xl md:text-3xl font-bold text-neutral mb-0.5 sm:mb-1">{bookmarks.length}</div>
+                  <div className="text-xs sm:text-sm font-medium text-base-content/70 leading-tight">Saved Stories</div>
                 </motion.div>
               </div>
             </div>
@@ -517,7 +517,7 @@ const Profile = () => {
                 whileTap={{ scale: 0.95 }}
                 onClick={handleRefresh}
                 disabled={refreshing}
-                className="flex-1 sm:flex-none bg-white hover:bg-gray-50 disabled:bg-gray-50 text-gray-700 disabled:text-gray-400 px-3 sm:px-4 md:px-5 py-2 sm:py-2.5 rounded-lg sm:rounded-xl text-sm sm:text-base font-semibold transition-all disabled:cursor-not-allowed flex items-center justify-center space-x-2 shadow-md hover:shadow-lg border border-gray-200"
+                className="flex-1 sm:flex-none bg-base-100 hover:bg-base-200 disabled:bg-base-200 text-base-content disabled:text-base-content/40 px-3 sm:px-4 md:px-5 py-2 sm:py-2.5 rounded-lg sm:rounded-xl text-sm sm:text-base font-semibold transition-all disabled:cursor-not-allowed flex items-center justify-center space-x-2 shadow-md hover:shadow-lg border border-base-300"
               >
                 <svg className={`w-4 h-4 ${refreshing ? 'animate-spin' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
@@ -533,7 +533,7 @@ const Profile = () => {
                     whileTap={{ scale: 0.95 }}
                     onClick={handleSave}
                     disabled={saving}
-                    className="flex-1 sm:flex-none bg-linear-to-r from-yellow-400 to-yellow-500 hover:from-yellow-500 hover:to-yellow-600 disabled:from-yellow-300 disabled:to-yellow-400 text-black px-3 sm:px-4 md:px-5 py-2 sm:py-2.5 rounded-lg sm:rounded-xl text-sm sm:text-base font-semibold transition-all disabled:cursor-not-allowed flex items-center justify-center space-x-2 shadow-lg hover:shadow-xl whitespace-nowrap"
+                    className="flex-1 sm:flex-none bg-primary hover:bg-primary/90 disabled:bg-primary/50 text-primary-content px-3 sm:px-4 md:px-5 py-2 sm:py-2.5 rounded-lg sm:rounded-xl text-sm sm:text-base font-semibold transition-all disabled:cursor-not-allowed flex items-center justify-center space-x-2 shadow-lg hover:shadow-xl whitespace-nowrap"
                   >
                     {saving && (
                       <svg className="w-4 h-4 animate-spin" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -547,7 +547,7 @@ const Profile = () => {
                     whileTap={{ scale: 0.95 }}
                     onClick={handleCancel}
                     disabled={saving}
-                    className="flex-1 sm:flex-none bg-white hover:bg-gray-50 disabled:bg-gray-50 text-gray-700 disabled:text-gray-400 px-3 sm:px-4 md:px-5 py-2 sm:py-2.5 rounded-lg sm:rounded-xl text-sm sm:text-base font-semibold transition-all disabled:cursor-not-allowed shadow-md border border-gray-200"
+                    className="flex-1 sm:flex-none bg-base-100 hover:bg-base-200 disabled:bg-base-200 text-base-content disabled:text-base-content/40 px-3 sm:px-4 md:px-5 py-2 sm:py-2.5 rounded-lg sm:rounded-xl text-sm sm:text-base font-semibold transition-all disabled:cursor-not-allowed shadow-md border border-base-300"
                   >
                     Cancel
                   </motion.button>
@@ -557,7 +557,7 @@ const Profile = () => {
                   whileHover={{ scale: 1.05, y: -2 }}
                   whileTap={{ scale: 0.95 }}
                   onClick={handleEdit}
-                  className="flex-1 sm:flex-none bg-linear-to-r from-yellow-400 to-yellow-500 hover:from-yellow-500 hover:to-yellow-600 text-black px-3 sm:px-4 md:px-6 py-2 sm:py-2.5 rounded-lg sm:rounded-xl text-sm sm:text-base font-semibold transition-all shadow-lg hover:shadow-xl whitespace-nowrap"
+                  className="flex-1 sm:flex-none bg-primary hover:bg-primary/90 text-primary-content px-3 sm:px-4 md:px-6 py-2 sm:py-2.5 rounded-lg sm:rounded-xl text-sm sm:text-base font-semibold transition-all shadow-lg hover:shadow-xl whitespace-nowrap"
                 >
                   Edit Profile
                 </motion.button>
@@ -573,13 +573,13 @@ const Profile = () => {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, scale: 0.95 }}
             transition={{ type: "spring", stiffness: 500, damping: 30 }}
-            className="bg-linear-to-r from-green-50 to-emerald-50 border-2 border-green-300 text-green-800 px-6 py-4 rounded-2xl mb-8 flex items-center space-x-3 shadow-lg shadow-green-200/50"
+            className="bg-success/20 border-2 border-success text-success-content px-6 py-4 rounded-2xl mb-8 flex items-center space-x-3 shadow-lg"
           >
             <motion.div
               initial={{ scale: 0 }}
               animate={{ scale: 1 }}
               transition={{ delay: 0.2, type: "spring", stiffness: 500 }}
-              className="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center"
+              className="w-8 h-8 bg-success rounded-full flex items-center justify-center"
             >
               <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" />
@@ -595,13 +595,13 @@ const Profile = () => {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, scale: 0.95 }}
             transition={{ type: "spring", stiffness: 500, damping: 30 }}
-            className="bg-linear-to-r from-red-50 to-rose-50 border-2 border-red-300 text-red-800 px-6 py-4 rounded-2xl mb-8 flex items-center space-x-3 shadow-lg shadow-red-200/50"
+            className="bg-error/20 border-2 border-error text-error-content px-6 py-4 rounded-2xl mb-8 flex items-center space-x-3 shadow-lg"
           >
             <motion.div
               initial={{ scale: 0 }}
               animate={{ scale: 1 }}
               transition={{ delay: 0.2, type: "spring", stiffness: 500 }}
-              className="w-8 h-8 bg-red-500 rounded-full flex items-center justify-center"
+              className="w-8 h-8 bg-error rounded-full flex items-center justify-center"
             >
               <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -616,7 +616,7 @@ const Profile = () => {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2, duration: 0.5 }}
-          className="bg-white rounded-2xl shadow-lg shadow-gray-200/50 mb-10 border border-gray-100 overflow-hidden"
+          className="bg-base-100 rounded-2xl shadow-lg mb-10 border border-base-300 overflow-hidden"
         >
           <nav className="flex relative">
             {tabs.map((tab, index) => (
@@ -627,8 +627,8 @@ const Profile = () => {
                 whileTap={{ scale: 0.98 }}
                 className={`flex-1 px-8 py-5 text-base font-semibold transition-all relative ${
                   activeTab === tab.id
-                    ? 'text-yellow-600'
-                    : 'text-gray-500 hover:text-gray-700'
+                    ? 'text-primary'
+                    : 'text-base-content/60 hover:text-base-content'
                 }`}
               >
                 {/* Active tab indicator */}
@@ -636,7 +636,7 @@ const Profile = () => {
                   <motion.div
                     layoutId="activeTab"
                     transition={{ type: "spring", stiffness: 500, damping: 30 }}
-                    className="absolute bottom-0 left-0 right-0 h-1 bg-linear-to-r from-yellow-400 via-yellow-500 to-yellow-400"
+                    className="absolute bottom-0 left-0 right-0 h-1 bg-primary"
                   />
                 )}
                 
@@ -645,7 +645,7 @@ const Profile = () => {
                   <motion.div
                     layoutId="activeTabBg"
                     transition={{ type: "spring", stiffness: 500, damping: 30 }}
-                    className="absolute inset-0 bg-linear-to-b from-yellow-50/50 to-transparent"
+                    className="absolute inset-0 bg-primary/10"
                   />
                 )}
                 
@@ -653,8 +653,8 @@ const Profile = () => {
                   <span>{tab.label}</span>
                   <span className={`inline-flex items-center justify-center px-2.5 py-0.5 rounded-full text-sm font-bold ${
                     activeTab === tab.id
-                      ? 'bg-yellow-400 text-black'
-                      : 'bg-gray-200 text-gray-600'
+                      ? 'bg-primary text-primary-content'
+                      : 'bg-base-300 text-base-content/70'
                   }`}>
                     {tab.count}
                   </span>

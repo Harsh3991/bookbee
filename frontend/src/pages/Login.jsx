@@ -51,7 +51,7 @@ const Login = () => {
   // Floating background elements
   const FloatingElement = ({ delay, duration, x, y }) => (
     <motion.div
-      className="absolute rounded-full bg-yellow-300 opacity-20"
+      className="absolute rounded-full bg-primary opacity-20"
       style={{
         width: Math.random() * 100 + 50,
         height: Math.random() * 100 + 50,
@@ -75,7 +75,7 @@ const Login = () => {
   // Bee icon animation
   const BeeIcon = () => (
     <motion.div
-      className="absolute -top-16 -right-16 text-yellow-400 opacity-30"
+      className="absolute -top-16 -right-16 text-primary opacity-30"
       animate={{
         rotate: [0, 10, -10, 0],
         y: [0, -10, 0],
@@ -95,7 +95,7 @@ const Login = () => {
   // Book icon animation
   const BookIcon = () => (
     <motion.div
-      className="absolute -bottom-16 -left-16 text-yellow-400 opacity-30"
+      className="absolute -bottom-16 -left-16 text-primary opacity-30"
       animate={{
         rotate: [0, -10, 10, 0],
         x: [0, 5, -5, 0],
@@ -113,7 +113,7 @@ const Login = () => {
   );
 
   return (
-    <div className="min-h-screen bg-linear-to-br from-amber-50 via-orange-50 to-yellow-50 flex items-center justify-center py-12 px-4 relative overflow-hidden">
+    <div className="min-h-screen bg-base-200 flex items-center justify-center py-12 px-4 relative overflow-hidden">
       {/* Decorative Background Elements */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         {/* Large gradient orbs */}
@@ -123,7 +123,7 @@ const Login = () => {
             opacity: [0.3, 0.5, 0.3]
           }}
           transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
-          className="absolute -top-1/4 -left-1/4 w-96 h-96 bg-linear-to-br from-amber-300/40 to-orange-300/40 rounded-full blur-3xl"
+          className="absolute -top-1/4 -left-1/4 w-96 h-96 bg-primary/20 rounded-full blur-3xl"
         />
         <motion.div
           animate={{ 
@@ -131,7 +131,7 @@ const Login = () => {
             opacity: [0.2, 0.4, 0.2]
           }}
           transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
-          className="absolute -bottom-1/4 -right-1/4 w-[500px] h-[500px] bg-linear-to-tl from-yellow-300/30 to-orange-300/30 rounded-full blur-3xl"
+          className="absolute -bottom-1/4 -right-1/4 w-[500px] h-[500px] bg-secondary/15 rounded-full blur-3xl"
         />
       </div>
       
@@ -159,7 +159,7 @@ const Login = () => {
       >
         {/* Glass Morphism Container */}
         <motion.div
-          className="bg-white/90 backdrop-blur-xl p-8 rounded-3xl shadow-2xl border border-white/20 relative overflow-hidden"
+          className="bg-base-100/90 backdrop-blur-xl p-8 rounded-3xl shadow-2xl border border-base-300/20 relative overflow-hidden"
           whileHover={{
             boxShadow: "0 25px 50px -12px rgba(251, 191, 36, 0.25)",
           }}
@@ -182,7 +182,7 @@ const Login = () => {
               transition={{ type: "spring", stiffness: 300 }}
             >
               <motion.div
-                className="w-12 h-12 bg-linear-to-br from-yellow-400 to-yellow-500 rounded-full flex items-center justify-center shadow-lg"
+                className="w-12 h-12 bg-primary rounded-full flex items-center justify-center shadow-lg"
                 animate={{
                   boxShadow: [
                     "0 0 0 0 rgba(251, 191, 36, 0.4)",
@@ -195,14 +195,14 @@ const Login = () => {
                   repeatType: "loop",
                 }}
               >
-                <span className="text-black font-bold text-2xl">B</span>
+                <span className="text-primary-content font-bold text-2xl">B</span>
               </motion.div>
-              <span className="text-3xl font-bold bg-linear-to-r from-gray-900 to-gray-700 bg-clip-text text-transparent">
+              <span className="text-3xl font-bold text-base-content">
                 BookBee
               </span>
             </motion.div>
             <motion.h2
-              className="text-4xl font-bold text-gray-900 mb-2"
+              className="text-4xl font-bold text-base-content mb-2"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.3 }}
@@ -210,7 +210,7 @@ const Login = () => {
               Welcome back
             </motion.h2>
             <motion.p
-              className="text-gray-600"
+              className="text-base-content/70"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.4 }}
@@ -244,7 +244,7 @@ const Login = () => {
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.5 }}
             >
-              <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
+              <label htmlFor="email" className="block text-sm font-medium text-base-content mb-2">
                 Email address
               </label>
               <motion.div
@@ -265,14 +265,14 @@ const Login = () => {
                   onBlur={() => setFocusedField('')}
                   className={`relative block w-full px-4 py-3 pl-12 border ${
                     focusedField === 'email'
-                      ? 'border-yellow-400 ring-2 ring-yellow-400 ring-opacity-50'
-                      : 'border-gray-300'
-                  } placeholder-gray-400 text-gray-900 rounded-xl focus:outline-none transition-all duration-200 bg-white/50 backdrop-blur-sm`}
+                      ? 'border-primary ring-2 ring-primary ring-opacity-50'
+                      : 'border-base-300'
+                  } placeholder-base-content/40 text-base-content rounded-xl focus:outline-none transition-all duration-200 bg-base-100/50 backdrop-blur-sm`}
                   placeholder="your@email.com"
                 />
                 <motion.div
-                  className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400"
-                  animate={focusedField === 'email' ? { scale: 1.2, color: '#FBBF24' } : {}}
+                  className="absolute left-4 top-1/2 transform -translate-y-1/2 text-base-content/50"
+                  animate={focusedField === 'email' ? { scale: 1.2, color: 'oklch(var(--p))' } : {}}
                 >
                   <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
@@ -287,7 +287,7 @@ const Login = () => {
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.6 }}
             >
-              <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-2">
+              <label htmlFor="password" className="block text-sm font-medium text-base-content mb-2">
                 Password
               </label>
               <motion.div
@@ -308,14 +308,14 @@ const Login = () => {
                   onBlur={() => setFocusedField('')}
                   className={`relative block w-full px-4 py-3 pl-12 pr-12 border ${
                     focusedField === 'password'
-                      ? 'border-yellow-400 ring-2 ring-yellow-400 ring-opacity-50'
-                      : 'border-gray-300'
-                  } placeholder-gray-400 text-gray-900 rounded-xl focus:outline-none transition-all duration-200 bg-white/50 backdrop-blur-sm`}
+                      ? 'border-primary ring-2 ring-primary ring-opacity-50'
+                      : 'border-base-300'
+                  } placeholder-base-content/40 text-base-content rounded-xl focus:outline-none transition-all duration-200 bg-base-100/50 backdrop-blur-sm`}
                   placeholder="••••••••"
                 />
                 <motion.div
-                  className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400"
-                  animate={focusedField === 'password' ? { scale: 1.2, color: '#FBBF24' } : {}}
+                  className="absolute left-4 top-1/2 transform -translate-y-1/2 text-base-content/50"
+                  animate={focusedField === 'password' ? { scale: 1.2, color: 'oklch(var(--p))' } : {}}
                 >
                   <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
@@ -324,7 +324,7 @@ const Login = () => {
                 <motion.button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-yellow-500 transition-colors"
+                  className="absolute right-4 top-1/2 transform -translate-y-1/2 text-base-content/50 hover:text-primary transition-colors"
                   whileHover={{ scale: 1.1 }}
                   whileTap={{ scale: 0.95 }}
                 >
@@ -356,10 +356,10 @@ const Login = () => {
                   type="checkbox"
                   checked={rememberMe}
                   onChange={(e) => setRememberMe(e.target.checked)}
-                  className="h-4 w-4 text-yellow-400 focus:ring-yellow-400 border-gray-300 rounded cursor-pointer"
+                  className="h-4 w-4 text-primary focus:ring-primary border-base-300 rounded cursor-pointer"
                   whileTap={{ scale: 0.95 }}
                 />
-                <label htmlFor="remember-me" className="ml-2 block text-sm text-gray-700 cursor-pointer">
+                <label htmlFor="remember-me" className="ml-2 block text-sm text-base-content cursor-pointer">
                   Remember me
                 </label>
               </motion.div>
@@ -367,7 +367,7 @@ const Login = () => {
               <div className="text-sm">
                 <motion.a
                   href="#"
-                  className="font-medium text-yellow-500 hover:text-yellow-600 transition-colors"
+                  className="font-medium text-primary hover:text-secondary transition-colors"
                   whileHover={{ scale: 1.05, x: 2 }}
                   whileTap={{ scale: 0.95 }}
                 >
@@ -385,13 +385,13 @@ const Login = () => {
               <motion.button
                 type="submit"
                 disabled={loading}
-                className="group relative w-full flex justify-center py-3 px-4 border border-transparent text-sm font-medium rounded-xl text-white bg-linear-to-r from-black to-gray-800 hover:from-gray-800 hover:to-black focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-400 transition-all disabled:opacity-50 disabled:cursor-not-allowed overflow-hidden"
+                className="group relative w-full flex justify-center py-3 px-4 border border-transparent text-sm font-medium rounded-xl text-primary-content bg-primary hover:bg-secondary focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary transition-all disabled:opacity-50 disabled:cursor-not-allowed overflow-hidden"
                 whileHover={!loading ? { scale: 1.02, boxShadow: "0 10px 30px -10px rgba(0, 0, 0, 0.3)" } : {}}
                 whileTap={!loading ? { scale: 0.98 } : {}}
               >
                 {/* Button Glow Effect */}
                 <motion.div
-                  className="absolute inset-0 bg-linear-to-r from-yellow-400/0 via-yellow-400/30 to-yellow-400/0"
+                  className="absolute inset-0 bg-secondary/30"
                   animate={loading ? {
                     x: ['-100%', '100%'],
                   } : {}}
@@ -405,7 +405,7 @@ const Login = () => {
                   {loading ? (
                     <>
                       <motion.svg
-                        className="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
+                        className="animate-spin -ml-1 mr-3 h-5 w-5 text-primary-content"
                         xmlns="http://www.w3.org/2000/svg"
                         fill="none"
                         viewBox="0 0 24 24"
@@ -445,10 +445,10 @@ const Login = () => {
               transition={{ delay: 0.9 }}
             >
               <div className="absolute inset-0 flex items-center">
-                <div className="w-full border-t border-gray-300"></div>
+                <div className="w-full border-t border-base-300"></div>
               </div>
               <div className="relative flex justify-center text-sm">
-                <span className="px-4 bg-white/90 text-gray-500">Or continue with</span>
+                <span className="px-4 bg-base-100/90 text-base-content/60">Or continue with</span>
               </div>
             </motion.div>
 
@@ -463,7 +463,7 @@ const Login = () => {
                 <motion.button
                   key={provider}
                   type="button"
-                  className="w-full inline-flex justify-center py-2.5 px-4 border border-gray-300 rounded-xl shadow-sm bg-white/50 backdrop-blur-sm text-sm font-medium text-gray-500 hover:bg-gray-50 transition-colors"
+                  className="w-full inline-flex justify-center py-2.5 px-4 border border-base-300 rounded-xl shadow-sm bg-base-100/50 backdrop-blur-sm text-sm font-medium text-base-content/60 hover:bg-base-200 transition-colors"
                   whileHover={{ scale: 1.05, y: -2 }}
                   whileTap={{ scale: 0.95 }}
                   initial={{ opacity: 0, y: 20 }}
@@ -499,10 +499,10 @@ const Login = () => {
               animate={{ opacity: 1 }}
               transition={{ delay: 1.1 }}
             >
-              <span className="text-gray-600">Don't have an account? </span>
+              <span className="text-base-content/70">Don't have an account? </span>
               <Link
                 to="/signup"
-                className="font-medium text-yellow-500 hover:text-yellow-600 transition-colors"
+                className="font-medium text-primary hover:text-secondary transition-colors"
               >
                 <motion.span
                   whileHover={{ scale: 1.05 }}
