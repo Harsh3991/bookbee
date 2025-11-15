@@ -1,4 +1,7 @@
 @import "tailwindcss";
+@plugin "daisyui" {
+  themes: all;
+};
 
 /* Keyframe Animations */
 @keyframes float {
@@ -63,7 +66,7 @@
 }
 
 .shimmer {
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+  background: linear-gradient(90deg, transparent, color-mix(in oklch, oklch(var(--b1)) 30%, transparent), transparent);
   background-size: 1000px 100%;
   animation: shimmer 2s infinite;
 }
@@ -93,39 +96,39 @@ html {
 }
 
 ::-webkit-scrollbar-track {
-  background: #f1f1f1;
+  background: oklch(var(--b2));
 }
 
 ::-webkit-scrollbar-thumb {
-  background: linear-gradient(180deg, #f59e0b, #f97316);
+  background: oklch(var(--p));
   border-radius: 6px;
-  border: 2px solid #f1f1f1;
+  border: 2px solid oklch(var(--b2));
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(180deg, #d97706, #ea580c);
+  background: oklch(var(--s));
 }
 
 /* Selection Color */
 ::selection {
-  background-color: #fbbf24;
-  color: #1f2937;
+  background-color: oklch(var(--p));
+  color: oklch(var(--pc));
 }
 
 ::-moz-selection {
-  background-color: #fbbf24;
-  color: #1f2937;
+  background-color: oklch(var(--p));
+  color: oklch(var(--pc));
 }
 
 /* Focus Styles */
 *:focus-visible {
-  outline: 2px solid #f59e0b;
+  outline: 2px solid oklch(var(--p));
   outline-offset: 2px;
 }
 
 /* Gradient Text */
 .gradient-text {
-  background: linear-gradient(135deg, #f59e0b 0%, #f97316 50%, #eab308 100%);
+  background: linear-gradient(135deg, oklch(var(--p)) 0%, oklch(var(--s)) 50%, oklch(var(--a)) 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -133,10 +136,10 @@ html {
 
 /* Glass Morphism Effect */
 .glass {
-  background: rgba(255, 255, 255, 0.7);
+  background: color-mix(in oklch, oklch(var(--b1)) 70%, transparent);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.3);
+  border: 1px solid color-mix(in oklch, oklch(var(--b1)) 30%, transparent);
 }
 
 /* Shadow Variations */
@@ -145,11 +148,11 @@ html {
 }
 
 .shadow-glow-amber {
-  box-shadow: 0 0 20px rgba(251, 146, 60, 0.3);
+  box-shadow: 0 0 20px color-mix(in oklch, oklch(var(--p)) 30%, transparent);
 }
 
 .shadow-glow-orange {
-  box-shadow: 0 0 20px rgba(249, 115, 22, 0.3);
+  box-shadow: 0 0 20px color-mix(in oklch, oklch(var(--s)) 30%, transparent);
 }
 
 /* Button Hover Effects */
@@ -164,7 +167,7 @@ html {
 
 /* Loading Skeleton */
 .skeleton {
-  background: linear-gradient(90deg, #f3f4f6 25%, #e5e7eb 50%, #f3f4f6 75%);
+  background: linear-gradient(90deg, oklch(var(--b2)) 25%, oklch(var(--b3)) 50%, oklch(var(--b2)) 75%);
   background-size: 200% 100%;
   animation: shimmer 1.5s infinite;
 }

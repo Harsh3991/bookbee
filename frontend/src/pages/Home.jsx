@@ -50,14 +50,14 @@ const Home = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-linear-to-br from-amber-50 via-orange-50 to-yellow-50 flex items-center justify-center">
+      <div className="min-h-screen bg-base-200 flex items-center justify-center">
         <div className="text-center">
           <motion.div
             animate={{ rotate: 360 }}
             transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
-            className="w-16 h-16 border-4 border-amber-200 border-t-amber-500 rounded-full mx-auto"
+            className="w-16 h-16 border-4 border-primary/30 border-t-primary rounded-full mx-auto"
           />
-          <p className="mt-6 text-gray-600 font-medium">Loading amazing stories...</p>
+          <p className="mt-6 text-base-content/70 font-medium">Loading amazing stories...</p>
         </div>
       </div>
     );
@@ -65,15 +65,15 @@ const Home = () => {
 
   if (error) {
     return (
-      <div className="min-h-screen bg-linear-to-br from-amber-50 via-orange-50 to-yellow-50 flex items-center justify-center">
-        <div className="text-center bg-white p-8 rounded-2xl shadow-lg">
-          <svg className="w-16 h-16 text-red-500 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <div className="min-h-screen bg-base-200 flex items-center justify-center">
+        <div className="text-center bg-base-100 p-8 rounded-2xl shadow-lg">
+          <svg className="w-16 h-16 text-error mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
           </svg>
-          <p className="text-red-600 font-semibold text-lg">{error}</p>
+          <p className="text-error font-semibold text-lg">{error}</p>
           <button 
             onClick={() => window.location.reload()}
-            className="mt-4 px-6 py-2 bg-amber-500 text-white rounded-lg hover:bg-amber-600 transition-colors"
+            className="mt-4 px-6 py-2 bg-primary text-primary-content rounded-lg hover:bg-secondary transition-colors"
           >
             Try Again
           </button>
@@ -83,15 +83,15 @@ const Home = () => {
   }
 
   return (
-    <div className="min-h-screen bg-linear-to-br from-amber-50 via-orange-50 to-yellow-50">
+    <div className="min-h-screen bg-base-200">
       <Hero />
       
       {/* Featured Stories Section */}
       <section className="py-20 relative">
         {/* Background decoration */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          <div className="absolute top-0 left-1/4 w-64 h-64 bg-amber-200/20 rounded-full blur-3xl" />
-          <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-orange-200/20 rounded-full blur-3xl" />
+          <div className="absolute top-0 left-1/4 w-64 h-64 bg-primary/10 rounded-full blur-3xl" />
+          <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-secondary/10 rounded-full blur-3xl" />
         </div>
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
@@ -109,18 +109,18 @@ const Home = () => {
               transition={{ duration: 0.5, type: "spring" }}
               className="inline-block mb-4"
             >
-              <span className="inline-flex items-center space-x-2 bg-linear-to-r from-amber-100 to-orange-100 px-4 py-2 rounded-full border border-amber-200">
-                <svg className="w-5 h-5 text-amber-600" fill="currentColor" viewBox="0 0 20 20">
+              <span className="inline-flex items-center space-x-2 bg-primary/10 px-4 py-2 rounded-full border border-primary/30">
+                <svg className="w-5 h-5 text-primary" fill="currentColor" viewBox="0 0 20 20">
                   <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
                 </svg>
-                <span className="text-sm font-bold text-amber-700">Trending Now</span>
+                <span className="text-sm font-bold text-primary">Trending Now</span>
               </span>
             </motion.div>
             
-            <h2 className="text-4xl sm:text-5xl font-bold text-gray-900 mb-4">
+            <h2 className="text-4xl sm:text-5xl font-bold text-base-content mb-4">
               Featured Stories
             </h2>
-            <p className="text-lg sm:text-xl text-gray-600 max-w-2xl mx-auto">
+            <p className="text-lg sm:text-xl text-base-content/70 max-w-2xl mx-auto">
               Discover the most popular and captivating stories from our talented community
             </p>
           </motion.div>
@@ -143,21 +143,21 @@ const Home = () => {
               animate={{ opacity: 1 }}
               className="text-center py-16"
             >
-              <svg className="w-24 h-24 mx-auto text-gray-300 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className="w-24 h-24 mx-auto text-base-content/20 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
               </svg>
-              <p className="text-gray-500 text-lg">No stories available yet</p>
+              <p className="text-base-content/50 text-lg">No stories available yet</p>
             </motion.div>
           )}
         </div>
       </section>
 
       {/* How It Works Section */}
-      <section className="py-20 bg-white relative overflow-hidden">
+      <section className="py-20 bg-base-100 relative overflow-hidden">
         {/* Decorative elements */}
         <div className="absolute inset-0 pointer-events-none">
-          <div className="absolute top-1/2 left-0 w-72 h-72 bg-amber-100/50 rounded-full blur-3xl -translate-y-1/2" />
-          <div className="absolute top-1/2 right-0 w-72 h-72 bg-orange-100/50 rounded-full blur-3xl -translate-y-1/2" />
+          <div className="absolute top-1/2 left-0 w-72 h-72 bg-primary/10 rounded-full blur-3xl -translate-y-1/2" />
+          <div className="absolute top-1/2 right-0 w-72 h-72 bg-secondary/10 rounded-full blur-3xl -translate-y-1/2" />
         </div>
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
@@ -168,10 +168,10 @@ const Home = () => {
             variants={fadeInUpVariants}
             className="text-center mb-16"
           >
-            <h2 className="text-4xl sm:text-5xl font-bold text-gray-900 mb-4">
+            <h2 className="text-4xl sm:text-5xl font-bold text-base-content mb-4">
               How It Works
             </h2>
-            <p className="text-lg sm:text-xl text-gray-600 max-w-2xl mx-auto">
+            <p className="text-lg sm:text-xl text-base-content/70 max-w-2xl mx-auto">
               Start your storytelling journey in four simple steps
             </p>
           </motion.div>
@@ -187,7 +187,7 @@ const Home = () => {
                 ),
                 title: 'Discover',
                 description: 'Browse thousands of stories across multiple genres and find your next favorite read',
-                color: 'from-amber-400 to-orange-400'
+                color: 'primary'
               },
               {
                 step: '02',
@@ -198,7 +198,7 @@ const Home = () => {
                 ),
                 title: 'Read',
                 description: 'Enjoy seamless reading experience with bookmarks and progress tracking',
-                color: 'from-orange-400 to-yellow-400'
+                color: 'secondary'
               },
               {
                 step: '03',
@@ -209,7 +209,7 @@ const Home = () => {
                 ),
                 title: 'Write',
                 description: 'Create your own stories with our powerful and intuitive writing tools',
-                color: 'from-yellow-400 to-amber-400'
+                color: 'accent'
               },
               {
                 step: '04',
@@ -220,7 +220,7 @@ const Home = () => {
                 ),
                 title: 'Share',
                 description: 'Connect with readers and writers, share feedback, and grow together',
-                color: 'from-amber-400 to-orange-500'
+                color: 'primary'
               }
             ].map((item, index) => (
               <motion.div
@@ -233,21 +233,21 @@ const Home = () => {
                 className="relative group"
               >
                 {/* Step number background */}
-                <div className="absolute -top-4 -left-4 text-8xl font-bold text-gray-100 group-hover:text-amber-100 transition-colors">
+                <div className="absolute -top-4 -left-4 text-8xl font-bold text-base-content/5 group-hover:text-primary/10 transition-colors">
                   {item.step}
                 </div>
                 
-                <div className="relative bg-white rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-all border border-gray-100 group-hover:border-amber-200">
+                <div className="relative bg-base-100 rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-all border border-base-300 group-hover:border-primary/30">
                   {/* Icon */}
-                  <div className={`inline-flex p-4 rounded-2xl bg-linear-to-br ${item.color} text-white mb-6 shadow-lg group-hover:scale-110 transition-transform`}>
+                  <div className={`inline-flex p-4 rounded-2xl bg-${item.color} text-${item.color === 'primary' || item.color === 'secondary' || item.color === 'accent' ? item.color + '-content' : 'white'} mb-6 shadow-lg group-hover:scale-110 transition-transform`}>
                     {item.icon}
                   </div>
                   
                   {/* Content */}
-                  <h3 className="text-2xl font-bold text-gray-900 mb-3 group-hover:text-amber-600 transition-colors">
+                  <h3 className="text-2xl font-bold text-base-content mb-3 group-hover:text-primary transition-colors">
                     {item.title}
                   </h3>
-                  <p className="text-gray-600 leading-relaxed">
+                  <p className="text-base-content/70 leading-relaxed">
                     {item.description}
                   </p>
                 </div>

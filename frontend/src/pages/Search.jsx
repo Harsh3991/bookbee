@@ -102,7 +102,7 @@ const Search = () => {
   }
 
   return (
-    <div className="min-h-screen bg-linear-to-br from-gray-50 via-yellow-50/30 to-gray-50 pt-6 sm:pt-8 md:pt-12 pb-8">
+    <div className="min-h-screen bg-base-200 pt-6 sm:pt-8 md:pt-12 pb-8">
       <div className="max-w-7xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8">
         {/* Search Header */}
         <motion.div
@@ -111,10 +111,10 @@ const Search = () => {
           transition={{ duration: 0.6 }}
           className="text-center mb-6 sm:mb-8 md:mb-10"
         >
-          <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-2 sm:mb-3 md:mb-4 px-2 leading-tight">
+          <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-base-content mb-2 sm:mb-3 md:mb-4 px-2 leading-tight">
             🔍 Search Stories
           </h1>
-          <p className="text-base sm:text-lg md:text-xl text-gray-600 max-w-2xl mx-auto px-4">
+          <p className="text-base sm:text-lg md:text-xl text-base-content/70 max-w-2xl mx-auto px-4">
             Find your next favorite story from our collection
           </p>
         </motion.div>
@@ -124,7 +124,7 @@ const Search = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.2 }}
-          className="bg-white/90 backdrop-blur-md rounded-xl sm:rounded-2xl lg:rounded-3xl shadow-lg sm:shadow-xl border border-gray-100 p-4 sm:p-5 md:p-6 lg:p-8 mb-6 sm:mb-8"
+          className="bg-base-100/90 backdrop-blur-md rounded-xl sm:rounded-2xl lg:rounded-3xl shadow-lg sm:shadow-xl border border-base-300 p-4 sm:p-5 md:p-6 lg:p-8 mb-6 sm:mb-8"
         >
           {/* Filters Grid - Stacks vertically on mobile, expands horizontally on larger screens */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 lg:gap-5 mb-4 sm:mb-5">
@@ -147,8 +147,8 @@ const Search = () => {
 
             {/* Genre Filter */}
             <div>
-              <label className="flex items-center text-xs sm:text-sm font-semibold text-gray-700 mb-1.5 sm:mb-2">
-                <span className="mr-1.5">🎭</span>
+              <label className="flex items-center text-xs sm:text-sm font-semibold text-base-content mb-1.5 sm:mb-2">
+                <span className="mr-1.5">📚</span>
                 Genre
               </label>
               <select
@@ -171,7 +171,7 @@ const Search = () => {
 
             {/* Status Filter */}
             <div>
-              <label className="flex items-center text-xs sm:text-sm font-semibold text-gray-700 mb-1.5 sm:mb-2">
+              <label className="flex items-center text-xs sm:text-sm font-semibold text-base-content mb-1.5 sm:mb-2">
                 <span className="mr-1.5">📊</span>
                 Status
               </label>
@@ -195,7 +195,7 @@ const Search = () => {
 
             {/* Author Filter */}
             <div>
-              <label className="flex items-center text-xs sm:text-sm font-semibold text-gray-700 mb-1.5 sm:mb-2">
+              <label className="flex items-center text-xs sm:text-sm font-semibold text-base-content mb-1.5 sm:mb-2">
                 <span className="mr-1.5">✍️</span>
                 Author
               </label>
@@ -217,12 +217,12 @@ const Search = () => {
               whileTap={{ scale: 0.98 }}
               onClick={() => handleSearch()}
               disabled={loading}
-              className="bg-linear-to-r from-yellow-400 to-yellow-500 hover:from-yellow-500 hover:to-yellow-600 disabled:from-yellow-300 disabled:to-yellow-300 text-black px-6 sm:px-8 py-3 sm:py-3.5 rounded-xl sm:rounded-2xl font-bold text-sm sm:text-base transition-all duration-300 flex items-center justify-center shadow-lg shadow-yellow-500/30 disabled:shadow-none disabled:cursor-not-allowed touch-manipulation min-h-11"
+              className="bg-primary hover:bg-primary/90 disabled:bg-primary/50 text-primary-content px-6 sm:px-8 py-3 sm:py-3.5 rounded-xl sm:rounded-2xl font-bold text-sm sm:text-base transition-all duration-300 flex items-center justify-center shadow-lg disabled:shadow-none disabled:cursor-not-allowed touch-manipulation min-h-11"
               aria-label="Search stories"
             >
               {loading ? (
                 <>
-                  <div className="animate-spin rounded-full h-4 w-4 sm:h-5 sm:w-5 border-2 border-black border-t-transparent mr-2"></div>
+                  <div className="animate-spin rounded-full h-4 w-4 sm:h-5 sm:w-5 border-2 border-primary-content border-t-transparent mr-2"></div>
                   <span>Searching...</span>
                 </>
               ) : (
@@ -236,7 +236,7 @@ const Search = () => {
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
               onClick={handleClearFilters}
-              className="bg-gray-100 hover:bg-gray-200 text-gray-700 px-6 sm:px-8 py-3 sm:py-3.5 rounded-xl sm:rounded-2xl font-semibold text-sm sm:text-base transition-all duration-300 border-2 border-gray-200 hover:border-gray-300 touch-manipulation min-h-11 flex items-center justify-center"
+              className="bg-base-200 hover:bg-base-300 text-base-content px-6 sm:px-8 py-3 sm:py-3.5 rounded-xl sm:rounded-2xl font-semibold text-sm sm:text-base transition-all duration-300 border-2 border-base-300 hover:border-base-content/20 touch-manipulation min-h-11 flex items-center justify-center"
               aria-label="Clear all filters"
             >
               <span className="mr-2">🔄</span>
@@ -250,7 +250,7 @@ const Search = () => {
           <motion.div
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
-            className="bg-red-50 border-2 border-red-200 text-red-700 px-4 sm:px-5 py-3 sm:py-4 rounded-xl mb-6 sm:mb-8 flex items-start space-x-2 shadow-sm"
+            className="bg-error/20 border-2 border-error text-error-content px-4 sm:px-5 py-3 sm:py-4 rounded-xl mb-6 sm:mb-8 flex items-start space-x-2 shadow-sm"
             role="alert"
           >
             <span className="text-lg sm:text-xl shrink-0">⚠️</span>
@@ -267,12 +267,12 @@ const Search = () => {
           >
             <div className="text-center">
               <div className="relative mx-auto w-16 h-16 sm:w-20 sm:h-20">
-                <div className="animate-spin rounded-full h-full w-full border-4 sm:border-[5px] border-yellow-200 border-t-yellow-400"></div>
+                <div className="animate-spin rounded-full h-full w-full border-4 sm:border-[5px] border-base-300 border-t-primary"></div>
                 <div className="absolute inset-0 flex items-center justify-center">
                   <span className="text-2xl sm:text-3xl">✨</span>
                 </div>
               </div>
-              <p className="mt-4 sm:mt-6 text-gray-600 text-sm sm:text-base font-medium">Searching stories...</p>
+              <p className="mt-4 sm:mt-6 text-base-content/70 text-sm sm:text-base font-medium">Searching stories...</p>
             </div>
           </motion.div>
         )}
@@ -286,13 +286,13 @@ const Search = () => {
               transition={{ duration: 0.6, delay: 0.4 }}
               className="mb-6 sm:mb-8"
             >
-              <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 mb-2 flex items-center">
+              <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-base-content mb-2 flex items-center">
                 <span className="mr-2 text-2xl sm:text-3xl">
                   {hasSearched ? '🎯' : '🔥'}
                 </span>
                 <span>{hasSearched ? 'Search Results' : 'Popular Stories'}</span>
               </h2>
-              <p className="text-sm sm:text-base text-gray-600">
+              <p className="text-sm sm:text-base text-base-content/70">
                 {hasSearched ? `Found ${stories.length} ${stories.length === 1 ? 'story' : 'stories'}` : 'Discover trending stories'}
               </p>
             </motion.div>
@@ -328,9 +328,9 @@ const Search = () => {
                   <span>Previous</span>
                 </motion.button>
                 
-                <div className="flex items-center space-x-2 px-4 py-2.5 bg-yellow-100 border-2 border-yellow-300 rounded-xl">
-                  <span className="text-xs sm:text-sm font-semibold text-gray-700">
-                    Page <span className="text-yellow-700 text-base sm:text-lg font-bold mx-1">{currentPage}</span> of {totalPages}
+                <div className="flex items-center space-x-2 px-4 py-2.5 bg-primary/20 border-2 border-primary rounded-xl">
+                  <span className="text-xs sm:text-sm font-semibold text-base-content">
+                    Page <span className="text-primary text-base sm:text-lg font-bold mx-1">{currentPage}</span> of {totalPages}
                   </span>
                 </div>
                 
@@ -358,15 +358,15 @@ const Search = () => {
             className="text-center py-12 sm:py-16 md:py-20 px-4"
           >
             <div className="text-6xl sm:text-7xl md:text-8xl mb-4 sm:mb-6">📚</div>
-            <h3 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 mb-2 sm:mb-3">No Stories Found</h3>
-            <p className="text-sm sm:text-base md:text-lg text-gray-600 max-w-md mx-auto mb-6 sm:mb-8">
+            <h3 className="text-xl sm:text-2xl md:text-3xl font-bold text-base-content mb-2 sm:mb-3">No Stories Found</h3>
+            <p className="text-sm sm:text-base md:text-lg text-base-content/70 max-w-md mx-auto mb-6 sm:mb-8">
               We couldn't find any stories matching your search. Try adjusting your filters or search terms.
             </p>
             <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               onClick={handleClearFilters}
-              className="px-6 sm:px-8 py-3 bg-linear-to-r from-yellow-400 to-yellow-500 hover:from-yellow-500 hover:to-yellow-600 text-black rounded-xl font-bold shadow-lg shadow-yellow-500/30 transition-all duration-300 text-sm sm:text-base touch-manipulation"
+              className="px-6 sm:px-8 py-3 bg-primary hover:bg-primary/90 text-primary-content rounded-xl font-bold shadow-lg transition-all duration-300 text-sm sm:text-base touch-manipulation"
             >
               Clear Filters & Try Again
             </motion.button>

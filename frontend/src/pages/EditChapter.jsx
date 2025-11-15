@@ -101,7 +101,7 @@ const EditChapter = () => {
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
         <div className="text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-yellow-400 mx-auto"></div>
-          <p className="mt-4 text-gray-600">Loading chapter...</p>
+          <p className="mt-4 text-base-content/70">Loading chapter...</p>
         </div>
       </div>
     );
@@ -114,7 +114,7 @@ const EditChapter = () => {
           <div className="text-red-600 mb-4">{error}</div>
           <button
             onClick={() => navigate('/profile')}
-            className="bg-yellow-400 hover:bg-yellow-500 text-black px-6 py-2 rounded-lg font-semibold"
+            className="bg-primary hover:bg-primary/90 text-primary-content px-6 py-2 rounded-lg font-semibold"
           >
             Back to Profile
           </button>
@@ -131,12 +131,12 @@ const EditChapter = () => {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="bg-white rounded-xl shadow-lg p-6"
+          className="bg-base-100 rounded-xl shadow-lg p-6"
         >
           <div className="mb-6">
             <button
               onClick={() => navigate(`/story-editor/${storyId}`)}
-              className="flex items-center gap-2 text-gray-600 hover:text-gray-800 mb-4"
+              className="flex items-center gap-2 text-base-content/70 hover:text-base-content mb-4"
             >
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
@@ -144,15 +144,15 @@ const EditChapter = () => {
               Back to Story Editor
             </button>
 
-            <h1 className="text-2xl font-bold text-gray-900 mb-2">Edit Chapter</h1>
-            <p className="text-gray-600">
+            <h1 className="text-2xl font-bold text-base-content mb-2">Edit Chapter</h1>
+            <p className="text-base-content/70">
               Editing Chapter {chapter.chapterNumber} of "{story.title}"
             </p>
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-6">
             <div>
-              <label htmlFor="title" className="block text-sm font-medium text-gray-700 mb-2">
+              <label htmlFor="title" className="block text-sm font-medium text-base-content mb-2">
                 Chapter Title *
               </label>
               <input
@@ -161,13 +161,13 @@ const EditChapter = () => {
                 value={formData.title}
                 onChange={(e) => handleInputChange('title', e.target.value)}
                 placeholder="Enter chapter title..."
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-400 focus:border-transparent"
+                className="w-full px-4 py-3 border border-base-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
                 required
               />
             </div>
 
             <div>
-              <label htmlFor="content" className="block text-sm font-medium text-gray-700 mb-2">
+              <label htmlFor="content" className="block text-sm font-medium text-base-content mb-2">
                 Chapter Content *
               </label>
               <textarea
@@ -176,10 +176,10 @@ const EditChapter = () => {
                 onChange={(e) => handleInputChange('content', e.target.value)}
                 placeholder="Write your chapter content here..."
                 rows={20}
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-400 focus:border-transparent resize-vertical"
+                className="w-full px-4 py-3 border border-base-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent resize-vertical"
                 required
               />
-              <p className="text-sm text-gray-500 mt-1">
+              <p className="text-sm text-base-content/60 mt-1">
                 Tip: You can edit and publish this chapter later from the story editor.
               </p>
             </div>
@@ -194,7 +194,7 @@ const EditChapter = () => {
               <button
                 type="submit"
                 disabled={saving}
-                className="bg-yellow-400 hover:bg-yellow-500 disabled:bg-yellow-300 text-black px-6 py-3 rounded-lg font-semibold transition-colors flex-1"
+                className="bg-primary hover:bg-primary/90 disabled:bg-primary/50 text-primary-content px-6 py-3 rounded-lg font-semibold transition-colors flex-1"
               >
                 {saving ? (
                   <div className="flex items-center justify-center gap-2">
@@ -208,7 +208,7 @@ const EditChapter = () => {
               <button
                 type="button"
                 onClick={() => navigate(`/story-editor/${storyId}`)}
-                className="bg-gray-200 hover:bg-gray-300 text-gray-700 px-6 py-3 rounded-lg font-semibold transition-colors"
+                className="bg-base-200 hover:bg-base-300 text-base-content px-6 py-3 rounded-lg font-semibold transition-colors"
               >
                 Cancel
               </button>

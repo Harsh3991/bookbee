@@ -168,10 +168,10 @@ const Read = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+      <div className="min-h-screen bg-base-200 flex items-center justify-center">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-yellow-400 mx-auto"></div>
-          <p className="mt-4 text-gray-600">Loading story...</p>
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto"></div>
+          <p className="mt-4 text-base-content/70">Loading story...</p>
         </div>
       </div>
     );
@@ -179,44 +179,44 @@ const Read = () => {
 
   if (!story || !currentChapter) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+      <div className="min-h-screen bg-base-200 flex items-center justify-center">
         <div className="text-center">
-          <p className="text-red-600">Story or chapter not found</p>
+          <p className="text-error">Story or chapter not found</p>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-base-200">
       {/* Header */}
-      <div className="bg-white shadow-sm border-b sticky top-0 z-10">
+      <div className="bg-base-100 shadow-sm border-b border-base-300 sticky top-0 z-10">
         <div className="max-w-7xl mx-auto px-3 sm:px-4 md:px-6 py-3 sm:py-4">
           {/* Mobile: Stack vertically; Tablet+: Side by side */}
           <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3 md:gap-4">
             <div className="flex items-center gap-2 sm:gap-3 md:gap-4">
               <button
                 onClick={() => navigate('/')}
-                className="text-gray-600 hover:text-gray-900 text-xs sm:text-sm md:text-base whitespace-nowrap shrink-0"
+                className="text-base-content/70 hover:text-base-content text-xs sm:text-sm md:text-base whitespace-nowrap shrink-0"
                 aria-label="Back to Home"
               >
                 ← <span className="hidden sm:inline">Back to Home</span>
                 <span className="sm:hidden">Back</span>
               </button>
               <div className="min-w-0 flex-1">
-                <h1 className="text-sm sm:text-base md:text-xl lg:text-2xl font-bold text-gray-900 truncate">{story.title}</h1>
-                <p className="text-xs sm:text-sm text-gray-600 truncate">by {story.author?.name || 'Unknown Author'}</p>
+                <h1 className="text-sm sm:text-base md:text-xl lg:text-2xl font-bold text-base-content truncate">{story.title}</h1>
+                <p className="text-xs sm:text-sm text-base-content/70 truncate">by {story.author?.name || 'Unknown Author'}</p>
               </div>
             </div>
 
             {/* Progress Section - Horizontal on mobile, enhanced on larger screens */}
             <div className="flex items-center gap-2 sm:gap-3 md:gap-4 shrink-0">
-              <div className="text-xs sm:text-sm text-gray-600 whitespace-nowrap">
+              <div className="text-xs sm:text-sm text-base-content/70 whitespace-nowrap">
                 Ch {currentChapter.chapterNumber}/{chapters.length}
               </div>
-              <div className="w-20 sm:w-24 md:w-32 lg:w-40 bg-gray-200 rounded-full h-1.5 sm:h-2 shrink-0">
+              <div className="w-20 sm:w-24 md:w-32 lg:w-40 bg-base-300 rounded-full h-1.5 sm:h-2 shrink-0">
                 <div
-                  className="bg-yellow-400 h-1.5 sm:h-2 rounded-full transition-all duration-300"
+                  className="bg-primary h-1.5 sm:h-2 rounded-full transition-all duration-300"
                   style={{ width: `${progress}%` }}
                   role="progressbar"
                   aria-valuenow={progress}
@@ -224,7 +224,7 @@ const Read = () => {
                   aria-valuemax="100"
                 ></div>
               </div>
-              <span className="text-xs sm:text-sm text-gray-600 w-8 sm:w-10 text-right">{progress}%</span>
+              <span className="text-xs sm:text-sm text-base-content/70 w-8 sm:w-10 text-right">{progress}%</span>
             </div>
           </div>
 
@@ -235,7 +235,7 @@ const Read = () => {
               <button
                 onClick={goToPreviousChapter}
                 disabled={chapters.findIndex(ch => ch._id === currentChapter._id) === 0}
-                className="px-3 py-2 text-xs sm:text-sm bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 disabled:opacity-50 disabled:cursor-not-allowed min-h-11 touch-manipulation"
+                className="px-3 py-2 text-xs sm:text-sm bg-base-200 text-base-content rounded-lg hover:bg-base-300 disabled:opacity-50 disabled:cursor-not-allowed min-h-11 touch-manipulation"
                 aria-label="Previous Chapter"
               >
                 ← Prev
@@ -248,7 +248,7 @@ const Read = () => {
                   const chapter = chapters.find(ch => ch._id === e.target.value);
                   if (chapter) goToChapter(chapter);
                 }}
-                className="flex-1 px-2 py-2 text-xs sm:text-sm bg-gray-100 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-400 focus:border-transparent min-h-11"
+                className="flex-1 px-2 py-2 text-xs sm:text-sm bg-base-100 border border-base-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent min-h-11"
               >
                 {chapters.map((chapter) => (
                   <option key={chapter._id} value={chapter._id}>
@@ -260,7 +260,7 @@ const Read = () => {
               <button
                 onClick={goToNextChapter}
                 disabled={chapters.findIndex(ch => ch._id === currentChapter._id) === chapters.length - 1}
-                className="px-3 py-2 text-xs sm:text-sm bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 disabled:opacity-50 disabled:cursor-not-allowed min-h-11 touch-manipulation"
+                className="px-3 py-2 text-xs sm:text-sm bg-base-200 text-base-content rounded-lg hover:bg-base-300 disabled:opacity-50 disabled:cursor-not-allowed min-h-11 touch-manipulation"
                 aria-label="Next Chapter"
               >
                 Next →
@@ -272,7 +272,7 @@ const Read = () => {
               <button
                 onClick={goToPreviousChapter}
                 disabled={chapters.findIndex(ch => ch._id === currentChapter._id) === 0}
-                className="px-4 py-2 text-sm lg:text-base bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 disabled:opacity-50 disabled:cursor-not-allowed whitespace-nowrap"
+                className="px-4 py-2 text-sm lg:text-base bg-base-200 text-base-content rounded-lg hover:bg-base-300 disabled:opacity-50 disabled:cursor-not-allowed whitespace-nowrap"
                 aria-label="Previous Chapter"
               >
                 ← Previous
@@ -285,8 +285,8 @@ const Read = () => {
                     onClick={() => goToChapter(chapter)}
                     className={`px-2 lg:px-3 py-2 rounded-lg text-xs lg:text-sm whitespace-nowrap shrink-0 transition-colors ${
                       chapter._id === currentChapter._id
-                        ? 'bg-yellow-400 text-black font-semibold'
-                        : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+                        ? 'bg-primary text-primary-content font-semibold'
+                        : 'bg-base-200 text-base-content hover:bg-base-300'
                     }`}
                     aria-label={`Go to chapter ${chapter.chapterNumber}`}
                     aria-current={chapter._id === currentChapter._id ? 'page' : undefined}
@@ -299,7 +299,7 @@ const Read = () => {
               <button
                 onClick={goToNextChapter}
                 disabled={chapters.findIndex(ch => ch._id === currentChapter._id) === chapters.length - 1}
-                className="px-4 py-2 text-sm lg:text-base bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 disabled:opacity-50 disabled:cursor-not-allowed whitespace-nowrap"
+                className="px-4 py-2 text-sm lg:text-base bg-base-200 text-base-content rounded-lg hover:bg-base-300 disabled:opacity-50 disabled:cursor-not-allowed whitespace-nowrap"
                 aria-label="Next Chapter"
               >
                 Next →
@@ -317,15 +317,15 @@ const Read = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
         >
-          <div className="bg-white rounded-lg shadow-sm p-4 sm:p-6 md:p-8">
-            <h2 className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-bold text-gray-900 mb-4 sm:mb-6">
+          <div className="bg-base-100 rounded-lg shadow-sm p-4 sm:p-6 md:p-8">
+            <h2 className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-bold text-base-content mb-4 sm:mb-6">
               Chapter {currentChapter.chapterNumber}: {currentChapter.title}
             </h2>
 
             <div
               id="chapter-content"
               onScroll={handleScroll}
-              className="prose prose-sm sm:prose-base md:prose-lg lg:prose-xl max-w-none leading-relaxed text-gray-800 [&>p]:wrap-break-word"
+              className="prose prose-sm sm:prose-base md:prose-lg lg:prose-xl max-w-none leading-relaxed text-base-content [&>p]:wrap-break-word"
               style={{
                 maxHeight: window.innerWidth < 640 ? '55vh' : window.innerWidth < 1024 ? '65vh' : '70vh',
                 overflowY: 'auto',
@@ -345,7 +345,7 @@ const Read = () => {
             <button
               onClick={goToPreviousChapter}
               disabled={chapters.findIndex(ch => ch._id === currentChapter._id) === 0}
-              className="w-full sm:w-auto px-4 sm:px-6 py-3 text-sm sm:text-base bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 disabled:opacity-50 disabled:cursor-not-allowed min-h-11 sm:min-h-12 touch-manipulation transition-colors"
+              className="w-full sm:w-auto px-4 sm:px-6 py-3 text-sm sm:text-base bg-base-200 text-base-content rounded-lg hover:bg-base-300 disabled:opacity-50 disabled:cursor-not-allowed min-h-11 sm:min-h-12 touch-manipulation transition-colors"
               aria-label="Previous Chapter"
             >
               ← Previous Chapter
@@ -354,7 +354,7 @@ const Read = () => {
             <button
               onClick={goToNextChapter}
               disabled={chapters.findIndex(ch => ch._id === currentChapter._id) === chapters.length - 1}
-              className="w-full sm:w-auto px-4 sm:px-6 py-3 text-sm sm:text-base bg-yellow-400 text-black rounded-lg hover:bg-yellow-500 disabled:opacity-50 disabled:cursor-not-allowed font-semibold min-h-11 sm:min-h-12 touch-manipulation transition-colors"
+              className="w-full sm:w-auto px-4 sm:px-6 py-3 text-sm sm:text-base bg-primary text-primary-content rounded-lg hover:bg-primary/90 disabled:opacity-50 disabled:cursor-not-allowed font-semibold min-h-11 sm:min-h-12 touch-manipulation transition-colors"
               aria-label="Next Chapter"
             >
               Next Chapter →
