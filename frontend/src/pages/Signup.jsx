@@ -1,9 +1,68 @@
 import { motion, AnimatePresence } from 'framer-motion';
 import { Link, useNavigate, useSearchParams } from 'react-router-dom';
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import { api } from '../services/api';
 import { useAuth } from '../contexts/AuthContext';
 import TermsAndConditions from '../components/TermsAndConditions';
+
+// Floating background elements - defined outside to prevent re-creation on re-renders
+const FloatingElement = ({ delay, duration, x, y, width, height }) => (
+  <motion.div
+    className="absolute rounded-full bg-primary opacity-20"
+    style={{ width, height, left: `${x}%`, top: `${y}%` }}
+    animate={{
+      y: [0, -30, 0],
+      x: [0, 15, 0],
+      scale: [1, 1.1, 1],
+    }}
+    transition={{
+      duration,
+      repeat: Infinity,
+      delay,
+      ease: "easeInOut",
+    }}
+  />
+);
+
+// Bee icon animation - defined outside to prevent re-creation
+const BeeIcon = () => (
+  <motion.div
+    className="absolute -top-16 -right-16 text-primary opacity-30"
+    animate={{
+      rotate: [0, 10, -10, 0],
+      y: [0, -10, 0],
+    }}
+    transition={{
+      duration: 3,
+      repeat: Infinity,
+      ease: "easeInOut",
+    }}
+  >
+    <svg width="80" height="80" viewBox="0 0 24 24" fill="currentColor">
+      <path d="M12 2C10.9 2 10 2.9 10 4C10 4.4 10.1 4.7 10.3 5C9.5 5.3 8.9 6.1 8.9 7C8.9 7.5 9.1 8 9.4 8.4C8.6 8.9 8 9.7 8 10.7C8 11.4 8.3 12 8.7 12.5C8.3 13 8 13.6 8 14.3C8 15.5 8.8 16.5 10 16.9V19C10 20.1 10.9 21 12 21C13.1 21 14 20.1 14 19V16.9C15.2 16.5 16 15.5 16 14.3C16 13.6 15.7 13 15.3 12.5C15.7 12 16 11.4 16 10.7C16 9.7 15.4 8.9 14.6 8.4C14.9 8 15.1 7.5 15.1 7C15.1 6.1 14.5 5.3 13.7 5C13.9 4.7 14 4.4 14 4C14 2.9 13.1 2 12 2Z"/>
+    </svg>
+  </motion.div>
+);
+
+// Book icon animation - defined outside to prevent re-creation
+const BookIcon = () => (
+  <motion.div
+    className="absolute -bottom-16 -left-16 text-primary opacity-30"
+    animate={{
+      rotate: [0, -10, 10, 0],
+      x: [0, 5, -5, 0],
+    }}
+    transition={{
+      duration: 4,
+      repeat: Infinity,
+      ease: "easeInOut",
+    }}
+  >
+    <svg width="80" height="80" viewBox="0 0 24 24" fill="currentColor">
+      <path d="M18 2H6C4.9 2 4 2.9 4 4V20C4 21.1 4.9 22 6 22H18C19.1 22 20 21.1 20 20V4C20 2.9 19.1 2 18 2ZM18 20H6V4H18V20ZM7 10H17V12H7V10ZM7 14H17V16H7V14ZM7 6H17V8H7V6Z"/>
+    </svg>
+  </motion.div>
+);
 
 const Signup = () => {
   const [formData, setFormData] = useState({
@@ -74,69 +133,13 @@ const Signup = () => {
     }
   };
 
-  // Floating background elements
-  const FloatingElement = ({ delay, duration, x, y }) => (
-    <motion.div
-      className="absolute rounded-full bg-primary opacity-20"
-      style={{
-        width: Math.random() * 100 + 50,
-        height: Math.random() * 100 + 50,
-        left: `${x}%`,
-        top: `${y}%`,
-      }}
-      animate={{
-        y: [0, -30, 0],
-        x: [0, 15, 0],
-        scale: [1, 1.1, 1],
-      }}
-      transition={{
-        duration,
-        repeat: Infinity,
-        delay,
-        ease: "easeInOut",
-      }}
-    />
-  );
-
-  // Bee icon animation
-  const BeeIcon = () => (
-    <motion.div
-      className="absolute -top-16 -right-16 text-primary opacity-30"
-      animate={{
-        rotate: [0, 10, -10, 0],
-        y: [0, -10, 0],
-      }}
-      transition={{
-        duration: 3,
-        repeat: Infinity,
-        ease: "easeInOut",
-      }}
-    >
-      <svg width="80" height="80" viewBox="0 0 24 24" fill="currentColor">
-        <path d="M12 2C10.9 2 10 2.9 10 4C10 4.4 10.1 4.7 10.3 5C9.5 5.3 8.9 6.1 8.9 7C8.9 7.5 9.1 8 9.4 8.4C8.6 8.9 8 9.7 8 10.7C8 11.4 8.3 12 8.7 12.5C8.3 13 8 13.6 8 14.3C8 15.5 8.8 16.5 10 16.9V19C10 20.1 10.9 21 12 21C13.1 21 14 20.1 14 19V16.9C15.2 16.5 16 15.5 16 14.3C16 13.6 15.7 13 15.3 12.5C15.7 12 16 11.4 16 10.7C16 9.7 15.4 8.9 14.6 8.4C14.9 8 15.1 7.5 15.1 7C15.1 6.1 14.5 5.3 13.7 5C13.9 4.7 14 4.4 14 4C14 2.9 13.1 2 12 2Z"/>
-      </svg>
-    </motion.div>
-  );
-
-  // Book icon animation
-  const BookIcon = () => (
-    <motion.div
-      className="absolute -bottom-16 -left-16 text-primary opacity-30"
-      animate={{
-        rotate: [0, -10, 10, 0],
-        x: [0, 5, -5, 0],
-      }}
-      transition={{
-        duration: 4,
-        repeat: Infinity,
-        ease: "easeInOut",
-      }}
-    >
-      <svg width="80" height="80" viewBox="0 0 24 24" fill="currentColor">
-        <path d="M18 2H6C4.9 2 4 2.9 4 4V20C4 21.1 4.9 22 6 22H18C19.1 22 20 21.1 20 20V4C20 2.9 19.1 2 18 2ZM18 20H6V4H18V20ZM7 10H17V12H7V10ZM7 14H17V16H7V14ZM7 6H17V8H7V6Z"/>
-      </svg>
-    </motion.div>
-  );
+  // Memoize floating element dimensions to prevent re-calculation on every render
+  const floatingElements = useMemo(() => [
+    { delay: 0, duration: 6, x: 10, y: 20, width: 120, height: 120 },
+    { delay: 1, duration: 8, x: 80, y: 70, width: 150, height: 150 },
+    { delay: 2, duration: 7, x: 15, y: 80, width: 100, height: 100 },
+    { delay: 1.5, duration: 9, x: 85, y: 15, width: 130, height: 130 },
+  ], []);
 
   const getPasswordStrengthColor = () => {
     if (passwordStrength < 40) return 'bg-error';
@@ -180,10 +183,9 @@ const Signup = () => {
       </div>
 
       {/* Floating Elements */}
-      <FloatingElement delay={0} duration={6} x={10} y={20} />
-      <FloatingElement delay={1} duration={8} x={80} y={70} />
-      <FloatingElement delay={2} duration={7} x={15} y={80} />
-      <FloatingElement delay={1.5} duration={9} x={85} y={15} />
+      {floatingElements.map((props, index) => (
+        <FloatingElement key={index} {...props} />
+      ))}
 
       <motion.div
         initial={{ opacity: 0, y: 50, scale: 0.9 }}
