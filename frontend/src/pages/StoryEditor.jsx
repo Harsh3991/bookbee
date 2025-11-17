@@ -25,6 +25,9 @@ const StoryEditor = () => {
   const [saveError, setSaveError] = useState('');
   const [saveSuccess, setSaveSuccess] = useState(false);
   const [refreshing, setRefreshing] = useState(false);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [deleting, setDeleting] = useState(false);
+  const [deleteError, setDeleteError] = useState('');
 
   // Redirect unauthenticated users to login
   useEffect(() => {
@@ -146,7 +149,7 @@ const StoryEditor = () => {
   };
 
   const handleDeleteChapter = async (chapterId) => {
-    if (window.confirm('Are you sure you want to delete this chapter? This action cannot be undone.')) {
+    if (confirm('Are you sure you want to delete this chapter?')) {
       try {
         await api.deleteChapter(chapterId);
         // Reload data to reflect changes
@@ -156,6 +159,31 @@ const StoryEditor = () => {
         alert('Failed to delete chapter. Please try again.');
       }
     }
+  };
+
+  const handleDeleteClick = () => {
+    setShowDeleteModal(true);
+    setDeleteError('');
+  };
+
+  const handleConfirmDelete = async () => {
+    setDeleting(true);
+    setDeleteError('');
+    
+    try {
+      await api.deleteStory(storyId);
+      // Redirect to profile page after successful deletion
+      navigate('/profile');
+    } catch (err) {
+      console.error('Failed to delete story:', err);
+      setDeleteError(err.message || 'Failed to delete story. Please try again.');
+      setDeleting(false);
+    }
+  };
+
+  const handleCancelDelete = () => {
+    setShowDeleteModal(false);
+    setDeleteError('');
   };
 
   const availableGenres = ['Fantasy', 'Romance', 'Mystery', 'Sci-Fi', 'Horror', 'Adventure', 'Drama', 'Comedy'];
@@ -222,12 +250,30 @@ const StoryEditor = () => {
                         <span>Status: <span className="capitalize font-medium">{story.status}</span></span>
                       </p>
                     </div>
-                    <button
-                      onClick={handleEditToggle}
-                      className="w-full sm:w-auto bg-primary hover:bg-primary/90 text-primary-content px-4 py-2 rounded-lg font-semibold transition-colors text-sm sm:text-base min-h-11 touch-manipulation shrink-0"
-                    >
-                      Edit Story Details
-                    </button>
+                    <div className="flex gap-2 shrink-0 w-full sm:w-auto">
+                      <button
+                        onClick={handleEditToggle}
+                        className="flex-1 sm:flex-none bg-primary hover:bg-primary/90 text-primary-content px-4 py-2 rounded-lg font-semibold transition-colors text-sm sm:text-base min-h-11 touch-manipulation"
+                      >
+                        Edit Story Details
+                      </button>
+                      {user && story.author._id === user._id && (
+                        <div className="relative group">
+                          <button
+                            onClick={handleDeleteClick}
+                            className="bg-base-200 hover:bg-red-100 text-base-content hover:text-red-600 p-2 sm:p-2.5 rounded-lg transition-colors min-h-11 min-w-11 flex items-center justify-center touch-manipulation"
+                            aria-label="Delete story"
+                          >
+                            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                            </svg>
+                          </button>
+                          <div className="absolute bottom-full right-0 mb-2 px-3 py-1 bg-base-content text-base-100 text-xs rounded whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">
+                            Delete the story
+                          </div>
+                        </div>
+                      )}
+                    </div>
                   </div>
 
                   <p className="text-sm sm:text-base text-base-content/80 mb-4 leading-relaxed wrap-break-word">{story.description}</p>
@@ -471,6 +517,71 @@ const StoryEditor = () => {
             </div>
           )}
         </motion.div>
+
+        {/* Delete Confirmation Modal */}
+        {showDeleteModal && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-base-300/50 backdrop-blur-sm">
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              className="bg-base-100 rounded-xl shadow-2xl max-w-md w-full p-6"
+            >
+              <div className="flex items-center gap-3 mb-4">
+                <div className="bg-error/10 text-error p-3 rounded-full">
+                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                  </svg>
+                </div>
+                <h3 className="text-xl font-bold text-base-content">Delete Story</h3>
+              </div>
+              
+              <p className="text-base-content/80 mb-6">
+                Are you sure you want to delete this story? This action cannot be undone and will also delete all chapters.
+              </p>
+
+              {deleteError && (
+                <div className="alert alert-error mb-4">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                  <span>{deleteError}</span>
+                </div>
+              )}
+
+              <div className="flex gap-3">
+                <button
+                  onClick={handleCancelDelete}
+                  disabled={deleting}
+                  className="btn btn-ghost flex-1"
+                >
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+                  Cancel
+                </button>
+                <button
+                  onClick={handleConfirmDelete}
+                  disabled={deleting}
+                  className="btn btn-error flex-1"
+                >
+                  {deleting ? (
+                    <>
+                      <span className="loading loading-spinner loading-sm"></span>
+                      Deleting...
+                    </>
+                  ) : (
+                    <>
+                      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                      </svg>
+                      Yes, Delete
+                    </>
+                  )}
+                </button>
+              </div>
+            </motion.div>
+          </div>
+        )}
       </div>
     </div>
   );

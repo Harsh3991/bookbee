@@ -98,9 +98,9 @@ const EditChapter = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+      <div className="min-h-screen bg-base-200 flex items-center justify-center">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-yellow-400 mx-auto"></div>
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto"></div>
           <p className="mt-4 text-base-content/70">Loading chapter...</p>
         </div>
       </div>
@@ -109,9 +109,9 @@ const EditChapter = () => {
 
   if (error) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+      <div className="min-h-screen bg-base-200 flex items-center justify-center">
         <div className="text-center">
-          <div className="text-red-600 mb-4">{error}</div>
+          <div className="text-error mb-4">{error}</div>
           <button
             onClick={() => navigate('/profile')}
             className="bg-primary hover:bg-primary/90 text-primary-content px-6 py-2 rounded-lg font-semibold"
@@ -126,7 +126,7 @@ const EditChapter = () => {
   if (!story || !chapter) return null;
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-base-200">
       <div className="max-w-4xl mx-auto px-4 py-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -185,8 +185,11 @@ const EditChapter = () => {
             </div>
 
             {saveError && (
-              <div className="text-red-600 bg-red-50 border border-red-200 rounded-lg p-4">
-                {saveError}
+              <div className="alert alert-error">
+                <svg xmlns="http://www.w3.org/2000/svg" className="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                <span>{saveError}</span>
               </div>
             )}
 
@@ -198,7 +201,7 @@ const EditChapter = () => {
               >
                 {saving ? (
                   <div className="flex items-center justify-center gap-2">
-                    <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-black"></div>
+                    <span className="loading loading-spinner loading-sm"></span>
                     Updating Chapter...
                   </div>
                 ) : (
