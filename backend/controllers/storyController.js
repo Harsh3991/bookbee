@@ -1,4 +1,5 @@
 const Story = require('../models/Story');
+const Chapter = require('../models/Chapter');
 const { uploadToCloudinary, deleteFromCloudinary } = require('../utils/cloudinaryUpload');
 
 // @desc    Get all stories
@@ -115,12 +116,29 @@ const deleteStory = async (req, res) => {
     }
 
     if (story.author.toString() !== req.user._id.toString()) {
-      return res.status(401).json({ message: 'Not authorized' });
+      return res.status(403).json({ message: 'Not authorized to delete this story' });
     }
 
-    await story.remove();
-    res.json({ message: 'Story removed' });
+    // Delete all chapters associated with this story
+    await Chapter.deleteMany({ story: req.params.id });
+
+    // Delete cover image from Cloudinary if it exists
+    if (story.coverImage) {
+      try {
+        const publicId = story.coverImage.split('/').pop().split('.')[0];
+        await deleteFromCloudinary(publicId);
+      } catch (err) {
+        console.error('Error deleting cover image from Cloudinary:', err);
+        // Continue with story deletion even if image deletion fails
+      }
+    }
+
+    // Delete the story
+    await Story.findByIdAndDelete(req.params.id);
+
+    res.json({ message: 'Story and all associated chapters deleted successfully' });
   } catch (error) {
+    console.error('Error deleting story:', error);
     res.status(500).json({ message: error.message });
   }
 };
