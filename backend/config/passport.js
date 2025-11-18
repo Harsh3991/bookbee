@@ -2,17 +2,15 @@ const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const User = require('../models/User');
 
 module.exports = function(passport) {
-  // Determine callback URL based on environment
-  const callbackURL = process.env.NODE_ENV === 'production'
-    ? 'https://bookbee-backend-5q0e.onrender.com/api/auth/google/callback'
-    : 'http://localhost:5000/api/auth/google/callback';
+  // Use relative URL for callback
+  const callbackURL = '/api/auth/google/callback';
 
   passport.use(
     new GoogleStrategy(
       {
         clientID: process.env.GOOGLE_CLIENT_ID,
         clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-        callbackURL: callbackURL,
+        callbackURL: callbackURL,  // Use relative URL
       },
       async (accessToken, refreshToken, profile, done) => {
         try {
