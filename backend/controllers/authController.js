@@ -48,7 +48,24 @@ const loginUser = async (req, res) => {
   try {
     const user = await User.findOne({ email });
 
-    if (user && (await bcrypt.compare(password, user.password))) {
+    if (!user) {
+      return res.status(401).json({ message: 'Invalid email or password' });
+    }
+
+    // Check if user signed up with Google (no password)
+    if ((!user.password || user.password === '') && user.googleId) {
+      return res.status(401).json({ 
+        message: 'This account was created with Google. Please use "Sign in with Google" to login.' 
+      });
+    }
+
+    // Check if user has no password at all
+    if (!user.password || user.password === '') {
+      return res.status(401).json({ message: 'Invalid email or password' });
+    }
+
+    // Check if user has a password and it matches
+    if (await bcrypt.compare(password, user.password)) {
       res.json({
         _id: user._id,
         name: user.name,
@@ -86,8 +103,24 @@ const getUserProfile = async (req, res) => {
   }
 };
 
+// @desc    Google OAuth callback
+// @route   GET /api/auth/google/callback
+// @access  Public
+const googleCallback = async (req, res) => {
+  try {
+    // User is authenticated by Passport and attached to req.user
+    const token = generateToken(req.user._id);
+    
+    // Redirect to frontend with token
+    res.redirect(`${process.env.FRONTEND_URL}/google-auth?token=${token}`);
+  } catch (error) {
+    res.redirect(`${process.env.FRONTEND_URL}/login?error=authentication_failed`);
+  }
+};
+
 module.exports = {
   registerUser,
   loginUser,
   getUserProfile,
+  googleCallback,
 };

@@ -1,6 +1,7 @@
 require('dotenv').config();
 const express = require('express');
 const helmet = require('helmet');
+const passport = require('passport');
 const connectDB = require('./config/database');
 const cors = require('./config/cors');
 const limiter = require('./middleware/rateLimitMiddleware');
@@ -17,6 +18,9 @@ const searchRoutes = require('./routes/searchRoutes');
 
 connectDB();
 
+// Configure Passport
+require('./config/passport')(passport);
+
 const cronJob = require('./config/cron');
 
 const app = express();
@@ -25,6 +29,7 @@ app.use(helmet());
 app.use(limiter);
 app.use(cors);
 app.use(express.json());
+app.use(passport.initialize());
 
 // Routes
 app.use('/api/auth', authRoutes);

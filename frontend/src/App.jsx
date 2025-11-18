@@ -14,6 +14,7 @@ import StoryEditor from './pages/StoryEditor';
 import AddChapter from './pages/AddChapter';
 import EditChapter from './pages/EditChapter';
 import Search from './pages/Search';
+import GoogleAuthCallback from './pages/GoogleAuthCallback';
 
 // Protected Route Component
 const ProtectedRoute = ({ children }) => {
@@ -46,6 +47,7 @@ function AppContent() {
           <Route path="/read/:storyId/:chapterId" element={<ProtectedRoute><Read /></ProtectedRoute>} />
           <Route path="/login" element={<PublicRoute><Login /></PublicRoute>} />
           <Route path="/signup" element={<PublicRoute><Signup /></PublicRoute>} />
+          <Route path="/google-auth" element={<GoogleAuthCallback />} />
         </Routes>
       </AnimatePresence>
       <Footer />
