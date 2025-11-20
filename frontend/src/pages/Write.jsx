@@ -322,21 +322,21 @@ const Write = () => {
 
       {/* Header */}
       <div className="relative bg-base-100/80 backdrop-blur-md shadow-xl border-b border-base-300">
-        <div className="max-w-7xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8 py-4 sm:py-5 md:py-6">
-          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+        <div className="max-w-7xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8 py-3 sm:py-4 md:py-5">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
             <div className="flex items-center space-x-3 sm:space-x-4 md:space-x-6 w-full sm:w-auto">
               <motion.button
                 whileHover={{ x: -4 }}
                 whileTap={{ scale: 0.95 }}
                 onClick={() => navigate('/')}
-                className="flex items-center space-x-2 text-base-content/70 hover:text-primary transition-colors group touch-manipulation min-h-11"
+                className="flex items-center space-x-2 text-base-content/70 hover:text-primary transition-colors group touch-manipulation min-h-10"
               >
-                <span className="text-lg sm:text-xl group-hover:-translate-x-1 transition-transform">←</span>
+                <span className="text-sm sm:text-base group-hover:-translate-x-1 transition-transform">←</span>
                 <span className="font-medium text-sm sm:text-base">Home</span>
               </motion.button>
-              <div className="h-6 sm:h-8 w-px bg-base-300"></div>
+              <div className="h-5 sm:h-6 w-px bg-base-300"></div>
               <div className="flex-1 sm:flex-none">
-                <h1 className="text-xl sm:text-2xl md:text-3xl font-serif font-bold text-base-content tracking-wide leading-tight">
+                <h1 className="text-lg sm:text-xl md:text-2xl font-serif font-bold text-base-content tracking-wide leading-tight">
                   {id ? 'Refine Your Story' : 'Begin Your Journey'}
                 </h1>
                 <p className="text-xs sm:text-sm text-base-content/70 mt-0.5 sm:mt-1 font-light hidden sm:block">Every great story starts with a single word</p>
@@ -360,7 +360,7 @@ const Write = () => {
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 onClick={autoSave}
-                className="px-3 sm:px-4 md:px-5 py-2 sm:py-2.5 text-base-content bg-base-100 border border-base-300 rounded-lg sm:rounded-xl hover:bg-base-200 hover:border-primary transition-all duration-300 font-medium shadow-md backdrop-blur-sm text-xs sm:text-sm md:text-base touch-manipulation min-h-11"
+                className="px-3 sm:px-4 md:px-5 py-2 sm:py-2.5 text-base-content bg-base-100 border border-base-300 rounded-lg sm:rounded-xl hover:bg-base-200 hover:border-primary transition-all duration-300 font-medium shadow-md backdrop-blur-sm text-xs sm:text-sm md:text-base touch-manipulation min-h-10"
               >
                 <span className="hidden sm:inline">💾 Save Draft</span>
                 <span className="sm:hidden">💾</span>
@@ -370,7 +370,7 @@ const Write = () => {
                 whileTap={{ scale: 0.95 }}
                 onClick={publishStory}
                 disabled={loading}
-                className="px-4 sm:px-5 md:px-6 py-2 sm:py-2.5 bg-primary hover:bg-primary/90 text-primary-content rounded-lg sm:rounded-xl disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300 font-bold shadow-xl relative overflow-hidden group text-xs sm:text-sm md:text-base touch-manipulation min-h-11"
+                className="px-3 sm:px-4 md:px-5 py-2 sm:py-2.5 bg-primary hover:bg-primary/90 text-primary-content rounded-lg sm:rounded-xl disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300 font-bold shadow-xl relative overflow-hidden group text-xs sm:text-sm md:text-base touch-manipulation min-h-10"
               >
                 <span className="relative z-10 flex items-center space-x-1 sm:space-x-2">
                   <span>{loading ? '⏳' : '✨'}</span>
@@ -383,7 +383,7 @@ const Write = () => {
           </div>
 
           {/* Enhanced Progress Steps */}
-          <div className="mt-6 sm:mt-8 overflow-x-auto -mx-3 sm:mx-0 px-3 sm:px-0 pb-2 scrollbar-hide">
+          <div className="mt-4 sm:mt-5 overflow-x-auto -mx-3 sm:mx-0 px-3 sm:px-0 pb-2 scrollbar-hide">
             <div className="flex items-center justify-start sm:justify-center space-x-2 sm:space-x-4 min-w-max sm:min-w-0">
               {steps.map((step, index) => (
                 <div key={step.number} className="flex items-center shrink-0">
@@ -392,7 +392,7 @@ const Write = () => {
                     className="flex flex-col items-center relative group cursor-pointer"
                     onClick={() => setCurrentStep(step.number)}
                   >
-                    <div className={`w-12 h-12 sm:w-14 sm:h-14 rounded-xl sm:rounded-2xl flex items-center justify-center text-lg sm:text-xl font-bold transition-all duration-500 relative ${
+                    <div className={`w-10 h-10 sm:w-12 sm:h-12 rounded-lg sm:rounded-xl flex items-center justify-center text-sm sm:text-base font-bold transition-all duration-500 relative ${
                       currentStep >= step.number
                         ? 'bg-primary text-primary-content shadow-2xl'
                         : 'bg-base-100 text-base-content/40 border-2 border-base-300'
@@ -455,7 +455,7 @@ const Write = () => {
       </div>
 
       {/* Content */}
-      <div className="relative max-w-5xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8 py-6 sm:py-8 md:py-10 lg:py-12">
+      <div className="relative max-w-5xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8 py-4 sm:py-6 md:py-8 lg:py-10">
         {currentStep === 1 && (
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -468,19 +468,19 @@ const Write = () => {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.3 }}
-              className="text-center mb-8 sm:mb-10 md:mb-12 px-4"
+              className="text-center mb-4 sm:mb-6 px-4"
             >
-              <p className="text-lg sm:text-xl md:text-2xl font-serif italic text-base-content/80 leading-relaxed">
+              <p className="text-base sm:text-lg font-serif italic text-base-content/80 leading-relaxed">
                 "There is no greater agony than bearing an untold story inside you."
               </p>
-              <p className="text-xs sm:text-sm text-base-content/60 mt-2">— Maya Angelou</p>
+              <p className="text-xs text-base-content/60 mt-1">— Maya Angelou</p>
             </motion.div>
 
-            <div className="bg-base-100 backdrop-blur-xl rounded-2xl sm:rounded-3xl p-4 sm:p-6 md:p-8 border border-base-300 shadow-xl">
-              <div className="space-y-4 sm:space-y-5 md:space-y-6">
+            <div className="bg-base-100 backdrop-blur-xl rounded-2xl sm:rounded-3xl p-3 sm:p-4 md:p-6 border border-base-300 shadow-xl">
+              <div className="space-y-3 sm:space-y-4">
                 <div>
-                  <label className="text-sm sm:text-base font-semibold text-base-content mb-2 sm:mb-3 flex items-center space-x-2">
-                    <span className="text-lg sm:text-xl">📚</span>
+                  <label className="text-sm font-semibold text-base-content mb-2 flex items-center space-x-2">
+                    <span className="text-base">📚</span>
                     <span>Story Title *</span>
                   </label>
                   <motion.input
@@ -488,25 +488,25 @@ const Write = () => {
                     type="text"
                     value={storyData.title}
                     onChange={(e) => handleStoryDataChange('title', e.target.value)}
-                    className="w-full px-4 sm:px-5 py-3 sm:py-4 bg-base-200 border-2 border-base-300 rounded-xl sm:rounded-2xl focus:ring-4 focus:ring-primary/20 focus:border-primary transition-all duration-300 text-base-content placeholder-base-content/40 text-base sm:text-lg font-serif touch-manipulation"
+                    className="w-full px-3 py-2.5 bg-base-200 border-2 border-base-300 rounded-xl focus:ring-4 focus:ring-primary/20 focus:border-primary transition-all duration-300 text-base-content placeholder-base-content/40 text-sm font-serif touch-manipulation"
                     placeholder="Enter a captivating title for your story..."
                   />
                 </div>
 
                 <div>
-                  <label className="text-sm sm:text-base font-semibold text-base-content mb-2 sm:mb-3 flex items-center space-x-2">
-                    <span className="text-lg sm:text-xl">📝</span>
+                  <label className="text-sm font-semibold text-base-content mb-2 flex items-center space-x-2">
+                    <span className="text-base">📝</span>
                     <span>Story Description *</span>
                   </label>
                   <motion.textarea
                     whileFocus={{ scale: 1.01 }}
                     value={storyData.description}
                     onChange={(e) => handleStoryDataChange('description', e.target.value)}
-                    rows={5}
-                    className="w-full px-4 sm:px-5 py-3 sm:py-4 bg-base-200 border-2 border-base-300 rounded-xl sm:rounded-2xl focus:ring-4 focus:ring-primary/20 focus:border-primary transition-all duration-300 text-base-content placeholder-base-content/40 leading-relaxed resize-none text-sm sm:text-base touch-manipulation"
+                    rows={3}
+                    className="w-full px-3 py-2.5 bg-base-200 border-2 border-base-300 rounded-xl focus:ring-4 focus:ring-primary/20 focus:border-primary transition-all duration-300 text-base-content placeholder-base-content/40 leading-relaxed resize-none text-sm touch-manipulation"
                     placeholder="Describe your story in a way that captivates readers..."
                   />
-                  <p className="text-xs text-base-content/50 mt-2 ml-1">✨ Make it compelling and intriguing</p>
+                  <p className="text-xs text-base-content/50 mt-1 ml-1">✨ Make it compelling and intriguing</p>
                 </div>
 
                 <div>
@@ -563,18 +563,18 @@ const Write = () => {
                 </div>
 
                 <div>
-                  <label className="text-sm sm:text-base font-semibold text-base-content mb-2 sm:mb-3 flex items-center space-x-2">
-                    <span className="text-lg sm:text-xl">🎭</span>
+                  <label className="text-sm font-semibold text-base-content mb-2 flex items-center space-x-2">
+                    <span className="text-base">🎭</span>
                     <span>Genres</span>
                   </label>
-                  <div className="flex flex-wrap gap-2 sm:gap-3">
+                  <div className="flex flex-wrap gap-1.5">
                     {['Fantasy', 'Romance', 'Mystery', 'Sci-Fi', 'Horror', 'Adventure', 'Drama', 'Comedy'].map(genre => (
                       <motion.button
                         key={genre}
-                        whileHover={{ scale: 1.05, y: -2 }}
+                        whileHover={{ scale: 1.05, y: -1 }}
                         whileTap={{ scale: 0.95 }}
                         onClick={() => handleGenreToggle(genre)}
-                        className={`px-3 sm:px-4 md:px-5 py-2 sm:py-2.5 rounded-lg sm:rounded-xl text-xs sm:text-sm font-medium transition-all duration-300 touch-manipulation min-h-10 ${
+                        className={`px-2 py-1.5 rounded text-xs font-medium transition-all duration-300 touch-manipulation min-h-8 ${
                           storyData.genres.includes(genre)
                             ? 'bg-primary text-primary-content shadow-lg border-2 border-primary'
                             : 'bg-base-200 text-base-content hover:bg-base-300 border-2 border-base-300 hover:border-base-content/20'
@@ -587,18 +587,18 @@ const Write = () => {
                 </div>
 
                 <div>
-                  <label className="text-sm sm:text-base font-semibold text-base-content mb-2 sm:mb-3 flex items-center space-x-2">
-                    <span className="text-lg sm:text-xl">🏷️</span>
+                  <label className="text-sm font-semibold text-base-content mb-2 flex items-center space-x-2">
+                    <span className="text-base">🏷️</span>
                     <span>Tags</span>
                   </label>
-                  <div className="flex flex-wrap gap-2 mb-3">
+                  <div className="flex flex-wrap gap-1.5 mb-2">
                     {storyData.tags.map(tag => (
                       <motion.span 
                         key={tag}
                         initial={{ opacity: 0, scale: 0.8 }}
                         animate={{ opacity: 1, scale: 1 }}
                         exit={{ opacity: 0, scale: 0.8 }}
-                        className="bg-primary/10 text-primary px-3 sm:px-4 py-1.5 sm:py-2 rounded-full text-xs sm:text-sm flex items-center space-x-2 border border-primary/20"
+                        className="bg-primary/10 text-primary px-2 py-1 rounded-full text-xs flex items-center space-x-1 border border-primary/20"
                       >
                         <span>{tag}</span>
                         <motion.button
@@ -621,24 +621,24 @@ const Write = () => {
                         e.target.value = '';
                       }
                     }}
-                    className="w-full px-4 sm:px-5 py-3 sm:py-4 bg-base-200 border-2 border-base-300 rounded-xl sm:rounded-2xl focus:ring-4 focus:ring-primary/20 focus:border-primary transition-all duration-300 text-base-content placeholder-base-content/40 text-sm sm:text-base touch-manipulation"
+                    className="w-full px-3 py-2.5 bg-base-200 border-2 border-base-300 rounded-xl focus:ring-4 focus:ring-primary/20 focus:border-primary transition-all duration-300 text-base-content placeholder-base-content/40 text-sm touch-manipulation"
                     placeholder="Add tags and press Enter..."
                   />
-                  <p className="text-xs text-base-content/50 mt-2 ml-1">💡 Tags help readers discover your story</p>
+                  <p className="text-xs text-base-content/50 mt-1 ml-1">💡 Tags help readers discover your story</p>
                 </div>
               </div>
             </div>
 
-            <div className="flex flex-col sm:flex-row justify-between sm:justify-end pt-4 sm:pt-6 gap-3">
+            <div className="flex flex-col sm:flex-row justify-between sm:justify-end pt-3 gap-3">
               <motion.button
                 whileHover={{ scale: 1.05, x: 5 }}
                 whileTap={{ scale: 0.95 }}
                 onClick={() => setCurrentStep(2)}
                 disabled={!storyData.title || !storyData.description}
-                className="w-full sm:w-auto px-6 sm:px-8 py-3 sm:py-4 bg-primary hover:bg-primary/90 text-primary-content rounded-xl sm:rounded-2xl disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300 font-bold text-base sm:text-lg shadow-2xl flex items-center justify-center space-x-2 sm:space-x-3 touch-manipulation min-h-11"
+                className="w-full sm:w-auto px-4 py-2.5 bg-primary hover:bg-primary/90 text-primary-content rounded-xl disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300 font-bold text-sm shadow-xl flex items-center justify-center space-x-2 touch-manipulation min-h-10"
               >
                 <span>Next: Write Your Story</span>
-                <span className="text-lg sm:text-xl">→</span>
+                <span className="text-base">→</span>
               </motion.button>
             </div>
           </motion.div>
@@ -656,12 +656,12 @@ const Write = () => {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.3 }}
-              className="text-center mb-6 sm:mb-8 px-4"
+              className="text-center mb-3 px-4"
             >
-              <p className="text-lg sm:text-xl font-serif italic text-base-content/70 leading-relaxed">
+              <p className="text-sm font-serif italic text-base-content/70 leading-relaxed">
                 "Fill your paper with the breathings of your heart."
               </p>
-              <p className="text-xs sm:text-sm text-base-content/60 mt-2">— William Wordsworth</p>
+              <p className="text-xs text-base-content/60 mt-1">— William Wordsworth</p>
             </motion.div>
 
             {/* Chapter Navigation */}
@@ -708,12 +708,12 @@ const Write = () => {
               initial={{ opacity: 0, x: 20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.4 }}
-              className="bg-base-100 backdrop-blur-xl rounded-2xl sm:rounded-3xl p-4 sm:p-6 md:p-8 border border-base-300 shadow-xl mb-6 sm:mb-8">
-              <div className="space-y-4 sm:space-y-5 md:space-y-6">
+              className="bg-base-100 backdrop-blur-xl rounded-2xl sm:rounded-3xl p-3 sm:p-4 border border-base-300 shadow-xl mb-4">
+              <div className="space-y-3">
                 {/* Chapter Title */}
                 <div>
-                  <label className="flex items-center space-x-2 text-sm sm:text-base font-semibold text-base-content mb-2 sm:mb-3">
-                    <span className="text-lg sm:text-xl">📖</span>
+                  <label className="flex items-center space-x-2 text-sm font-semibold text-base-content mb-2">
+                    <span className="text-base">📖</span>
                     <span>Chapter Title</span>
                   </label>
                   <motion.input
@@ -721,24 +721,24 @@ const Write = () => {
                     type="text"
                     value={chapters[currentChapter]?.title || ''}
                     onChange={(e) => updateChapter(currentChapter, 'title', e.target.value)}
-                    className="w-full px-4 sm:px-5 py-3 sm:py-4 bg-base-200 border-2 border-base-300 rounded-xl sm:rounded-2xl focus:ring-4 focus:ring-primary/20 focus:border-primary transition-all duration-300 text-base-content placeholder-base-content/40 text-base sm:text-lg font-serif touch-manipulation"
+                    className="w-full px-3 py-2.5 bg-base-200 border-2 border-base-300 rounded-xl focus:ring-4 focus:ring-primary/20 focus:border-primary transition-all duration-300 text-base-content placeholder-base-content/40 text-sm font-serif touch-manipulation"
                     placeholder="Give this chapter a memorable title..."
                   />
                 </div>
 
                 {/* Word Count Display */}
-                <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 sm:gap-4 px-2 bg-base-200 rounded-xl p-3">
-                  <div className="flex items-center flex-wrap gap-3 sm:gap-4 text-xs sm:text-sm">
-                    <div className="flex items-center space-x-1.5 sm:space-x-2 text-primary">
+                <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-1 px-2 bg-base-200 rounded-lg p-2">
+                  <div className="flex items-center flex-wrap gap-2 text-xs">
+                    <div className="flex items-center space-x-1 text-primary">
                       <span>📊</span>
                       <span className="font-semibold">
                         {chapters[currentChapter]?.content.split(/\s+/).filter(w => w).length || 0} words
                       </span>
                     </div>
-                    <div className="h-4 w-px bg-base-300 hidden sm:block"></div>
-                    <div className="flex items-center space-x-1.5 sm:space-x-2 text-base-content/60">
+                    <div className="h-3 w-px bg-base-300 hidden sm:block"></div>
+                    <div className="flex items-center space-x-1 text-base-content/60">
                       <span>🔤</span>
-                      <span className="font-medium">{chapters[currentChapter]?.content.length || 0} characters</span>
+                      <span className="font-medium">{chapters[currentChapter]?.content.length || 0} chars</span>
                     </div>
                   </div>
                   <div className="text-xs text-base-content/50 w-full sm:w-auto text-left sm:text-right">
@@ -748,8 +748,8 @@ const Write = () => {
 
                 {/* Chapter Content */}
                 <div>
-                  <label className="flex items-center space-x-2 text-sm sm:text-base font-semibold text-base-content mb-2 sm:mb-3">
-                    <span className="text-lg sm:text-xl">✍️</span>
+                  <label className="flex items-center space-x-2 text-sm font-semibold text-base-content mb-2">
+                    <span className="text-base">✍️</span>
                     <span>Chapter Content</span>
                   </label>
                   <div className="relative">
@@ -757,21 +757,21 @@ const Write = () => {
                       whileFocus={{ scale: 1.005 }}
                       value={chapters[currentChapter]?.content || ''}
                       onChange={(e) => updateChapter(currentChapter, 'content', e.target.value)}
-                      rows={window.innerWidth < 640 ? 16 : 24}
-                      className="w-full px-4 sm:px-5 md:px-6 py-3 sm:py-4 md:py-5 bg-base-200 border-2 border-base-300 rounded-xl sm:rounded-2xl focus:ring-4 focus:ring-primary/20 focus:border-primary transition-all duration-300 text-base-content placeholder-base-content/40 font-serif text-sm sm:text-base leading-loose resize-none shadow-inner touch-manipulation"
+                      rows={window.innerWidth < 640 ? 12 : 18}
+                      className="w-full px-3 py-2.5 bg-base-200 border-2 border-base-300 rounded-xl focus:ring-4 focus:ring-primary/20 focus:border-primary transition-all duration-300 text-base-content placeholder-base-content/40 font-serif text-sm leading-relaxed resize-none shadow-inner touch-manipulation"
                       placeholder="Begin writing your story here... Let your imagination flow freely onto the page."
                       style={{
-                        lineHeight: '1.8',
+                        lineHeight: '1.6',
                         letterSpacing: '0.01em'
                       }}
                     />
                     {/* Decorative corner accents */}
-                    <div className="absolute top-2 left-2 w-3 h-3 sm:w-4 sm:h-4 border-l-2 border-t-2 border-primary/20 rounded-tl-lg"></div>
-                    <div className="absolute top-2 right-2 w-3 h-3 sm:w-4 sm:h-4 border-r-2 border-t-2 border-primary/20 rounded-tr-lg"></div>
-                    <div className="absolute bottom-2 left-2 w-3 h-3 sm:w-4 sm:h-4 border-l-2 border-b-2 border-primary/20 rounded-bl-lg"></div>
-                    <div className="absolute bottom-2 right-2 w-3 h-3 sm:w-4 sm:h-4 border-r-2 border-b-2 border-primary/20 rounded-br-lg"></div>
+                    <div className="absolute top-1.5 left-1.5 w-2 h-2 border-l-2 border-t-2 border-primary/20 rounded-tl"></div>
+                    <div className="absolute top-1.5 right-1.5 w-2 h-2 border-r-2 border-t-2 border-primary/20 rounded-tr"></div>
+                    <div className="absolute bottom-1.5 left-1.5 w-2 h-2 border-l-2 border-b-2 border-primary/20 rounded-bl"></div>
+                    <div className="absolute bottom-1.5 right-1.5 w-2 h-2 border-r-2 border-b-2 border-primary/20 rounded-br"></div>
                   </div>
-                  <p className="text-xs text-base-content/50 mt-2 sm:mt-3 ml-1 italic">
+                  <p className="text-xs text-base-content/50 mt-1 ml-1 italic">
                     💡 Write without judgment. You can always edit later.
                   </p>
                 </div>
@@ -779,24 +779,24 @@ const Write = () => {
             </motion.div>
 
             {/* Navigation Buttons */}
-            <div className="flex flex-col-reverse sm:flex-row justify-between gap-3 sm:gap-4 pt-4">
+            <div className="flex flex-col-reverse sm:flex-row justify-between gap-3 pt-3">
               <motion.button
                 whileHover={{ scale: 1.05, x: -5 }}
                 whileTap={{ scale: 0.95 }}
                 onClick={() => setCurrentStep(1)}
-                className="w-full sm:w-auto px-5 sm:px-6 py-3 border-2 border-base-300 text-base-content/70 rounded-xl hover:bg-base-200 hover:border-primary transition-all duration-300 font-medium flex items-center justify-center space-x-2 text-sm sm:text-base touch-manipulation min-h-11"
+                className="w-full sm:w-auto px-4 py-2.5 border-2 border-base-300 text-base-content/70 rounded-xl hover:bg-base-200 hover:border-primary transition-all duration-300 font-medium flex items-center justify-center space-x-2 text-sm touch-manipulation min-h-10"
               >
-                <span className="text-lg">←</span>
+                <span className="text-base">←</span>
                 <span>Back to Details</span>
               </motion.button>
               <motion.button
                 whileHover={{ scale: 1.05, x: 5 }}
                 whileTap={{ scale: 0.95 }}
                 onClick={() => setCurrentStep(3)}
-                className="w-full sm:w-auto px-6 sm:px-8 py-3 bg-primary hover:brightness-110 text-primary-content rounded-xl transition-all duration-300 font-bold shadow-xl flex items-center justify-center space-x-2 text-sm sm:text-base touch-manipulation min-h-11"
+                className="w-full sm:w-auto px-4 py-2.5 bg-primary hover:brightness-110 text-primary-content rounded-xl transition-all duration-300 font-bold shadow-xl flex items-center justify-center space-x-2 text-sm touch-manipulation min-h-10"
               >
                 <span>Review & Publish</span>
-                <span className="text-lg">→</span>
+                <span className="text-base">→</span>
               </motion.button>
             </div>
           </motion.div>
@@ -814,12 +814,12 @@ const Write = () => {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.3 }}
-              className="text-center mb-6 sm:mb-8 px-4"
+              className="text-center mb-3 px-4"
             >
-              <p className="text-lg sm:text-xl md:text-2xl font-serif italic text-base-content/70 leading-relaxed">
+              <p className="text-sm font-serif italic text-base-content/70 leading-relaxed">
                 "A story is a letter that the author writes to himself, to tell himself things that he would be unable to think otherwise."
               </p>
-              <p className="text-xs sm:text-sm text-base-content/60 mt-2">— Carlos Ruiz Zafón</p>
+              <p className="text-xs text-base-content/60 mt-1">— Carlos Ruiz Zafón</p>
             </motion.div>
 
             <div className="bg-base-100 backdrop-blur-xl rounded-2xl sm:rounded-3xl p-4 sm:p-6 md:p-8 border border-base-300 shadow-xl mb-6 sm:mb-8">
@@ -841,62 +841,60 @@ const Write = () => {
                   transition={{ delay: 0.2 }}
                   className="space-y-3 sm:space-y-4"
                 >
-                  <div className="bg-base-200 rounded-xl sm:rounded-2xl p-4 sm:p-5 md:p-6 border border-base-300">
-                    <h4 className="font-semibold text-base-content mb-3 sm:mb-4 flex items-center space-x-2 text-base sm:text-lg">
-                      <span>📚</span>
-                      <span>Story Details</span>
-                    </h4>
-                    <div className="space-y-2.5 sm:space-y-3 text-base-content/70">
-                      <div className="flex flex-col space-y-1">
-                        <span className="text-xs text-base-content/50 uppercase tracking-wider">Title</span>
-                        <p className="text-base-content font-serif text-base sm:text-lg wrap-break-word">{storyData.title}</p>
-                      </div>
-                      <div className="h-px bg-base-300"></div>
-                      <div className="flex flex-col space-y-1">
-                        <span className="text-xs text-base-content/50 uppercase tracking-wider">Description</span>
-                        <p className="text-base-content/70 leading-relaxed text-sm sm:text-base wrap-break-word">{storyData.description}</p>
-                      </div>
-                      <div className="h-px bg-base-300"></div>
-                      <div className="flex flex-col space-y-2">
-                        <span className="text-xs text-base-content/50 uppercase tracking-wider">Genres</span>
-                        <div className="flex flex-wrap gap-1.5 sm:gap-2">
-                          {storyData.genres.map(genre => (
-                            <span key={genre} className="px-2 sm:px-3 py-1 bg-primary/10 text-primary rounded-full text-xs sm:text-sm border border-primary/20">
-                              {genre}
-                            </span>
-                          ))}
+                    <div className="bg-base-200 rounded-lg p-3 border border-base-300">
+                      <h4 className="font-semibold text-base-content mb-2 flex items-center space-x-2 text-sm">
+                        <span>📚</span>
+                        <span>Story Details</span>
+                      </h4>
+                      <div className="space-y-1.5 text-base-content/70">
+                        <div className="flex flex-col space-y-0.5">
+                          <span className="text-xs text-base-content/50 uppercase tracking-wider">Title</span>
+                          <p className="text-base-content font-serif text-sm wrap-break-word">{storyData.title}</p>
+                        </div>
+                        <div className="h-px bg-base-300"></div>
+                        <div className="flex flex-col space-y-0.5">
+                          <span className="text-xs text-base-content/50 uppercase tracking-wider">Description</span>
+                          <p className="text-base-content/70 leading-relaxed text-xs wrap-break-word">{storyData.description}</p>
+                        </div>
+                        <div className="h-px bg-base-300"></div>
+                        <div className="flex flex-col space-y-1">
+                          <span className="text-xs text-base-content/50 uppercase tracking-wider">Genres</span>
+                          <div className="flex flex-wrap gap-1">
+                            {storyData.genres.map(genre => (
+                              <span key={genre} className="px-1.5 py-0.5 bg-primary/10 text-primary rounded text-xs border border-primary/20">
+                                {genre}
+                              </span>
+                            ))}
+                          </div>
+                        </div>
+                        <div className="h-px bg-base-300"></div>
+                        <div className="flex flex-col space-y-1">
+                          <span className="text-xs text-base-content/50 uppercase tracking-wider">Tags</span>
+                          <div className="flex flex-wrap gap-1">
+                            {storyData.tags.map(tag => (
+                              <span key={tag} className="px-1.5 py-0.5 bg-base-300 text-base-content/70 rounded text-xs border border-base-300">
+                                #{tag}
+                              </span>
+                            ))}
+                          </div>
+                        </div>
+                        <div className="h-px bg-base-300"></div>
+                        <div className="flex items-center justify-between">
+                          <span className="text-xs text-base-content/50 uppercase tracking-wider">Total Chapters</span>
+                          <span className="text-lg font-bold text-primary">{chapters.length}</span>
                         </div>
                       </div>
-                      <div className="h-px bg-base-300"></div>
-                      <div className="flex flex-col space-y-2">
-                        <span className="text-xs text-base-content/50 uppercase tracking-wider">Tags</span>
-                        <div className="flex flex-wrap gap-1.5 sm:gap-2">
-                          {storyData.tags.map(tag => (
-                            <span key={tag} className="px-2 sm:px-3 py-1 bg-base-300 text-base-content/70 rounded-full text-xs border border-base-300">
-                              #{tag}
-                            </span>
-                          ))}
-                        </div>
-                      </div>
-                      <div className="h-px bg-base-300"></div>
-                      <div className="flex items-center justify-between">
-                        <span className="text-xs text-base-content/50 uppercase tracking-wider">Total Chapters</span>
-                        <span className="text-xl sm:text-2xl font-bold text-primary">{chapters.length}</span>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Total Word Count */}
-                  <div className="bg-primary/10 rounded-xl sm:rounded-2xl p-4 sm:p-5 md:p-6 border border-primary/20">
+                    </div>                  {/* Total Word Count */}
+                  <div className="bg-primary/10 rounded-lg p-3 border border-primary/20">
                     <div className="flex items-center justify-between">
                       <div>
-                        <p className="text-xs sm:text-sm text-primary mb-1">Total Word Count</p>
-                        <p className="text-3xl sm:text-4xl font-bold text-primary">
+                        <p className="text-xs text-primary mb-0.5">Total Word Count</p>
+                        <p className="text-2xl font-bold text-primary">
                           {chapters.reduce((total, ch) => total + (ch.content.split(/\s+/).filter(w => w).length), 0).toLocaleString()}
                         </p>
-                        <p className="text-xs text-primary mt-1">words written</p>
+                        <p className="text-xs text-primary mt-0.5">words written</p>
                       </div>
-                      <div className="text-4xl sm:text-5xl">📊</div>
+                      <div className="text-3xl">📊</div>
                     </div>
                   </div>
                 </motion.div>
@@ -1000,10 +998,10 @@ const Write = () => {
                 whileTap={{ scale: 0.95 }}
                 onClick={publishStory}
                 disabled={loading}
-                className="w-full sm:w-auto px-8 sm:px-10 py-3 sm:py-4 bg-primary text-primary-content rounded-xl sm:rounded-2xl hover:brightness-110 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300 font-bold text-base sm:text-lg shadow-2xl flex items-center justify-center space-x-2 sm:space-x-3 relative overflow-hidden group touch-manipulation min-h-11"
+                className="w-full sm:w-auto px-6 py-2.5 bg-primary text-primary-content rounded-xl hover:brightness-110 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300 font-bold text-sm shadow-xl flex items-center justify-center space-x-2 relative overflow-hidden group touch-manipulation min-h-10"
               >
-                <span className="relative z-10 flex items-center space-x-2 sm:space-x-3">
-                  <span className="text-xl sm:text-2xl">{loading ? '⏳' : '🚀'}</span>
+                <span className="relative z-10 flex items-center space-x-2">
+                  <span className="text-lg">{loading ? '⏳' : '🚀'}</span>
                   <span className="hidden sm:inline">{loading ? 'Publishing Your Story...' : 'Publish to the World'}</span>
                   <span className="sm:hidden">{loading ? 'Publishing...' : 'Publish'}</span>
                 </span>

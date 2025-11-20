@@ -102,7 +102,7 @@ const Search = () => {
   }
 
   return (
-    <div className="min-h-screen bg-base-200 pt-6 sm:pt-8 md:pt-12 pb-8">
+    <div className="min-h-screen bg-base-200 pt-4 sm:pt-6 md:pt-8 pb-6">
       <div className="max-w-7xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8">
         {/* Search Header */}
         <motion.div
@@ -111,10 +111,10 @@ const Search = () => {
           transition={{ duration: 0.6 }}
           className="text-center mb-6 sm:mb-8 md:mb-10"
         >
-          <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-base-content mb-2 sm:mb-3 md:mb-4 px-2 leading-tight">
+          <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-base-content mb-2 sm:mb-3 md:mb-4 px-2 leading-tight">
             🔍 Search Stories
           </h1>
-          <p className="text-base sm:text-lg md:text-xl text-base-content/70 max-w-2xl mx-auto px-4">
+          <p className="text-sm sm:text-base md:text-lg text-base-content/70 max-w-2xl mx-auto px-4">
             Find your next favorite story from our collection
           </p>
         </motion.div>
@@ -124,7 +124,7 @@ const Search = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.2 }}
-          className="bg-base-100/90 backdrop-blur-md rounded-xl sm:rounded-2xl lg:rounded-3xl shadow-lg sm:shadow-xl border border-base-300 p-4 sm:p-5 md:p-6 lg:p-8 mb-6 sm:mb-8"
+          className="bg-base-100/90 backdrop-blur-md rounded-xl sm:rounded-2xl lg:rounded-3xl shadow-lg sm:shadow-xl border border-base-300 p-3 sm:p-4 md:p-5 lg:p-6 mb-4 sm:mb-6"
         >
           {/* Filters Grid - Stacks vertically on mobile, expands horizontally on larger screens */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 lg:gap-5 mb-4 sm:mb-5">
@@ -140,7 +140,7 @@ const Search = () => {
                 onChange={(e) => setQuery(e.target.value)}
                 onKeyPress={handleKeyPress}
                 placeholder="Title, description, or tags..."
-                className="w-full px-3 sm:px-4 py-2.5 sm:py-3 text-sm sm:text-base border-2 border-gray-200 rounded-lg sm:rounded-xl focus:outline-none focus:ring-4 focus:ring-yellow-100 focus:border-yellow-400 transition-all duration-300 placeholder-gray-400 touch-manipulation"
+                className="w-full px-3 sm:px-4 py-2 sm:py-2.5 text-sm sm:text-base border-2 border-gray-200 rounded-lg sm:rounded-xl focus:outline-none focus:ring-4 focus:ring-yellow-100 focus:border-yellow-400 transition-all duration-300 placeholder-gray-400 touch-manipulation"
                 aria-label="Search query input"
               />
             </div>
@@ -154,7 +154,7 @@ const Search = () => {
               <select
                 value={genre}
                 onChange={(e) => setGenre(e.target.value)}
-                className="w-full px-3 sm:px-4 py-2.5 sm:py-3 text-sm sm:text-base border-2 border-gray-200 rounded-lg sm:rounded-xl focus:outline-none focus:ring-4 focus:ring-yellow-100 focus:border-yellow-400 transition-all duration-300 bg-white cursor-pointer touch-manipulation appearance-none bg-no-repeat bg-right pr-8"
+                className="w-full px-3 sm:px-4 py-2 sm:py-2.5 text-sm sm:text-base border-2 border-gray-200 rounded-lg sm:rounded-xl focus:outline-none focus:ring-4 focus:ring-yellow-100 focus:border-yellow-400 transition-all duration-300 bg-white cursor-pointer touch-manipulation appearance-none bg-no-repeat bg-right pr-8"
                 style={{
                   backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3E%3Cpath stroke='%236B7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3E%3C/svg%3E")`,
                   backgroundPosition: 'right 0.5rem center',
@@ -178,7 +178,7 @@ const Search = () => {
               <select
                 value={status}
                 onChange={(e) => setStatus(e.target.value)}
-                className="w-full px-3 sm:px-4 py-2.5 sm:py-3 text-sm sm:text-base border-2 border-gray-200 rounded-lg sm:rounded-xl focus:outline-none focus:ring-4 focus:ring-yellow-100 focus:border-yellow-400 transition-all duration-300 bg-white cursor-pointer touch-manipulation appearance-none bg-no-repeat bg-right pr-8"
+                className="w-full px-3 sm:px-4 py-2 sm:py-2.5 text-sm sm:text-base border-2 border-gray-200 rounded-lg sm:rounded-xl focus:outline-none focus:ring-4 focus:ring-yellow-100 focus:border-yellow-400 transition-all duration-300 bg-white cursor-pointer touch-manipulation appearance-none bg-no-repeat bg-right pr-8"
                 style={{
                   backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3E%3Cpath stroke='%236B7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3E%3C/svg%3E")`,
                   backgroundPosition: 'right 0.5rem center',
@@ -204,7 +204,7 @@ const Search = () => {
                 value={author}
                 onChange={(e) => setAuthor(e.target.value)}
                 placeholder="Author name..."
-                className="w-full px-3 sm:px-4 py-2.5 sm:py-3 text-sm sm:text-base border-2 border-gray-200 rounded-lg sm:rounded-xl focus:outline-none focus:ring-4 focus:ring-yellow-100 focus:border-yellow-400 transition-all duration-300 placeholder-gray-400 touch-manipulation"
+                className="w-full px-3 sm:px-4 py-2 sm:py-2.5 text-sm sm:text-base border-2 border-gray-200 rounded-lg sm:rounded-xl focus:outline-none focus:ring-4 focus:ring-yellow-100 focus:border-yellow-400 transition-all duration-300 placeholder-gray-400 touch-manipulation"
                 aria-label="Author filter input"
               />
             </div>
@@ -217,7 +217,7 @@ const Search = () => {
               whileTap={{ scale: 0.98 }}
               onClick={() => handleSearch()}
               disabled={loading}
-              className="bg-primary hover:bg-primary/90 disabled:bg-primary/50 text-primary-content px-6 sm:px-8 py-3 sm:py-3.5 rounded-xl sm:rounded-2xl font-bold text-sm sm:text-base transition-all duration-300 flex items-center justify-center shadow-lg disabled:shadow-none disabled:cursor-not-allowed touch-manipulation min-h-11"
+              className="bg-primary hover:bg-primary/90 disabled:bg-primary/50 text-primary-content px-4 sm:px-6 py-2.5 sm:py-3 rounded-xl sm:rounded-2xl font-bold text-sm sm:text-base transition-all duration-300 flex items-center justify-center shadow-lg disabled:shadow-none disabled:cursor-not-allowed touch-manipulation min-h-10"
               aria-label="Search stories"
             >
               {loading ? (
@@ -236,7 +236,7 @@ const Search = () => {
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
               onClick={handleClearFilters}
-              className="bg-base-200 hover:bg-base-300 text-base-content px-6 sm:px-8 py-3 sm:py-3.5 rounded-xl sm:rounded-2xl font-semibold text-sm sm:text-base transition-all duration-300 border-2 border-base-300 hover:border-base-content/20 touch-manipulation min-h-11 flex items-center justify-center"
+              className="bg-base-200 hover:bg-base-300 text-base-content px-4 sm:px-6 py-2.5 sm:py-3 rounded-xl sm:rounded-2xl font-semibold text-sm sm:text-base transition-all duration-300 border-2 border-base-300 hover:border-base-content/20 touch-manipulation min-h-10 flex items-center justify-center"
               aria-label="Clear all filters"
             >
               <span className="mr-2">🔄</span>
@@ -266,10 +266,10 @@ const Search = () => {
             className="flex items-center justify-center py-12 sm:py-16 md:py-20"
           >
             <div className="text-center">
-              <div className="relative mx-auto w-16 h-16 sm:w-20 sm:h-20">
+              <div className="relative mx-auto w-12 h-12 sm:w-16 sm:h-16">
                 <div className="animate-spin rounded-full h-full w-full border-4 sm:border-[5px] border-base-300 border-t-primary"></div>
                 <div className="absolute inset-0 flex items-center justify-center">
-                  <span className="text-2xl sm:text-3xl">✨</span>
+                  <span className="text-xl sm:text-2xl">✨</span>
                 </div>
               </div>
               <p className="mt-4 sm:mt-6 text-base-content/70 text-sm sm:text-base font-medium">Searching stories...</p>
@@ -286,8 +286,8 @@ const Search = () => {
               transition={{ duration: 0.6, delay: 0.4 }}
               className="mb-6 sm:mb-8"
             >
-              <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-base-content mb-2 flex items-center">
-                <span className="mr-2 text-2xl sm:text-3xl">
+              <h2 className="text-lg sm:text-xl md:text-2xl font-bold text-base-content mb-2 flex items-center">
+                <span className="mr-2 text-xl sm:text-2xl">
                   {hasSearched ? '🎯' : '🔥'}
                 </span>
                 <span>{hasSearched ? 'Search Results' : 'Popular Stories'}</span>
@@ -302,7 +302,7 @@ const Search = () => {
               variants={containerVariants}
               initial="hidden"
               animate="visible"
-              className="grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-3 sm:gap-4 md:gap-5 lg:gap-6 mb-8 sm:mb-10 md:mb-12"
+              className="grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-2 sm:gap-3 md:gap-4 lg:gap-5 mb-6 sm:mb-8 md:mb-10"
             >
               {stories.map((story) => (
                 <StoryCard key={story._id} story={story} />
@@ -321,7 +321,7 @@ const Search = () => {
                   whileTap={{ scale: 0.95 }}
                   onClick={() => handleSearch(currentPage - 1)}
                   disabled={currentPage === 1 || loading}
-                  className="w-full sm:w-auto px-6 sm:px-8 py-3 bg-white border-2 border-gray-300 hover:border-yellow-400 hover:bg-yellow-50 disabled:bg-gray-100 disabled:border-gray-200 disabled:cursor-not-allowed rounded-xl transition-all duration-300 font-semibold text-sm sm:text-base text-gray-700 disabled:text-gray-400 shadow-md hover:shadow-lg disabled:shadow-none min-h-11 flex items-center justify-center touch-manipulation"
+                  className="w-full sm:w-auto px-4 sm:px-6 py-2.5 bg-white border-2 border-gray-300 hover:border-yellow-400 hover:bg-yellow-50 disabled:bg-gray-100 disabled:border-gray-200 disabled:cursor-not-allowed rounded-xl transition-all duration-300 font-semibold text-sm sm:text-base text-gray-700 disabled:text-gray-400 shadow-md hover:shadow-lg disabled:shadow-none min-h-10 flex items-center justify-center touch-manipulation"
                   aria-label="Previous page"
                 >
                   <span className="mr-2">←</span>
@@ -339,7 +339,7 @@ const Search = () => {
                   whileTap={{ scale: 0.95 }}
                   onClick={() => handleSearch(currentPage + 1)}
                   disabled={currentPage === totalPages || loading}
-                  className="w-full sm:w-auto px-6 sm:px-8 py-3 bg-white border-2 border-gray-300 hover:border-yellow-400 hover:bg-yellow-50 disabled:bg-gray-100 disabled:border-gray-200 disabled:cursor-not-allowed rounded-xl transition-all duration-300 font-semibold text-sm sm:text-base text-gray-700 disabled:text-gray-400 shadow-md hover:shadow-lg disabled:shadow-none min-h-11 flex items-center justify-center touch-manipulation"
+                  className="w-full sm:w-auto px-4 sm:px-6 py-2.5 bg-white border-2 border-gray-300 hover:border-yellow-400 hover:bg-yellow-50 disabled:bg-gray-100 disabled:border-gray-200 disabled:cursor-not-allowed rounded-xl transition-all duration-300 font-semibold text-sm sm:text-base text-gray-700 disabled:text-gray-400 shadow-md hover:shadow-lg disabled:shadow-none min-h-10 flex items-center justify-center touch-manipulation"
                   aria-label="Next page"
                 >
                   <span>Next</span>
@@ -357,8 +357,8 @@ const Search = () => {
             animate={{ opacity: 1, scale: 1 }}
             className="text-center py-12 sm:py-16 md:py-20 px-4"
           >
-            <div className="text-6xl sm:text-7xl md:text-8xl mb-4 sm:mb-6">📚</div>
-            <h3 className="text-xl sm:text-2xl md:text-3xl font-bold text-base-content mb-2 sm:mb-3">No Stories Found</h3>
+            <div className="text-4xl sm:text-5xl md:text-6xl mb-4 sm:mb-6">📚</div>
+            <h3 className="text-lg sm:text-xl md:text-2xl font-bold text-base-content mb-2 sm:mb-3">No Stories Found</h3>
             <p className="text-sm sm:text-base md:text-lg text-base-content/70 max-w-md mx-auto mb-6 sm:mb-8">
               We couldn't find any stories matching your search. Try adjusting your filters or search terms.
             </p>
@@ -366,7 +366,7 @@ const Search = () => {
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               onClick={handleClearFilters}
-              className="px-6 sm:px-8 py-3 bg-primary hover:bg-primary/90 text-primary-content rounded-xl font-bold shadow-lg transition-all duration-300 text-sm sm:text-base touch-manipulation"
+              className="px-4 sm:px-6 py-2.5 bg-primary hover:bg-primary/90 text-primary-content rounded-xl font-bold shadow-lg transition-all duration-300 text-sm sm:text-base touch-manipulation"
             >
               Clear Filters & Try Again
             </motion.button>
