@@ -100,7 +100,7 @@ const AddChapter = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+      <div className="min-h-screen bg-base-200 flex items-center justify-center">
         <div className="text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-yellow-400 mx-auto"></div>
           <p className="mt-4 text-base-content/70">Loading...</p>
@@ -111,7 +111,7 @@ const AddChapter = () => {
 
   if (error) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+      <div className="min-h-screen bg-base-200 flex items-center justify-center">
         <div className="text-center">
           <div className="text-red-600 mb-4">{error}</div>
           <button
@@ -132,7 +132,7 @@ const AddChapter = () => {
     : 1;
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-base-200">
       <div className="max-w-4xl mx-auto px-4 py-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
