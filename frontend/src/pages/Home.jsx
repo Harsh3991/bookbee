@@ -50,15 +50,77 @@ const Home = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-base-200 flex items-center justify-center">
-        <div className="text-center">
-          <motion.div
-            animate={{ rotate: 360 }}
-            transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
-            className="w-16 h-16 border-4 border-primary/30 border-t-primary rounded-full mx-auto"
-          />
-          <p className="mt-6 text-base-content/70 font-medium">Loading amazing stories...</p>
-        </div>
+      <div className="min-h-screen bg-base-200">
+        <Hero />
+        
+        {/* Loading Section */}
+        <section className="py-20 relative">
+          {/* Background decoration */}
+          <div className="absolute inset-0 overflow-hidden pointer-events-none">
+            <div className="absolute top-0 left-1/4 w-64 h-64 bg-primary/10 rounded-full blur-3xl" />
+            <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-secondary/10 rounded-full blur-3xl" />
+          </div>
+
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            {/* Loading Header */}
+            <div className="text-center mb-16">
+              <div className="inline-block mb-4">
+                <span className="inline-flex items-center space-x-2 bg-primary/10 px-4 py-2 rounded-full border border-primary/30">
+                  <span className="loading loading-spinner loading-sm text-primary"></span>
+                  <span className="text-sm font-bold text-primary">Loading Stories</span>
+                </span>
+              </div>
+              
+              <h2 className="text-4xl sm:text-5xl font-bold text-base-content mb-4">
+                Featured Stories
+              </h2>
+              <p className="text-lg sm:text-xl text-base-content/70 max-w-2xl mx-auto">
+                Discovering the most popular and captivating stories...
+              </p>
+            </div>
+
+            {/* Skeleton Cards Grid */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+              {[...Array(8)].map((_, index) => (
+                <div key={index} className="card bg-base-100 shadow-xl">
+                  <figure className="skeleton h-48 w-full rounded-t-2xl"></figure>
+                  <div className="card-body">
+                    <div className="skeleton h-6 w-3/4 mb-2"></div>
+                    <div className="skeleton h-4 w-full mb-2"></div>
+                    <div className="skeleton h-4 w-5/6 mb-4"></div>
+                    <div className="flex gap-2 mb-4">
+                      <div className="skeleton h-6 w-16 rounded-full"></div>
+                      <div className="skeleton h-6 w-16 rounded-full"></div>
+                    </div>
+                    <div className="flex justify-between items-center">
+                      <div className="skeleton h-4 w-20"></div>
+                      <div className="skeleton h-4 w-16"></div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* How It Works Section - Also shown during loading */}
+        <section className="py-20 bg-base-100 relative overflow-hidden">
+          <div className="absolute inset-0 pointer-events-none">
+            <div className="absolute top-1/2 left-0 w-72 h-72 bg-primary/10 rounded-full blur-3xl -translate-y-1/2" />
+            <div className="absolute top-1/2 right-0 w-72 h-72 bg-secondary/10 rounded-full blur-3xl -translate-y-1/2" />
+          </div>
+
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 opacity-50">
+            <div className="text-center mb-16">
+              <h2 className="text-4xl sm:text-5xl font-bold text-base-content mb-4">
+                How It Works
+              </h2>
+              <p className="text-lg sm:text-xl text-base-content/70 max-w-2xl mx-auto">
+                Start your storytelling journey in four simple steps
+              </p>
+            </div>
+          </div>
+        </section>
       </div>
     );
   }
