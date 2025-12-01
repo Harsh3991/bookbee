@@ -77,7 +77,10 @@ const Footer = () => {
               
               {/* YouTube */}
               <a 
-                href="#" 
+                href="https://youtu.be/dQw4w9WgXcQ?si=maI-exZDxjWqvI7L" 
+                target="_blank"
+                rel="noopener noreferrer"
+                title="YouTube"
                 className="w-10 h-10 bg-base-300 rounded-full flex items-center justify-center hover:bg-primary hover:text-primary-content transition-colors group"
                 aria-label="YouTube"
               >
