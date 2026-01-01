@@ -282,6 +282,29 @@ export const api = {
     return data;
   },
 
+  deleteReadingProgress: async (progressId) => {
+    const token = localStorage.getItem('token');
+    const response = await fetch(`${API_BASE}/reading/progress/${progressId}`, {
+      method: 'DELETE',
+      headers: {
+        'Authorization': `Bearer ${token}`,
+      },
+    });
+    
+    if (!response.ok) {
+      // Try to parse error message
+      const contentType = response.headers.get('content-type');
+      if (contentType && contentType.includes('application/json')) {
+        const data = await response.json();
+        throw new Error(data.message || 'Failed to delete reading progress');
+      } else {
+        throw new Error(`Failed to delete reading progress (${response.status})`);
+      }
+    }
+    
+    return await response.json();
+  },
+
   // Bookmarks endpoints
   getBookmarks: async () => {
     const token = localStorage.getItem('token');

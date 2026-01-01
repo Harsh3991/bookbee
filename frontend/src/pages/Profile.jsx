@@ -23,6 +23,10 @@ const Profile = () => {
   const [saveError, setSaveError] = useState('');
   const [saveSuccess, setSaveSuccess] = useState(false);
 
+  // Delete progress states
+  const [deletingProgressId, setDeletingProgressId] = useState(null);
+  const [deleteError, setDeleteError] = useState('');
+
   useEffect(() => {
     loadProfileData();
   }, []);
@@ -48,6 +52,7 @@ const Profile = () => {
         api.getBookmarks()
       ]);
 
+      console.log('Reading Progress Data:', progressData); // Debug log
       setUserStories(storiesData);
       setReadingHistory(progressData);
       setBookmarks(bookmarksData);
@@ -98,6 +103,32 @@ const Profile = () => {
       setSaveError(error.message || 'Failed to update profile');
     } finally {
       setSaving(false);
+    }
+  };
+
+  const handleDeleteProgress = async (progressId) => {
+    // Show confirmation dialog
+    if (!window.confirm('Are you sure you want to remove this chapter from your reading history?')) {
+      return;
+    }
+
+    try {
+      setDeletingProgressId(progressId);
+      setDeleteError('');
+
+      // Call API to delete the progress entry
+      await api.deleteReadingProgress(progressId);
+
+      // Update local state by filtering out the deleted item
+      setReadingHistory(prev => prev.filter(progress => progress._id !== progressId));
+    } catch (error) {
+      console.error('Error deleting reading progress:', error);
+      setDeleteError('Failed to remove from reading history. Please try again.');
+      
+      // Clear error after 5 seconds
+      setTimeout(() => setDeleteError(''), 5000);
+    } finally {
+      setDeletingProgressId(null);
     }
   };
 
@@ -174,14 +205,39 @@ const Profile = () => {
           .filter((progress) => progress.story && progress.chapter) // Filter out invalid entries
           .map((progress, index) => (
             <motion.div
-              key={`${progress.story._id}-${progress.chapter._id}`}
+              key={progress._id || `${progress.story._id}-${progress.chapter._id}`}
               initial={{ opacity: 0, x: -30 }}
               animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: 30, height: 0 }}
               transition={{ delay: index * 0.1, duration: 0.4 }}
               whileHover={{ y: -4, scale: 1.01 }}
-              className="bg-base-100 rounded-2xl shadow-lg p-8 hover:shadow-xl transition-all border border-base-300 cursor-pointer group"
+              className="bg-base-100 rounded-2xl shadow-lg p-8 hover:shadow-xl transition-all border border-base-300 group relative"
             >
-              <div className="flex items-center justify-between gap-6">
+              {/* Delete Button - positioned on right side */}
+              <motion.button
+                whileHover={{ scale: 1.1, rotate: 90 }}
+                whileTap={{ scale: 0.9 }}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  console.log('Deleting progress:', progress); // Debug log
+                  handleDeleteProgress(progress._id);
+                }}
+                disabled={deletingProgressId === progress._id}
+                className="absolute top-4 right-4 w-10 h-10 bg-error/10 hover:bg-error/20 text-error disabled:bg-error/5 disabled:text-error/50 rounded-full flex items-center justify-center transition-all shadow-md hover:shadow-lg border border-error/20 disabled:cursor-not-allowed z-10"
+                title="Remove from reading history"
+              >
+                {deletingProgressId === progress._id ? (
+                  <svg className="w-5 h-5 animate-spin" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                  </svg>
+                ) : (
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+                )}
+              </motion.button>
+
+              <div className="flex items-start justify-between gap-6 pr-12">
                 <div className="flex-1 min-w-0">
                   <h3 className="text-xl font-bold text-base-content mb-2 group-hover:text-primary transition-colors truncate">
                     {progress.story.title}
@@ -197,34 +253,34 @@ const Profile = () => {
                   </p>
                 </div>
                 
-                <div className="flex flex-col items-end space-y-4">
-                  <div className="text-right">
+                <div className="flex flex-col items-center space-y-4 shrink-0">
+                  <div className="text-center">
                     <div className="text-sm font-semibold text-base-content/70 mb-3">
                       Reading Progress
                     </div>
-                    <div className="relative w-32 h-32">
+                    <div className="relative w-28 h-28">
                       {/* Circular progress */}
-                      <svg className="transform -rotate-90 w-32 h-32">
+                      <svg className="transform -rotate-90 w-28 h-28">
                         <circle
-                          cx="64"
-                          cy="64"
-                          r="56"
+                          cx="56"
+                          cy="56"
+                          r="48"
                           stroke="currentColor"
                           strokeWidth="8"
                           fill="transparent"
                           className="text-base-300"
                         />
                         <motion.circle
-                          cx="64"
-                          cy="64"
-                          r="56"
+                          cx="56"
+                          cy="56"
+                          r="48"
                           stroke="currentColor"
                           strokeWidth="8"
                           fill="transparent"
-                          strokeDasharray={`${2 * Math.PI * 56}`}
-                          initial={{ strokeDashoffset: 2 * Math.PI * 56 }}
+                          strokeDasharray={`${2 * Math.PI * 48}`}
+                          initial={{ strokeDashoffset: 2 * Math.PI * 48 }}
                           animate={{ 
-                            strokeDashoffset: 2 * Math.PI * 56 * (1 - (progress.progress || 0) / 100)
+                            strokeDashoffset: 2 * Math.PI * 48 * (1 - (progress.progress || 0) / 100)
                           }}
                           transition={{ duration: 1, ease: "easeOut", delay: index * 0.1 }}
                           className="text-primary"
@@ -608,6 +664,28 @@ const Profile = () => {
               </svg>
             </motion.div>
             <span className="font-semibold text-lg">{saveError}</span>
+          </motion.div>
+        )}
+
+        {deleteError && (
+          <motion.div
+            initial={{ opacity: 0, y: -20, scale: 0.95 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.95 }}
+            transition={{ type: "spring", stiffness: 500, damping: 30 }}
+            className="bg-error/20 border-2 border-error text-error-content px-6 py-4 rounded-2xl mb-8 flex items-center space-x-3 shadow-lg"
+          >
+            <motion.div
+              initial={{ scale: 0 }}
+              animate={{ scale: 1 }}
+              transition={{ delay: 0.2, type: "spring", stiffness: 500 }}
+              className="w-8 h-8 bg-error rounded-full flex items-center justify-center"
+            >
+              <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+            </motion.div>
+            <span className="font-semibold text-lg">{deleteError}</span>
           </motion.div>
         )}
 

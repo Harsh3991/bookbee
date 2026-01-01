@@ -115,10 +115,39 @@ const removeBookmark = async (req, res) => {
   }
 };
 
+// @desc    Delete reading progress
+// @route   DELETE /api/reading/progress/:progressId
+// @access  Private
+const deleteReadingProgress = async (req, res) => {
+  try {
+    console.log('Delete request received for progress ID:', req.params.progressId);
+    console.log('User ID:', req.user._id);
+    
+    const progress = await ReadingProgress.findOne({
+      _id: req.params.progressId,
+      user: req.user._id,
+    });
+
+    console.log('Found progress:', progress);
+
+    if (!progress) {
+      return res.status(404).json({ message: 'Reading progress not found' });
+    }
+
+    await progress.deleteOne();
+
+    res.json({ message: 'Reading progress removed successfully' });
+  } catch (error) {
+    console.error('Error in deleteReadingProgress:', error);
+    res.status(500).json({ message: error.message });
+  }
+};
+
 module.exports = {
   getReadingProgress,
   updateReadingProgress,
   getBookmarks,
   addBookmark,
   removeBookmark,
+  deleteReadingProgress,
 };
