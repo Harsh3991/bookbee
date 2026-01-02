@@ -42,7 +42,7 @@
 
 ### Frontend 🌐
 - **React** & **Vite** - Fast, modern web app
-- **Tailwind CSS** & **DaisyUI** - Utility-first styling with components
+- **Tailwind CSS** & **DaisyUI** - Utility-first styling with components.
 - **Framer Motion** - Smooth animations & transitions
 - **React Router** - Client-side routing
 
