@@ -32,10 +32,10 @@
 ## 🛠️ Tech Stack
 
 ### Backend 🖥️
-- **Node.js** & **Express.js** - Robust server framework
-- **MongoDB** & **Mongoose** - NoSQL database with ODM
-- **JWT** - Secure token-based auth
-- **Cloudinary** - Image upload & management
+- **Node.js** & **Express.js** - Robust server framework.
+- **MongoDB** & **Mongoose** - NoSQL database with ODM.
+- **JWT** - Secure token-based auth.
+- **Cloudinary** - Image upload & management.
 - **Nodemailer** - Email service
 - **Cron** - Scheduled tasks
 - **Helmet** & **Express Rate Limit** - Security middleware
