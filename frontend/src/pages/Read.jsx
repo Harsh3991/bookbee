@@ -203,9 +203,18 @@ const Read = () => {
                 ← <span className="hidden sm:inline">Back to Home</span>
                 <span className="sm:hidden">Back</span>
               </button>
-              <div className="min-w-0 flex-1">
-                <h1 className="text-sm sm:text-base md:text-xl lg:text-2xl font-bold text-base-content truncate">{story.title}</h1>
-                <p className="text-xs sm:text-sm text-base-content/70 truncate">by {story.author?.name || 'Unknown Author'}</p>
+              <div className="min-w-0 flex-1 flex items-center gap-2 sm:gap-3">
+                <img 
+                  src={story.coverImage || 'https://via.placeholder.com/40x40?text=Book'} 
+                  alt={`${story.title} cover`}
+                  className="object-cover rounded-full shrink-0"
+                  style={{ width: '40px', height: '40px', minWidth: '40px', minHeight: '40px' }}
+                  onError={(e) => e.target.src = 'https://via.placeholder.com/40x40?text=Book'}
+                />
+                <div className="min-w-0 flex-1">
+                  <h1 className="text-sm sm:text-base md:text-xl lg:text-2xl font-bold text-base-content truncate">{story.title}</h1>
+                  <p className="text-xs sm:text-sm text-base-content/70 truncate">by {story.author?.name || 'Unknown Author'}</p>
+                </div>
               </div>
             </div>
 
