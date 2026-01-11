@@ -11,6 +11,7 @@ import Signup from './pages/Signup';
 import Write from './pages/Write';
 import Read from './pages/Read';
 import StoryEditor from './pages/StoryEditor';
+import StoryOverview from './pages/StoryOverview';
 import AddChapter from './pages/AddChapter';
 import EditChapter from './pages/EditChapter';
 import Search from './pages/Search';
@@ -38,6 +39,7 @@ function AppContent() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/search" element={<Search />} />
+          <Route path="/story/:storyId" element={<ProtectedRoute><StoryOverview /></ProtectedRoute>} />
           <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
           <Route path="/write" element={<ProtectedRoute><Write /></ProtectedRoute>} />
           <Route path="/write/:storyId" element={<ProtectedRoute><Write /></ProtectedRoute>} />

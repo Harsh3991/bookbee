@@ -55,6 +55,11 @@ const StoryCard = ({ story, showEditButton = false, onEdit }) => {
     }
   };
 
+  const handleCardClick = () => {
+    // Navigate to story overview page instead of read page
+    navigate(`/story/${story._id}`);
+  };
+
   return (
     <motion.div
       whileHover={{ 
@@ -66,6 +71,7 @@ const StoryCard = ({ story, showEditButton = false, onEdit }) => {
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.3, type: "spring", stiffness: 300 }}
       className="bg-base-100 rounded-2xl shadow-lg shadow-base-300/50 overflow-hidden cursor-pointer story-card group border border-base-300 hover:shadow-2xl hover:shadow-primary/10 transition-all"
+      onClick={handleCardClick}
     >
       {/* Story Image */}
       <div className="relative overflow-hidden h-56">
