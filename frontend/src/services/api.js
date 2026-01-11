@@ -379,4 +379,20 @@ export const api = {
     }
     return data;
   },
+
+  // Like/Unlike story
+  likeStory: async (storyId) => {
+    const token = localStorage.getItem('token');
+    const response = await fetch(`${API_BASE}/stories/${storyId}/like`, {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${token}`,
+      },
+    });
+    const data = await response.json();
+    if (!response.ok) {
+      throw new Error(data.message || 'Failed to update like status');
+    }
+    return data;
+  },
 };

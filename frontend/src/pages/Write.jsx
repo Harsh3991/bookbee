@@ -906,7 +906,7 @@ const Write = () => {
                   transition={{ delay: 0.4 }}
                   className="space-y-3 sm:space-y-4"
                 >
-                  <div className="bg-base-100 rounded-xl sm:rounded-2xl p-4 sm:p-5 md:p-6 border border-base-300 shadow-xl max-h-[400px] sm:max-h-[500px] md:max-h-[600px] overflow-y-auto">
+                  <div className="bg-base-100 rounded-xl sm:rounded-2xl p-4 sm:p-5 md:p-6 border border-base-300 shadow-xl max-h-100 sm:max-h-125 md:max-h-150 overflow-y-auto">
                     <h4 className="font-semibold text-base-content mb-3 sm:mb-4 flex items-center space-x-2 text-base sm:text-lg sticky top-0 bg-base-100/95 backdrop-blur-sm pb-2">
                       <span>📖</span>
                       <span>Chapter Summary</span>
