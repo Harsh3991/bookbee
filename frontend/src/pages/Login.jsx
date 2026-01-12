@@ -134,7 +134,7 @@ const Login = () => {
             opacity: [0.2, 0.4, 0.2]
           }}
           transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
-          className="absolute -bottom-1/4 -right-1/4 w-[500px] h-[500px] bg-secondary/15 rounded-full blur-3xl"
+          className="absolute -bottom-1/4 -right-1/4 w-125 h-125 bg-secondary/15 rounded-full blur-3xl"
         />
       </div>
       
