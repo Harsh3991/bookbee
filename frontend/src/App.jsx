@@ -16,6 +16,7 @@ import AddChapter from './pages/AddChapter';
 import EditChapter from './pages/EditChapter';
 import Search from './pages/Search';
 import GoogleAuthCallback from './pages/GoogleAuthCallback';
+import { useScrollRestoration } from './hooks/useScrollRestoration';
 
 // Protected Route Component
 const ProtectedRoute = ({ children }) => {
@@ -31,12 +32,15 @@ const PublicRoute = ({ children }) => {
 
 function AppContent() {
   const location = useLocation();
+  
+  // Add scroll restoration hook
+  useScrollRestoration(150); // 150ms delay to account for animations
 
   return (
     <div className="App">
       <Navbar />
       <AnimatePresence mode="wait">
-        <Routes>
+        <Routes location={location} key={location.pathname}>
           <Route path="/" element={<Home />} />
           <Route path="/search" element={<Search />} />
           <Route path="/story/:storyId" element={<ProtectedRoute><StoryOverview /></ProtectedRoute>} />

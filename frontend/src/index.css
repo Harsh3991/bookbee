@@ -89,6 +89,18 @@ html {
   scroll-behavior: smooth;
 }
 
+/* Prevent layout shift during scroll restoration */
+html {
+  overflow-y: scroll; /* Always show scrollbar to prevent width change */
+}
+
+/* Smooth transitions for scroll when not restoring */
+@media (prefers-reduced-motion: no-preference) {
+  html:not(.scroll-restoring) {
+    scroll-behavior: smooth;
+  }
+}
+
 /* Custom Scrollbar */
 ::-webkit-scrollbar {
   width: 12px;
