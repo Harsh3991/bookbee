@@ -204,15 +204,29 @@ const Read = () => {
                 <span className="sm:hidden">Back</span>
               </button>
               <div className="min-w-0 flex-1 flex items-center gap-2 sm:gap-3">
-                <img 
-                  src={story.coverImage || 'https://via.placeholder.com/40x40?text=Book'} 
-                  alt={`${story.title} cover`}
-                  className="object-cover rounded-full shrink-0"
-                  style={{ width: '40px', height: '40px', minWidth: '40px', minHeight: '40px' }}
-                  onError={(e) => e.target.src = 'https://via.placeholder.com/40x40?text=Book'}
-                />
+                <button
+                  onClick={() => navigate(`/story/${storyId}`)}
+                  className="shrink-0 focus:outline-none rounded-full transition-transform hover:scale-105"
+                  aria-label={`View ${story.title} overview`}
+                  tabIndex={0}
+                >
+                  <img 
+                    src={story.coverImage || 'https://via.placeholder.com/40x40?text=Book'} 
+                    alt={`${story.title} cover`}
+                    className="object-cover rounded-full cursor-pointer"
+                    style={{ width: '40px', height: '40px', minWidth: '40px', minHeight: '40px' }}
+                    onError={(e) => e.target.src = 'https://via.placeholder.com/40x40?text=Book'}
+                  />
+                </button>
                 <div className="min-w-0 flex-1">
-                  <h1 className="text-sm sm:text-base md:text-xl lg:text-2xl font-bold text-base-content truncate">{story.title}</h1>
+                  <button
+                    onClick={() => navigate(`/story/${storyId}`)}
+                    className="text-left w-full focus:outline-none rounded transition-colors hover:text-primary"
+                    aria-label={`View ${story.title} overview`}
+                    tabIndex={0}
+                  >
+                    <h1 className="text-sm sm:text-base md:text-xl lg:text-2xl font-bold text-base-content truncate cursor-pointer">{story.title}</h1>
+                  </button>
                   <p className="text-xs sm:text-sm text-base-content/70 truncate">by {story.author?.name || 'Unknown Author'}</p>
                 </div>
               </div>
