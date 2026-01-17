@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import { api } from '../services/api';
@@ -26,6 +26,10 @@ const Profile = () => {
   // Delete progress states
   const [deletingProgressId, setDeletingProgressId] = useState(null);
   const [deleteError, setDeleteError] = useState('');
+  
+  // Confirmation modal states
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [progressToDelete, setProgressToDelete] = useState(null);
 
   useEffect(() => {
     loadProfileData();
@@ -107,20 +111,26 @@ const Profile = () => {
   };
 
   const handleDeleteProgress = async (progressId) => {
-    // Show confirmation dialog
-    if (!window.confirm('Are you sure you want to remove this chapter from your reading history?')) {
-      return;
-    }
+    // Show confirmation modal instead of window.confirm
+    setProgressToDelete(progressId);
+    setShowDeleteModal(true);
+  };
+
+  const confirmDelete = async () => {
+    if (!progressToDelete) return;
 
     try {
-      setDeletingProgressId(progressId);
+      setDeletingProgressId(progressToDelete);
       setDeleteError('');
+      setShowDeleteModal(false);
 
       // Call API to delete the progress entry
-      await api.deleteReadingProgress(progressId);
+      await api.deleteReadingProgress(progressToDelete);
 
       // Update local state by filtering out the deleted item
-      setReadingHistory(prev => prev.filter(progress => progress._id !== progressId));
+      setReadingHistory(prev => prev.filter(progress => progress._id !== progressToDelete));
+      
+      setProgressToDelete(null);
     } catch (error) {
       console.error('Error deleting reading progress:', error);
       setDeleteError('Failed to remove from reading history. Please try again.');
@@ -130,6 +140,11 @@ const Profile = () => {
     } finally {
       setDeletingProgressId(null);
     }
+  };
+
+  const cancelDelete = () => {
+    setShowDeleteModal(false);
+    setProgressToDelete(null);
   };
 
   const tabs = [
@@ -754,6 +769,97 @@ const Profile = () => {
           {activeTab === 'bookmarks' && renderBookmarksTab()}
         </motion.div>
       </div>
+
+      {/* Delete Confirmation Modal */}
+      <AnimatePresence>
+        {showDeleteModal && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
+            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm"
+            onClick={cancelDelete}
+          >
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.9, y: 20 }}
+              transition={{ type: "spring", stiffness: 300, damping: 30 }}
+              onClick={(e) => e.stopPropagation()}
+              className="bg-base-100 rounded-3xl shadow-2xl max-w-md w-full p-8 border border-base-300"
+              role="dialog"
+              aria-labelledby="delete-modal-title"
+              aria-describedby="delete-modal-description"
+            >
+              {/* Icon */}
+              <motion.div
+                initial={{ scale: 0 }}
+                animate={{ scale: 1 }}
+                transition={{ delay: 0.1, type: "spring", stiffness: 400, damping: 20 }}
+                className="w-16 h-16 mx-auto mb-6 bg-error/10 rounded-full flex items-center justify-center"
+              >
+                <svg className="w-8 h-8 text-error" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                </svg>
+              </motion.div>
+
+              {/* Title */}
+              <h3 
+                id="delete-modal-title"
+                className="text-2xl font-bold text-base-content text-center mb-3"
+              >
+                Remove from History?
+              </h3>
+
+              {/* Description */}
+              <p 
+                id="delete-modal-description"
+                className="text-base-content/70 text-center mb-8 text-lg"
+              >
+                Are you sure you want to remove this chapter from your reading history? This action cannot be undone.
+              </p>
+
+              {/* Action Buttons */}
+              <div className="flex flex-col sm:flex-row gap-3">
+                <motion.button
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                  onClick={cancelDelete}
+                  className="flex-1 bg-base-200 hover:bg-base-300 text-base-content px-6 py-3.5 rounded-xl font-bold text-lg transition-all shadow-md hover:shadow-lg border border-base-300"
+                  aria-label="Cancel deletion"
+                >
+                  Cancel
+                </motion.button>
+                <motion.button
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                  onClick={confirmDelete}
+                  disabled={deletingProgressId === progressToDelete}
+                  className="flex-1 bg-error hover:bg-error/90 disabled:bg-error/50 text-error-content px-6 py-3.5 rounded-xl font-bold text-lg transition-all shadow-lg hover:shadow-xl disabled:cursor-not-allowed inline-flex items-center justify-center space-x-2"
+                  aria-label="Confirm deletion"
+                >
+                  {deletingProgressId === progressToDelete ? (
+                    <>
+                      <svg className="w-5 h-5 animate-spin" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                      </svg>
+                      <span>Deleting...</span>
+                    </>
+                  ) : (
+                    <>
+                      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                      </svg>
+                      <span>Delete</span>
+                    </>
+                  )}
+                </motion.button>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 };
