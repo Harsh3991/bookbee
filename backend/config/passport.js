@@ -2,15 +2,15 @@ const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const User = require('../models/User');
 
 module.exports = function(passport) {
-  // Use environment variable for callback URL with fallback to localhost
-  const callbackURL = process.env.GOOGLE_CALLBACK_URL || 'http://localhost:5000/api/auth/google/callback';
+  // Use API_URL to construct callback URL
+  const callbackURL = `${process.env.API_URL}/api/auth/google/callback`;
 
   passport.use(
     new GoogleStrategy(
       {
         clientID: process.env.GOOGLE_CLIENT_ID,
         clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-        callbackURL: callbackURL,  // Use relative URL
+        callbackURL: callbackURL,
       },
       async (accessToken, refreshToken, profile, done) => {
         try {
