@@ -21,8 +21,6 @@ connectDB();
 // Configure Passport
 require('./config/passport')(passport);
 
-const cronJob = require('./config/cron');
-
 const app = express();
 
 app.use(helmet());
@@ -48,8 +46,18 @@ app.get('/', (req, res) => {
   res.send('Welcome to BookBee API!');
 });
 
-app.listen(port, () => {
-  console.log(`Server running on port ${port}`);
-});
+// Export for Vercel serverless
+module.exports = app;
 
-cronJob.start();
+// Only listen if not in Vercel environment
+if (process.env.NODE_ENV !== 'production') {
+  app.listen(port, () => {
+    console.log(`Server running on port ${port}`);
+  });
+}
+
+// Only start cron in development (not on Vercel)
+if (process.env.NODE_ENV !== 'production') {
+  const cronJob = require('./config/cron');
+  cronJob.start();
+}
