@@ -6,12 +6,13 @@ const corsOptions = {
     if (!origin) return callback(null, true);
 
     const allowedOrigins = [
-      'http://localhost:5173', // Vite dev server
-      'http://localhost:3000', // Alternative dev port
-      process.env.FRONTEND_URL, // Production frontend URL
+      'http://localhost:5173',
+      'http://localhost:3000',
+      'https://bookbee-lovat.vercel.app', // Your production frontend
+      process.env.FRONTEND_URL,
     ];
 
-    if (allowedOrigins.includes(origin) || origin.includes('netlify.app') || origin.includes('vercel.app')) {
+    if (allowedOrigins.includes(origin)) {
       return callback(null, true);
     }
 
