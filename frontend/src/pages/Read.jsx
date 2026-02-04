@@ -189,57 +189,56 @@ const Read = () => {
 
   return (
     <div className="min-h-screen bg-base-200">
-      {/* Header */}
+      {/* Compact Header */}
       <div className="bg-base-100 shadow-sm border-b border-base-300 sticky top-0 z-10">
-        <div className="max-w-7xl mx-auto px-3 sm:px-4 md:px-6 py-3 sm:py-4">
-          {/* Mobile: Stack vertically; Tablet+: Side by side */}
-          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3 md:gap-4">
-            <div className="flex items-center gap-2 sm:gap-3 md:gap-4">
+        <div className="max-w-7xl mx-auto px-3 sm:px-4 md:px-6 py-2 sm:py-2.5">
+          <div className="flex items-center justify-between gap-2 sm:gap-3">
+            {/* Left: Back button and Story Info */}
+            <div className="flex items-center gap-2 sm:gap-3 min-w-0 flex-1">
               <button
                 onClick={() => navigate('/')}
-                className="text-base-content/70 hover:text-base-content text-xs sm:text-sm md:text-base whitespace-nowrap shrink-0"
+                className="text-base-content/70 hover:text-base-content text-xs sm:text-sm whitespace-nowrap shrink-0"
                 aria-label="Back to Home"
               >
-                ← <span className="hidden sm:inline">Back to Home</span>
-                <span className="sm:hidden">Back</span>
+                ← <span className="hidden sm:inline">Home</span>
               </button>
-              <div className="min-w-0 flex-1 flex items-center gap-2 sm:gap-3">
+              
+              <button
+                onClick={() => navigate(`/story/${storyId}`)}
+                className="shrink-0 focus:outline-none rounded-full transition-transform hover:scale-105"
+                aria-label={`View ${story.title} overview`}
+                tabIndex={0}
+              >
+                <img 
+                  src={story.coverImage || 'https://via.placeholder.com/32x32?text=Book'} 
+                  alt={`${story.title} cover`}
+                  className="object-cover rounded-full cursor-pointer"
+                  style={{ width: '32px', height: '32px', minWidth: '32px', minHeight: '32px' }}
+                  onError={(e) => e.target.src = 'https://via.placeholder.com/32x32?text=Book'}
+                />
+              </button>
+              
+              <div className="min-w-0 flex-1">
                 <button
                   onClick={() => navigate(`/story/${storyId}`)}
-                  className="shrink-0 focus:outline-none rounded-full transition-transform hover:scale-105"
+                  className="text-left w-full focus:outline-none rounded transition-colors hover:text-primary"
                   aria-label={`View ${story.title} overview`}
                   tabIndex={0}
                 >
-                  <img 
-                    src={story.coverImage || 'https://via.placeholder.com/40x40?text=Book'} 
-                    alt={`${story.title} cover`}
-                    className="object-cover rounded-full cursor-pointer"
-                    style={{ width: '40px', height: '40px', minWidth: '40px', minHeight: '40px' }}
-                    onError={(e) => e.target.src = 'https://via.placeholder.com/40x40?text=Book'}
-                  />
+                  <h1 className="text-[10px] xs:text-xs sm:text-sm md:text-base font-semibold text-base-content truncate cursor-pointer">{story.title}</h1>
                 </button>
-                <div className="min-w-0 flex-1">
-                  <button
-                    onClick={() => navigate(`/story/${storyId}`)}
-                    className="text-left w-full focus:outline-none rounded transition-colors hover:text-primary"
-                    aria-label={`View ${story.title} overview`}
-                    tabIndex={0}
-                  >
-                    <h1 className="text-sm sm:text-base md:text-xl lg:text-2xl font-bold text-base-content truncate cursor-pointer">{story.title}</h1>
-                  </button>
-                  <p className="text-xs sm:text-sm text-base-content/70 truncate">by {story.author?.name || 'Unknown Author'}</p>
-                </div>
+                <p className="text-[9px] xs:text-[10px] sm:text-xs text-base-content/60 truncate hidden sm:block">by {story.author?.name || 'Unknown Author'}</p>
               </div>
             </div>
 
-            {/* Progress Section - Horizontal on mobile, enhanced on larger screens */}
-            <div className="flex items-center gap-2 sm:gap-3 md:gap-4 shrink-0">
-              <div className="text-xs sm:text-sm text-base-content/70 whitespace-nowrap">
-                Ch {currentChapter.chapterNumber}/{chapters.length}
+            {/* Right: Compact Progress Section */}
+            <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
+              <div className="text-xs text-base-content/70 whitespace-nowrap">
+                {currentChapter.chapterNumber}/{chapters.length}
               </div>
-              <div className="w-20 sm:w-24 md:w-32 lg:w-40 bg-base-300 rounded-full h-1.5 sm:h-2 shrink-0">
+              <div className="w-16 sm:w-20 md:w-24 bg-base-300 rounded-full h-1.5 shrink-0">
                 <div
-                  className="bg-primary h-1.5 sm:h-2 rounded-full transition-all duration-300"
+                  className="bg-primary h-1.5 rounded-full transition-all duration-300"
                   style={{ width: `${progress}%` }}
                   role="progressbar"
                   aria-valuenow={progress}
@@ -247,93 +246,14 @@ const Read = () => {
                   aria-valuemax="100"
                 ></div>
               </div>
-              <span className="text-xs sm:text-sm text-base-content/70 w-8 sm:w-10 text-right">{progress}%</span>
-            </div>
-          </div>
-
-          {/* Chapter Navigation */}
-          <div className="mt-3 sm:mt-4">
-            {/* Mobile: Stack buttons, hide chapter list; Tablet+: Show all */}
-            <div className="flex items-center justify-between gap-2 mb-3 md:hidden">
-              <button
-                onClick={goToPreviousChapter}
-                disabled={chapters.findIndex(ch => ch._id === currentChapter._id) === 0}
-                className="px-3 py-2 text-xs sm:text-sm bg-base-200 text-base-content rounded-lg hover:bg-base-300 disabled:opacity-50 disabled:cursor-not-allowed min-h-11 touch-manipulation"
-                aria-label="Previous Chapter"
-              >
-                ← Prev
-              </button>
-
-              {/* Mobile dropdown for chapter selection */}
-              <select
-                value={currentChapter._id}
-                onChange={(e) => {
-                  const chapter = chapters.find(ch => ch._id === e.target.value);
-                  if (chapter) goToChapter(chapter);
-                }}
-                className="flex-1 px-2 py-2 text-xs sm:text-sm bg-base-100 border border-base-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent min-h-11"
-              >
-                {chapters.map((chapter) => (
-                  <option key={chapter._id} value={chapter._id}>
-                    Ch {chapter.chapterNumber}: {chapter.title || 'Untitled'}
-                  </option>
-                ))}
-              </select>
-
-              <button
-                onClick={goToNextChapter}
-                disabled={chapters.findIndex(ch => ch._id === currentChapter._id) === chapters.length - 1}
-                className="px-3 py-2 text-xs sm:text-sm bg-base-200 text-base-content rounded-lg hover:bg-base-300 disabled:opacity-50 disabled:cursor-not-allowed min-h-11 touch-manipulation"
-                aria-label="Next Chapter"
-              >
-                Next →
-              </button>
-            </div>
-
-            {/* Tablet+ Layout */}
-            <div className="hidden md:flex items-center justify-between gap-3 lg:gap-4">
-              <button
-                onClick={goToPreviousChapter}
-                disabled={chapters.findIndex(ch => ch._id === currentChapter._id) === 0}
-                className="px-4 py-2 text-sm lg:text-base bg-base-200 text-base-content rounded-lg hover:bg-base-300 disabled:opacity-50 disabled:cursor-not-allowed whitespace-nowrap"
-                aria-label="Previous Chapter"
-              >
-                ← Previous
-              </button>
-
-              <div className="flex gap-2 overflow-x-auto scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100 pb-2 flex-1">
-                {chapters.map((chapter) => (
-                  <button
-                    key={chapter._id}
-                    onClick={() => goToChapter(chapter)}
-                    className={`px-2 lg:px-3 py-2 rounded-lg text-xs lg:text-sm whitespace-nowrap shrink-0 transition-colors ${
-                      chapter._id === currentChapter._id
-                        ? 'bg-primary text-primary-content font-semibold'
-                        : 'bg-base-200 text-base-content hover:bg-base-300'
-                    }`}
-                    aria-label={`Go to chapter ${chapter.chapterNumber}`}
-                    aria-current={chapter._id === currentChapter._id ? 'page' : undefined}
-                  >
-                    {chapter.chapterNumber}. {chapter.title || 'Untitled'}
-                  </button>
-                ))}
-              </div>
-
-              <button
-                onClick={goToNextChapter}
-                disabled={chapters.findIndex(ch => ch._id === currentChapter._id) === chapters.length - 1}
-                className="px-4 py-2 text-sm lg:text-base bg-base-200 text-base-content rounded-lg hover:bg-base-300 disabled:opacity-50 disabled:cursor-not-allowed whitespace-nowrap"
-                aria-label="Next Chapter"
-              >
-                Next →
-              </button>
+              <span className="text-xs text-base-content/70 w-7 text-right">{progress}%</span>
             </div>
           </div>
         </div>
       </div>
 
-      {/* Chapter Content */}
-      <div className="max-w-4xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8 py-4 sm:py-6 md:py-8">
+      {/* Chapter Content - Now more prominent */}
+      <div className="max-w-4xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8 py-3 sm:py-4 md:py-6">
         <motion.div
           key={currentChapter._id}
           initial={{ opacity: 0, y: 20 }}
@@ -350,7 +270,7 @@ const Read = () => {
               onScroll={handleScroll}
               className="prose prose-sm sm:prose-base md:prose-lg lg:prose-xl max-w-none leading-relaxed text-base-content [&>p]:wrap-break-word"
               style={{
-                maxHeight: window.innerWidth < 640 ? '55vh' : window.innerWidth < 1024 ? '65vh' : '70vh',
+                maxHeight: window.innerWidth < 640 ? '65vh' : window.innerWidth < 1024 ? '72vh' : '75vh',
                 overflowY: 'auto',
                 paddingRight: '0.5rem'
               }}
@@ -363,25 +283,89 @@ const Read = () => {
             </div>
           </div>
 
-          {/* Chapter Navigation Footer */}
-          <div className="mt-4 sm:mt-6 md:mt-8 flex flex-col sm:flex-row gap-3 sm:gap-4 justify-between">
-            <button
-              onClick={goToPreviousChapter}
-              disabled={chapters.findIndex(ch => ch._id === currentChapter._id) === 0}
-              className="w-full sm:w-auto px-4 sm:px-6 py-3 text-sm sm:text-base bg-base-200 text-base-content rounded-lg hover:bg-base-300 disabled:opacity-50 disabled:cursor-not-allowed min-h-11 sm:min-h-12 touch-manipulation transition-colors"
-              aria-label="Previous Chapter"
-            >
-              ← Previous Chapter
-            </button>
+          {/* Chapter Navigation - Now includes chapter list */}
+          <div className="mt-4 sm:mt-6 space-y-3 sm:space-y-4">
+            {/* Chapter Selection - Desktop */}
+            <div className="hidden md:block">
+              <div className="bg-base-100 rounded-lg shadow-sm p-3 lg:p-4">
+                <div className="flex items-center gap-2 lg:gap-3">
+                  <button
+                    onClick={goToPreviousChapter}
+                    disabled={chapters.findIndex(ch => ch._id === currentChapter._id) === 0}
+                    className="px-3 py-2 text-sm lg:text-base bg-base-200 text-base-content rounded-lg hover:bg-base-300 disabled:opacity-50 disabled:cursor-not-allowed whitespace-nowrap shrink-0"
+                    aria-label="Previous Chapter"
+                  >
+                    ← Prev
+                  </button>
 
-            <button
-              onClick={goToNextChapter}
-              disabled={chapters.findIndex(ch => ch._id === currentChapter._id) === chapters.length - 1}
-              className="w-full sm:w-auto px-4 sm:px-6 py-3 text-sm sm:text-base bg-primary text-primary-content rounded-lg hover:bg-primary/90 disabled:opacity-50 disabled:cursor-not-allowed font-semibold min-h-11 sm:min-h-12 touch-manipulation transition-colors"
-              aria-label="Next Chapter"
-            >
-              Next Chapter →
-            </button>
+                  <div className="flex gap-2 overflow-x-auto scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100 pb-2 flex-1">
+                    {chapters.map((chapter) => (
+                      <button
+                        key={chapter._id}
+                        onClick={() => goToChapter(chapter)}
+                        className={`px-2 lg:px-3 py-2 rounded-lg text-xs lg:text-sm whitespace-nowrap shrink-0 transition-colors ${
+                          chapter._id === currentChapter._id
+                            ? 'bg-primary text-primary-content font-semibold'
+                            : 'bg-base-200 text-base-content hover:bg-base-300'
+                        }`}
+                        aria-label={`Go to chapter ${chapter.chapterNumber}`}
+                        aria-current={chapter._id === currentChapter._id ? 'page' : undefined}
+                      >
+                        {chapter.chapterNumber}. {chapter.title || 'Untitled'}
+                      </button>
+                    ))}
+                  </div>
+
+                  <button
+                    onClick={goToNextChapter}
+                    disabled={chapters.findIndex(ch => ch._id === currentChapter._id) === chapters.length - 1}
+                    className="px-3 py-2 text-sm lg:text-base bg-base-200 text-base-content rounded-lg hover:bg-base-300 disabled:opacity-50 disabled:cursor-not-allowed whitespace-nowrap shrink-0"
+                    aria-label="Next Chapter"
+                  >
+                    Next →
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            {/* Chapter Selection - Mobile Dropdown */}
+            <div className="md:hidden bg-base-100 rounded-lg shadow-sm p-3">
+              <select
+                value={currentChapter._id}
+                onChange={(e) => {
+                  const chapter = chapters.find(ch => ch._id === e.target.value);
+                  if (chapter) goToChapter(chapter);
+                }}
+                className="w-full px-3 py-2 text-xs sm:text-sm bg-base-100 border border-base-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
+              >
+                {chapters.map((chapter) => (
+                  <option key={chapter._id} value={chapter._id}>
+                    Ch {chapter.chapterNumber}: {chapter.title || 'Untitled'}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            {/* Prev/Next Buttons */}
+            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-between">
+              <button
+                onClick={goToPreviousChapter}
+                disabled={chapters.findIndex(ch => ch._id === currentChapter._id) === 0}
+                className="w-full sm:w-auto px-4 sm:px-6 py-3 text-sm sm:text-base bg-base-200 text-base-content rounded-lg hover:bg-base-300 disabled:opacity-50 disabled:cursor-not-allowed min-h-11 sm:min-h-12 touch-manipulation transition-colors"
+                aria-label="Previous Chapter"
+              >
+                ← Previous Chapter
+              </button>
+
+              <button
+                onClick={goToNextChapter}
+                disabled={chapters.findIndex(ch => ch._id === currentChapter._id) === chapters.length - 1}
+                className="w-full sm:w-auto px-4 sm:px-6 py-3 text-sm sm:text-base bg-primary text-primary-content rounded-lg hover:bg-primary/90 disabled:opacity-50 disabled:cursor-not-allowed font-semibold min-h-11 sm:min-h-12 touch-manipulation transition-colors"
+                aria-label="Next Chapter"
+              >
+                Next Chapter →
+              </button>
+            </div>
           </div>
         </motion.div>
       </div>
