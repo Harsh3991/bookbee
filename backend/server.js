@@ -2,6 +2,7 @@ require('dotenv').config();
 const express = require('express');
 const helmet = require('helmet');
 const passport = require('passport');
+const session = require('express-session');
 const connectDB = require('./config/database');
 const cors = require('./config/cors');
 const limiter = require('./middleware/rateLimitMiddleware');
@@ -27,7 +28,21 @@ app.use(helmet());
 app.use(limiter);
 app.use(cors);
 app.use(express.json());
+
+// Add session middleware BEFORE passport initialization
+app.use(session({
+  secret: process.env.JWT_SECRET,
+  resave: false,
+  saveUninitialized: false,
+  cookie: {
+    secure: process.env.NODE_ENV === 'production',
+    httpOnly: true,
+    maxAge: 24 * 60 * 60 * 1000 // 24 hours
+  }
+}));
+
 app.use(passport.initialize());
+app.use(passport.session());
 
 // Routes
 app.use('/api/auth', authRoutes);
