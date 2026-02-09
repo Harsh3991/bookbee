@@ -291,6 +291,62 @@ const Write = () => {
     }
   ];
 
+  const [stepCompletion, setStepCompletion] = useState({
+    1: false,
+    2: false,
+    3: false
+  });
+
+  const validateStoryDetails = () => {
+    return (
+      storyData.title.trim() !== '' &&
+      storyData.description.trim() !== '' &&
+      storyData.genres.length > 0 &&
+      storyData.status !== ''
+    );
+  };
+
+  const validateChapters = () => {
+    return chapters.length > 0 && chapters.every(ch => 
+      ch.title.trim() !== '' && ch.content.trim() !== ''
+    );
+  };
+
+  useEffect(() => {
+    setStepCompletion(prev => ({
+      ...prev,
+      1: validateStoryDetails()
+    }));
+  }, [storyData.title, storyData.description, storyData.genres, storyData.status]);
+
+  useEffect(() => {
+    setStepCompletion(prev => ({
+      ...prev,
+      2: validateChapters()
+    }));
+  }, [chapters]);
+
+  const handleStepClick = (stepNumber) => {
+    // Can always go back to previous steps
+    if (stepNumber < currentStep) {
+      setCurrentStep(stepNumber);
+      return;
+    }
+
+    // Can't skip ahead if current step is incomplete
+    if (stepNumber > currentStep && !stepCompletion[currentStep]) {
+      // Show error message
+      const errorMessages = {
+        1: 'Please complete story details (title, description, at least one genre, and status) before proceeding.',
+        2: 'Please add at least one complete chapter (with title and content) before proceeding.'
+      };
+      alert(errorMessages[currentStep] || 'Please complete the current step before proceeding.');
+      return;
+    }
+
+    setCurrentStep(stepNumber);
+  };
+
   if (loading) {
     return (
       <div className="min-h-screen bg-base-200 flex items-center justify-center px-4">
@@ -385,71 +441,108 @@ const Write = () => {
           {/* Enhanced Progress Steps */}
           <div className="mt-4 sm:mt-5 overflow-x-auto -mx-3 sm:mx-0 px-3 sm:px-0 pb-2 scrollbar-hide">
             <div className="flex items-center justify-start sm:justify-center space-x-2 sm:space-x-4 min-w-max sm:min-w-0">
-              {steps.map((step, index) => (
-                <div key={step.number} className="flex items-center shrink-0">
-                  <motion.div 
-                    whileHover={{ scale: 1.1 }}
-                    className="flex flex-col items-center relative group cursor-pointer"
-                    onClick={() => setCurrentStep(step.number)}
-                  >
-                    <div className={`w-10 h-10 sm:w-12 sm:h-12 rounded-lg sm:rounded-xl flex items-center justify-center text-sm sm:text-base font-bold transition-all duration-500 relative ${
-                      currentStep >= step.number
-                        ? 'bg-primary text-primary-content shadow-2xl'
-                        : 'bg-base-100 text-base-content/40 border-2 border-base-300'
-                    }`}>
-                      {currentStep > step.number ? (
-                        <motion.span
-                          initial={{ scale: 0 }}
-                          animate={{ scale: 1 }}
-                          className="text-xl sm:text-2xl"
-                        >
-                          ✓
-                        </motion.span>
-                      ) : (
-                        <span className="text-xl sm:text-2xl">{step.icon}</span>
+              {steps.map((step, index) => {
+                const isActive = currentStep === step.number;
+                const isCompleted = stepCompletion[step.number];
+                const canAccess = step.number <= currentStep || (step.number === currentStep + 1 && stepCompletion[currentStep]);
+                
+                return (
+                  <div key={step.number} className="flex items-center shrink-0">
+                    <motion.div 
+                      whileHover={canAccess ? { scale: 1.1 } : {}}
+                      className={`flex flex-col items-center relative group ${
+                        canAccess ? 'cursor-pointer' : 'cursor-not-allowed opacity-50'
+                      }`}
+                      onClick={() => canAccess && handleStepClick(step.number)}
+                    >
+                      <div className={`w-10 h-10 sm:w-12 sm:h-12 rounded-lg sm:rounded-xl flex items-center justify-center text-sm sm:text-base font-bold transition-all duration-500 relative ${
+                        isActive
+                          ? 'bg-primary text-primary-content shadow-2xl'
+                          : isCompleted
+                          ? 'bg-success text-success-content'
+                          : canAccess
+                          ? 'bg-base-100 text-base-content/40 border-2 border-base-300'
+                          : 'bg-base-300 text-base-content/30 border-2 border-base-300'
+                      }`}>
+                        {isCompleted ? (
+                          <motion.span
+                            initial={{ scale: 0 }}
+                            animate={{ scale: 1 }}
+                            className="text-xl sm:text-2xl"
+                          >
+                            ✓
+                          </motion.span>
+                        ) : !canAccess && step.number > currentStep ? (
+                          <span className="text-xl sm:text-2xl">🔒</span>
+                        ) : (
+                          <span className="text-xl sm:text-2xl">{step.icon}</span>
+                        )}
+                        {currentStep === step.number && (
+                          <motion.div
+                            layoutId="activeStep"
+                            className="absolute inset-0 rounded-xl sm:rounded-2xl border-2 border-primary"
+                            transition={{ type: "spring", stiffness: 300, damping: 30 }}
+                          />
+                        )}
+                      </div>
+                      <div className="mt-2 sm:mt-3 text-center hidden sm:block">
+                        <div className={`text-xs sm:text-sm font-semibold transition-colors duration-300 whitespace-nowrap ${
+                          currentStep >= step.number ? 'text-base-content' : 'text-base-content/50'
+                        }`}>
+                          {step.title}
+                        </div>
+                        <div className="text-xs text-base-content/60 mt-0.5 sm:mt-1 font-light hidden lg:block">{step.description}</div>
+                      </div>
+                      {/* Mobile step title below icon */}
+                      <div className="mt-1.5 text-center sm:hidden">
+                        <div className={`text-xs font-semibold transition-colors duration-300 whitespace-nowrap ${
+                          currentStep >= step.number ? 'text-base-content' : 'text-base-content/50'
+                        }`}>
+                          {step.title}
+                        </div>
+                      </div>
+
+                      {/* Tooltip for locked steps */}
+                      {!canAccess && step.number > currentStep && (
+                        <div className="absolute bottom-full mb-2 px-3 py-1 bg-base-content text-base-100 text-xs rounded whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-10">
+                          Complete previous step first
+                        </div>
                       )}
-                      {currentStep === step.number && (
-                        <motion.div
-                          layoutId="activeStep"
-                          className="absolute inset-0 rounded-xl sm:rounded-2xl border-2 border-primary"
-                          transition={{ type: "spring", stiffness: 300, damping: 30 }}
+                    </motion.div>
+                    {index < steps.length - 1 && (
+                      <div className="hidden sm:block mx-2 sm:mx-4 mb-6 sm:mb-8">
+                        <motion.div 
+                          className={`w-12 sm:w-20 lg:w-32 h-1 rounded-full transition-all duration-700 ${
+                            stepCompletion[step.number] ? 'bg-success' : 'bg-base-300'
+                          }`}
+                          initial={{ scaleX: 0 }}
+                          animate={{ scaleX: 1 }}
+                          transition={{ delay: index * 0.2 }}
                         />
-                      )}
-                    </div>
-                    <div className="mt-2 sm:mt-3 text-center hidden sm:block">
-                      <div className={`text-xs sm:text-sm font-semibold transition-colors duration-300 whitespace-nowrap ${
-                        currentStep >= step.number ? 'text-base-content' : 'text-base-content/50'
-                      }`}>
-                        {step.title}
                       </div>
-                      <div className="text-xs text-base-content/60 mt-0.5 sm:mt-1 font-light hidden lg:block">{step.description}</div>
-                    </div>
-                    {/* Mobile step title below icon */}
-                    <div className="mt-1.5 text-center sm:hidden">
-                      <div className={`text-xs font-semibold transition-colors duration-300 whitespace-nowrap ${
-                        currentStep >= step.number ? 'text-base-content' : 'text-base-content/50'
-                      }`}>
-                        {step.title}
-                      </div>
-                    </div>
-                  </motion.div>
-                  {index < steps.length - 1 && (
-                    <div className="hidden sm:block mx-2 sm:mx-4 mb-6 sm:mb-8">
-                      <motion.div 
-                        className={`w-12 sm:w-20 lg:w-32 h-1 rounded-full transition-all duration-700 ${
-                          currentStep > step.number 
-                            ? 'bg-primary' 
-                            : 'bg-base-300'
-                        }`}
-                        initial={{ scaleX: 0 }}
-                        animate={{ scaleX: 1 }}
-                        transition={{ delay: index * 0.2 }}
-                      />
-                    </div>
-                  )}
-                </div>
-              ))}
+                    )}
+                  </div>
+                );
+              })}
             </div>
+
+            {/* Validation Warning - show when current step is incomplete */}
+            {!stepCompletion[currentStep] && currentStep < 3 && (
+              <motion.div 
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="mt-4 p-3 bg-warning/20 border border-warning rounded-lg flex items-start gap-2"
+              >
+                <svg className="w-5 h-5 text-warning shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                </svg>
+                <div className="text-sm">
+                  <span className="font-semibold">Complete this step to continue: </span>
+                  {currentStep === 1 && 'Add title, description, at least one genre, and select status'}
+                  {currentStep === 2 && 'Add at least one chapter with title and content'}
+                </div>
+              </motion.div>
+            )}
           </div>
         </div>
       </div>
@@ -843,7 +936,7 @@ const Write = () => {
                 >
                     <div className="bg-base-200 rounded-lg p-3 border border-base-300">
                       <h4 className="font-semibold text-base-content mb-2 flex items-center space-x-2 text-sm">
-                        <span>📚</span>
+                        <span className="text-base">📚</span>
                         <span>Story Details</span>
                       </h4>
                       <div className="space-y-1.5 text-base-content/70">
